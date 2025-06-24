@@ -661,7 +661,7 @@ local function Ipr_FpsBooster_Options(primary, fast)
                 if (Ipr_SettingsDbutton.Convar) then
                     draw.RoundedBoxEx(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"], true, true, false, false)
 
-                    Ipr_ConvarColor = (Ipr_SettingsDbutton.DataDelayed and timer.Exists(Ipr_SettingsDbutton.DataDelayed.Name) or Ipr.Func.GetConvar(Ipr_SettingsDbutton.Convar.Name)) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"]
+                    Ipr_ConvarColor = (Ipr_SettingsDbutton.DataDelayed and timer.Exists(Ipr_SettingsDbutton.DataDelayed.Name)) and Ipr.Settings.TColor["orange"] or Ipr.Func.GetConvar(Ipr_SettingsDbutton.Convar.Name) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"]
                     draw.RoundedBox(0, 0, h- 1, w, h, Ipr_ConvarColor)
                 else
                     if (Ipr.Settings.Updated.Set) then
