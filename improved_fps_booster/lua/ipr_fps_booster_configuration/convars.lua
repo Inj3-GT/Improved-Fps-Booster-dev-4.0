@@ -298,7 +298,7 @@ Ipr_Fps_Booster.DefaultCommands = {
         },
     },
     {
-        Name = "Water",
+        Name = "WaterSplashEffect",
         DefaultCheck = false,
         Convars = {
             ["cl_show_splashes"] = {
