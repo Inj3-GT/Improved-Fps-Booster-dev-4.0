@@ -99,12 +99,11 @@ Ipr.Func.SetConvar = function(name, value, save)
     end
 
     if (save == 1) then
-        local Ipr_NameSetTimer = "Ipr_Fps_Booster_SetConvar"
-        if timer.Exists(Ipr_NameSetTimer) then
-            timer.Remove(Ipr_NameSetTimer)
+        if timer.Exists("Ipr_Fps_Booster_SetConvar") then
+            timer.Remove("Ipr_Fps_Booster_SetConvar")
         end
 
-        timer.Create(Ipr_NameSetTimer, 0.5, 1, function()
+        timer.Create("Ipr_Fps_Booster_SetConvar", 0.5, 1, function()
             file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Settings.Convars))
         end)
     elseif (save == 2) then
