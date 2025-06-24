@@ -686,9 +686,10 @@ local function Ipr_FpsBooster_Options(primary, fast)
 
             if (Ipr_SettingsDbutton.Convar) then
                 local Ipr_RunConvar = false
+                local Ipr_TimerData = timer.Exists(Ipr_SettingsDbutton.DataDelayed.Name)
 
-                if (Ipr_SettingsDbutton.DataDelayed) then
-                    Ipr_RunConvar = not timer.Exists(Ipr_SettingsDbutton.DataDelayed.Name)
+                if (Ipr_SettingsDbutton.DataDelayed) and (Ipr_TimerData) then
+                    Ipr_RunConvar = not Ipr_TimerData
                 else
                     Ipr_RunConvar = not Ipr.Func.GetConvar(Ipr_SettingsDbutton.Convar.Name)
                 end
