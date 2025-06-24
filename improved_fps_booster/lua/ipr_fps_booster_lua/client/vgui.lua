@@ -14,7 +14,6 @@ Ipr.Settings = {
         State = false,
     },
     Fps =  {
-        Current = 0,
         Max = {
             Int = 0,
             Name = "Max : "
@@ -243,10 +242,6 @@ Ipr.Func.FpsCalculator = function()
 end
 
 Ipr.Func.ResetFps = function(reset)
-    if not reset then
-        Ipr.Settings.Fps.Current = 0
-    end
-
     Ipr.Settings.Fps.Low.InProgress = 0
     Ipr.Settings.Fps.Min.Int = Ipr_Infinity
     Ipr.Settings.Fps.Max.Int = 0
