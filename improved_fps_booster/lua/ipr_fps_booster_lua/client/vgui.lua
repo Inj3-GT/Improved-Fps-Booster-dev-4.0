@@ -224,6 +224,9 @@ Ipr.Func.FpsCalculator = function()
         if (Ipr.Settings.FpsCurrent > (Ipr.Settings.Fps.Max.Int ~= Ipr_Infinity and Ipr.Settings.Fps.Max.Int or 0)) then
             Ipr.Settings.Fps.Max.Int = Ipr.Settings.FpsCurrent
         end
+
+        Ipr.Settings.Fps.Low.InProgress  = Ipr.Settings.Fps.Low.InProgress or Ipr.Settings.Fps.Min.Int
+
         if (#Ipr.Settings.Fps.Low.Lists <= Ipr.Settings.Fps.Low.MaxFrame) then
             Ipr.Settings.Fps.Low.Lists[#Ipr.Settings.Fps.Low.Lists + 1] = Ipr.Settings.FpsCurrent
         else
@@ -236,12 +239,10 @@ Ipr.Func.FpsCalculator = function()
         Ipr.CurNext = Ipr_CurTime + 0.3
     end
 
-    return Ipr.Settings.FpsCurrent, Ipr.Settings.Fps.Min.Int, Ipr.Settings.Fps.Max.Int, Ipr.Settings.Fps.Low.InProgress or Ipr.Settings.Fps.Min.Int
+    return Ipr.Settings.FpsCurrent, Ipr.Settings.Fps.Min.Int, Ipr.Settings.Fps.Max.Int, Ipr.Settings.Fps.Low.InProgress
 end
 
 Ipr.Func.ResetFps = function()
-    Ipr.Settings.Fps.Low.InProgress = 0
-
     Ipr.Settings.Fps.Min.Int = Ipr_Infinity
     Ipr.Settings.Fps.Max.Int = 0
 end
