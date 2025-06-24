@@ -631,6 +631,11 @@ local function Ipr_FpsBooster_Options(primary, fast)
             },
             Func = function()
                 Ipr.Func.CreateData(true)
+
+                if timer.Exists(Ipr.Settings.StartupLaunch.Name) then
+                    timer.Remove(Ipr.Settings.StartupLaunch.Name)
+                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Startup launch is avorted !")
+                end
                 Ipr.Func.SetConvar("Startup", false, 2)
 
                 Ipr.Func.Activate(false)
