@@ -990,6 +990,7 @@ local Ipr_DefaultCommands = {
         Func = function()
             if timer.Exists("IprFpsBooster_Startup") then
                 timer.Remove("IprFpsBooster_Startup")
+                
                 print("Startup is disabled !")
             end
             
