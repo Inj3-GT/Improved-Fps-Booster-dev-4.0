@@ -59,12 +59,12 @@ Ipr.Func.CreateData = function(reset)
 
         file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_TData))
     end
-    Ipr_Fps_Booster.Settings.Convars = Ipr_TData or util.JSONToTable(file.Read(Ipr_Fps_Booster.Settings.Save.. "convars.json", "DATA"))
+    Ipr_Fps_Booster.Convars = Ipr_TData or util.JSONToTable(file.Read(Ipr_Fps_Booster.Settings.Save.. "convars.json", "DATA"))
 end
 
 Ipr.Func.GetConvar = function(name)
-    for i = 1, #Ipr_Fps_Booster.Settings.Convars do
-        local Ipr_Convars = Ipr_Fps_Booster.Settings.Convars[i]
+    for i = 1, #Ipr_Fps_Booster.Convars do
+        local Ipr_Convars = Ipr_Fps_Booster.Convars[i]
 
         if (Ipr_Convars.Name == name) then
             return Ipr_Convars.Checked
@@ -77,20 +77,20 @@ end
 Ipr.Func.SetConvar = function(name, value, save)
     local Ipr_ConvarExists = (Ipr.Func.GetConvar(name) == nil)
     if (Ipr_ConvarExists) then
-        Ipr_Fps_Booster.Settings.Convars[#Ipr_Fps_Booster.Settings.Convars + 1] = {
+        Ipr_Fps_Booster.Convars[#Ipr_Fps_Booster.Convars + 1] = {
             Name = name,
             Checked = value,
         }
         
-        file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Settings.Convars))
+        file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
         print("Creating new convar : " ..name, value, save)
     end
 
-    for i = 1, #Ipr_Fps_Booster.Settings.Convars do
-        local Ipr_ToggleCount = Ipr_Fps_Booster.Settings.Convars[i] 
+    for i = 1, #Ipr_Fps_Booster.Convars do
+        local Ipr_ToggleCount = Ipr_Fps_Booster.Convars[i] 
 
         if (Ipr_ToggleCount.Name == name) then
-            Ipr_Fps_Booster.Settings.Convars[i].Checked = value
+            Ipr_Fps_Booster.Convars[i].Checked = value
             break
         end
     end
@@ -101,10 +101,10 @@ Ipr.Func.SetConvar = function(name, value, save)
         end
 
         timer.Create("IprFpsBooster_SetConvar", 1, 1, function()
-            file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Settings.Convars))
+            file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
         end)
     elseif (save == 2) then
-        file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Settings.Convars))
+        file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
     end
 end
 
@@ -141,8 +141,8 @@ Ipr.Func.MatchConvar = function(bool)
 end
 
 Ipr.Func.IsChecked = function()
-    for i = 1, #Ipr_Fps_Booster.Settings.Convars do
-        if not Ipr_Fps_Booster.Settings.Convars[i].Vgui and (Ipr_Fps_Booster.Settings.Convars[i].Checked == true) then
+    for i = 1, #Ipr_Fps_Booster.Convars do
+        if not Ipr_Fps_Booster.Convars[i].Vgui and (Ipr_Fps_Booster.Convars[i].Checked == true) then
             return true
         end
     end
@@ -412,8 +412,8 @@ local function Ipr_FpsBooster_Options(primary, fast)
                 end
 
                 local Ipr_CopyDataCheck = Ipr.Settings.Updated.Data[i].Checked
-                for c = 1, #Ipr_Fps_Booster.Settings.Convars do
-                     if (Ipr_CopyDataName == Ipr_Fps_Booster.Settings.Convars[c].Name) and (Ipr_CopyDataCheck ~= Ipr_Fps_Booster.Settings.Convars[c].Checked) then
+                for c = 1, #Ipr_Fps_Booster.Convars do
+                     if (Ipr_CopyDataName == Ipr_Fps_Booster.Convars[c].Name) and (Ipr_CopyDataCheck ~= Ipr_Fps_Booster.Convars[c].Checked) then
                          Ipr_ConvarFind = true
                          break
                      end
@@ -570,10 +570,10 @@ local function Ipr_FpsBooster_Options(primary, fast)
 
                 Ipr.Func.SetConvar("Startup", false, 2)
 
-                Ipr.Settings.Updated.Data = table.Copy(Ipr_Fps_Booster.Settings.Convars)
+                Ipr.Settings.Updated.Data = table.Copy(Ipr_Fps_Booster.Convars)
                 Ipr.Settings.Updated.Set = false
 
-                file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Settings.Convars))
+                file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
                 chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Optimization parameters were saved !")
             end
         },
@@ -639,7 +639,7 @@ local function Ipr_FpsBooster_Options(primary, fast)
 
                 Ipr.Func.Activate(false)
 
-                Ipr.Settings.Updated.Data = table.Copy(Ipr_Fps_Booster.Settings.Convars)
+                Ipr.Settings.Updated.Data = table.Copy(Ipr_Fps_Booster.Convars)
                 Ipr.Settings.Updated.Set = false
 
                 Ipr_FpsBooster_Options(primary, true)
@@ -738,7 +738,7 @@ local function Ipr_FpsBooster()
     Ipr.Settings.Vgui.Primary:AlphaTo(5, 0, 0)
     Ipr.Settings.Vgui.Primary:AlphaTo(255, 1, 0)
 
-    Ipr.Settings.Updated.Data = table.Copy(Ipr_Fps_Booster.Settings.Convars)
+    Ipr.Settings.Updated.Data = table.Copy(Ipr_Fps_Booster.Convars)
     Ipr.Settings.Updated.Set = false
     
     Ipr.Settings.Vgui.Primary.Paint = function(self, w, h)

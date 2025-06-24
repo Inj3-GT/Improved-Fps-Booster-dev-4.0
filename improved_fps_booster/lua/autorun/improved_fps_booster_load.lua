@@ -18,7 +18,7 @@ if (CLIENT) then
     Ipr_Fps_Booster.Settings.ExternalLink = "https://steamcommunity.com/sharedfiles/filedetails/?id=1762151370"
     Ipr_Fps_Booster.Settings.Developer = "Inj3"
 
-    Ipr_Fps_Booster.Settings.Convars = {}
+    Ipr_Fps_Booster.Convars = {}
     Ipr_Fps_Booster.Lang = {}
     
     surface.CreateFont("Ipr_Fps_Booster_Font",{
