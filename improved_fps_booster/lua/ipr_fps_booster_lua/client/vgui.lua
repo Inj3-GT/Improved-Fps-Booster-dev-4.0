@@ -564,6 +564,11 @@ local function Ipr_FpsBooster_Options(primary, fast)
                     return
                 end
 
+                if timer.Exists(Ipr.Settings.StartupLaunch.Name) then
+                    timer.Remove(Ipr.Settings.StartupLaunch.Name)
+                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Startup launch is avorted !")
+                end
+
                 Ipr.Func.SetConvar("Startup", false, 2)
 
                 Ipr.Settings.Updated.Data = table.Copy(Ipr_Fps_Booster.Settings.Convars)
@@ -593,8 +598,7 @@ local function Ipr_FpsBooster_Options(primary, fast)
             Func = function(name, value)
                 if timer.Exists(Ipr.Settings.StartupLaunch.Name) then
                     timer.Remove(Ipr.Settings.StartupLaunch.Name)
-
-                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Startup launch automatically is avorted !")
+                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Startup launch is avorted !")
                 end
 
                 local Ipr_SetStartup = value
@@ -627,6 +631,9 @@ local function Ipr_FpsBooster_Options(primary, fast)
             },
             Func = function()
                 Ipr.Func.CreateData(true)
+                Ipr.Func.SetConvar("Startup", false, 2)
+
+                Ipr.Func.Activate(false)
 
                 Ipr.Settings.Updated.Data = table.Copy(Ipr_Fps_Booster.Settings.Convars)
                 Ipr.Settings.Updated.Set = false
