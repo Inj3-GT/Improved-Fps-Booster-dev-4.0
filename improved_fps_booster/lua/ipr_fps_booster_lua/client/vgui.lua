@@ -11,14 +11,13 @@ Ipr.Settings = {
     Blur = Material("pp/blurscreen"),
     Updated = {},
     SetLang = Ipr_Fps_Booster.Settings.Language,
-    FpsDefault =  {Max = {Int = 0, Name = "Max : "}, Current = {Int = 0}, Min = {Int = math.huge, Name = "Min : "}, Gain = {Int = 0, Name = "Gain : "}, Status = {Name = "FPS Status"}},
+    Fps =  {Max = {Int = 0, Name = "Max : "}, Current = {Int = 0}, Min = {Int = math.huge, Name = "Min : "}, Gain = {Int = 0, Name = "Gain : "}, Status = {Name = "FPS Status"}},
     TColor = {["vert"] = Color(39, 174, 96), ["rouge"] = Color(192, 57, 43), ["orange"] = Color(226, 149, 25), ["orangec"] = Color(175, 118, 27), ["blanc"] = Color(236, 240, 241), ["bleu"] = Color(52, 73, 94), ["bleuc"] = Color(27, 66, 99)},
     Country = {["BE"] = true, ["FR"] = true, ["DZ"] = true, ["MA"] = true, ["CA"] = true},
     Vgui = {Primary = false, Secondary = false},
     StartupLaunch = {Name = "IprFpsBooster_ApplyToStartup", Delay = 300},
 }
 
-Ipr.Settings.FpsCopy = table.Copy(Ipr.Settings.FpsDefault)
 Ipr.Func = {}
 
 Ipr.Func.CreateData = function(reset)
@@ -179,38 +178,38 @@ Ipr.Func.FpsCalculator = function()
     local Ipr_CurTime = CurTime()
 
     if (Ipr_CurTime > (Ipr.CurNext or 0)) then
-        Ipr.Settings.Fps = math.Round(1 / FrameTime())
-        Ipr.Settings.Fps = math.abs(Ipr.Settings.Fps) > 999 and 999 or Ipr.Settings.Fps
+        Ipr.Settings.FpsCurrent = math.Round(1 / FrameTime())
+        Ipr.Settings.FpsCurrent = math.abs(Ipr.Settings.FpsCurrent) > 999 and 999 or Ipr.Settings.FpsCurrent
 
-        if (Ipr.Settings.Fps < Ipr.Settings.FpsCopy.Min.Int) then
-            Ipr.Settings.FpsCopy.Min.Int = Ipr.Settings.Fps
+        if (Ipr.Settings.FpsCurrent < Ipr.Settings.Fps.Min.Int) then
+            Ipr.Settings.Fps.Min.Int = Ipr.Settings.FpsCurrent
         end
-        if (Ipr.Settings.Fps > (Ipr.Settings.FpsCopy.Max.Int ~= math.huge and Ipr.Settings.FpsCopy.Max.Int or 0)) then
-            Ipr.Settings.FpsCopy.Max.Int = Ipr.Settings.Fps
+        if (Ipr.Settings.FpsCurrent > (Ipr.Settings.Fps.Max.Int ~= math.huge and Ipr.Settings.Fps.Max.Int or 0)) then
+            Ipr.Settings.Fps.Max.Int = Ipr.Settings.FpsCurrent
         end
 
         local Ipr_Status = Ipr.Func.CurrentStatus()
         if not Ipr_Status then
-            Ipr.Settings.FpsCopy.Current.Int = Ipr.Settings.FpsCopy.Max.Int
+            Ipr.Settings.Fps.Current.Int = Ipr.Settings.Fps.Max.Int
         end
-        if (Ipr.Settings.FpsCopy.Max.Int > Ipr.Settings.FpsCopy.Current.Int) then
-            Ipr.Settings.FpsCopy.Gain.Int = Ipr.Settings.FpsCopy.Max.Int - Ipr.Settings.FpsCopy.Current.Int
+        if (Ipr.Settings.Fps.Max.Int > Ipr.Settings.Fps.Current.Int) then
+            Ipr.Settings.Fps.Gain.Int = Ipr.Settings.Fps.Max.Int - Ipr.Settings.Fps.Current.Int
         end
 
         Ipr.CurNext = Ipr_CurTime + 0.3
     end
 
-    return Ipr.Settings.Fps, Ipr.Settings.FpsCopy.Min.Int, Ipr.Settings.FpsCopy.Max.Int, Ipr.Settings.FpsCopy.Gain.Int
+    return Ipr.Settings.FpsCurrent, Ipr.Settings.Fps.Min.Int, Ipr.Settings.Fps.Max.Int, Ipr.Settings.Fps.Gain.Int
 end
 
 Ipr.Func.ResetFps = function(reset)
     if not reset then
-        Ipr.Settings.FpsCopy.Current.Int = Ipr.Settings.FpsDefault.Current.Int
+        Ipr.Settings.Fps.Current.Int = 0
     end
 
-    Ipr.Settings.FpsCopy.Min.Int = Ipr.Settings.FpsDefault.Min.Int
-    Ipr.Settings.FpsCopy.Max.Int = Ipr.Settings.FpsDefault.Max.Int
-    Ipr.Settings.FpsCopy.Gain.Int = Ipr.Settings.FpsDefault.Gain.Int
+    Ipr.Settings.Fps.Min.Int = math.huge
+    Ipr.Settings.Fps.Max.Int = 0
+    Ipr.Settings.Fps.Gain.Int = 0
 end
 
 Ipr.Func.SetStatus = function(bool)
@@ -805,10 +804,10 @@ local function Ipr_FpsBooster()
     local Ipr_IconWrench = Material("icon/Ipr_boost_wrench.png", "noclamp smooth")
 
     Ipr_PrimaryProperty.Paint = function(self, w, h)
-        draw.SimpleText(Ipr.Settings.FpsDefault.Status.Name, "Ipr_Fps_Booster_Font", w / 2, h / 2 - 63, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText(Ipr.Settings.FpsDefault.Max.Name, "Ipr_Fps_Booster_Font", w / 2  -10, h / 2 - 31, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText(Ipr.Settings.FpsDefault.Min.Name, "Ipr_Fps_Booster_Font", w / 2 - 10, h / 2 - 16, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText(Ipr.Settings.FpsDefault.Gain.Name, "Ipr_Fps_Booster_Font", w / 2 - 10, h / 2 - 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr.Settings.Fps.Status.Name, "Ipr_Fps_Booster_Font", w / 2, h / 2 - 63, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr.Settings.Fps.Max.Name, "Ipr_Fps_Booster_Font", w / 2  -10, h / 2 - 31, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr.Settings.Fps.Min.Name, "Ipr_Fps_Booster_Font", w / 2 - 10, h / 2 - 16, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr.Settings.Fps.Gain.Name, "Ipr_Fps_Booster_Font", w / 2 - 10, h / 2 - 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].FpsCurrent, "Ipr_Fps_Booster_Font", w / 2 - 10, h / 2 - 46, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
