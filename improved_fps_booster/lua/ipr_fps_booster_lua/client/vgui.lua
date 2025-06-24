@@ -422,6 +422,15 @@ local function Ipr_FpsBooster_Options(primary, fast)
         local Ipr_DboxConvars = vgui.Create("DCheckBoxLabel", Ipr_ScrollBarConvars)
         Ipr_DboxConvars:SetPos(5, i * (1 + 22) -22)
         Ipr_DboxConvars:SetText("")
+
+        local Ipr_ConvarsExists = (Ipr.Func.GetConvar(Ipr_ConvarsLists[i].Name) ~= nil)
+        if not Ipr_ConvarsExists then
+            Ipr.Func.SetConvar(Ipr_ConvarsLists[i].Name, Ipr_ConvarsLists[i].DefaultCheck)
+
+            Ipr.Settings.Copy.Data = table.Copy(Ipr_Fps_Booster.Convars)
+            Ipr.Settings.Copy.Set = false
+        end
+        
         Ipr_DboxConvars:SetValue(Ipr.Func.GetConvar(Ipr_ConvarsLists[i].Name))
         Ipr_DboxConvars:SetTooltip(Ipr_Fps_Booster.DefaultCommands[i].Localization.ToolTip[Ipr.Settings.SetLang])
         Ipr_DboxConvars:SetWide(200)
