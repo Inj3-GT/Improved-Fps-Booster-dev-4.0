@@ -241,11 +241,11 @@ Ipr.Func.FpsCalculator = function()
     return Ipr.Settings.FpsCurrent, Ipr.Settings.Fps.Min.Int, Ipr.Settings.Fps.Max.Int, Ipr.Settings.Fps.Low.InProgress or Ipr.Settings.Fps.Min.Int
 end
 
-Ipr.Func.ResetFps = function(reset)
+Ipr.Func.ResetFps = function()
     Ipr.Settings.Fps.Low.InProgress = 0
+
     Ipr.Settings.Fps.Min.Int = Ipr_Infinity
     Ipr.Settings.Fps.Max.Int = 0
-    Ipr.Settings.Fps.Low.Int = 0
 end
 
 Ipr.Func.SetStatus = function(bool)
@@ -902,7 +902,7 @@ local function Ipr_FpsBooster()
         local Ipr_ConvarsEnabled = Ipr.Func.MatchConvar(true)
         if (Ipr_ConvarsEnabled) then
             Ipr.Func.Activate(true)
-            Ipr.Func.ResetFps(true)
+            Ipr.Func.ResetFps()
 
             chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Si vous rencontrez des problèmes graphiques ou crashs, utilisez le bouton options pour modifier vos paramètres. Pour ouvrir Improved FPS Booster /boost.")
         else
@@ -929,7 +929,7 @@ local function Ipr_FpsBooster()
         local Ipr_ConvarsEnabled = Ipr.Func.MatchConvar(false)
         if (Ipr_ConvarsEnabled) then
             Ipr.Func.Activate(false)
-            Ipr.Func.ResetFps(true)
+            Ipr.Func.ResetFps()
         else
             chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Already disabled !")
         end
@@ -968,7 +968,7 @@ local function Ipr_FpsBooster()
         draw.SimpleText("Reset FPS max/min", "Ipr_Fps_Booster_Font", w / 2 + 7, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     Ipr_PrimaryResetFps.DoClick = function()
-        Ipr.Func.ResetFps(true)
+        Ipr.Func.ResetFps()
 
         surface.PlaySound("buttons/button9.wav")
     end
@@ -1054,7 +1054,7 @@ local Ipr_DefaultCommands = {
     },
     ["/reset"] = {
         Func = function()
-            Ipr.Func.ResetFps(false)
+            Ipr.Func.ResetFps()
             Ipr.Func.Activate(false)
 
             chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Reset is completed !")
