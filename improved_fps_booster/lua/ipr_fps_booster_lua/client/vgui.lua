@@ -564,6 +564,8 @@ local function Ipr_FpsBooster_Options(primary, fast)
                     return
                 end
 
+                Ipr.Func.SetConvar("Startup", false, 2)
+
                 Ipr.Settings.Updated.Data = table.Copy(Ipr_Fps_Booster.Settings.Convars)
                 Ipr.Settings.Updated.Set = false
 
