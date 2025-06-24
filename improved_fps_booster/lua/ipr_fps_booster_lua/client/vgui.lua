@@ -81,13 +81,13 @@ Ipr.Func.SetConvar = function(name, value, save)
             Name = name,
             Checked = value,
         }
-        
+
         file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
         print("Creating new convar : " ..name, value, save)
     end
 
     for i = 1, #Ipr_Fps_Booster.Convars do
-        local Ipr_ToggleCount = Ipr_Fps_Booster.Convars[i] 
+        local Ipr_ToggleCount = Ipr_Fps_Booster.Convars[i]
 
         if (Ipr_ToggleCount.Name == name) then
             Ipr_Fps_Booster.Convars[i].Checked = value
@@ -124,11 +124,11 @@ Ipr.Func.MatchConvar = function(bool)
 
         for k, v in pairs(Ipr_ConvarCommand) do
             if isbool(Ipr.Func.GetConvar(Ipr_NameCommand)) then
-                local Ipr_Auto = (bool) and v.Enabled or v.Disabled
-                Ipr_Auto = tonumber(Ipr_Auto)
+                local Ipr_Toggle = (bool) and v.Enabled or v.Disabled
+                Ipr_Toggle = tonumber(Ipr_Toggle)
 
                 local Ipr_InfoCmds = Ipr.Func.InfoNum(k)
-                if Ipr.Func.InfoNum(k, true) or (Ipr_InfoCmds == Ipr_Auto) then
+                if Ipr.Func.InfoNum(k, true) or (Ipr_InfoCmds == Ipr_Toggle) then
                     continue
                 end
 
@@ -152,22 +152,22 @@ end
 
 Ipr.Func.Activate = function(bool)
     local Ipr_LocalPlayer = LocalPlayer()
-    
+
     for i = 1, #Ipr_Fps_Booster.DefaultCommands do
         local Ipr_NameCommand = Ipr_Fps_Booster.DefaultCommands[i].Name
 
         for k, v in pairs(Ipr_Fps_Booster.DefaultCommands[i].Convars) do
             if isbool(Ipr.Func.GetConvar(Ipr_NameCommand)) then
-                local Ipr_Auto = (bool) and v.Enabled or v.Disabled
-                Ipr_Auto = tonumber(Ipr_Auto)
+                local Ipr_Toggle = (bool) and v.Enabled or v.Disabled
+                Ipr_Toggle = tonumber(Ipr_Toggle)
 
                 local Ipr_InfoCmds = Ipr.Func.InfoNum(k)
-                if Ipr.Func.InfoNum(k, true) or (Ipr_InfoCmds == Ipr_Auto) then
+                if Ipr.Func.InfoNum(k, true) or (Ipr_InfoCmds == Ipr_Toggle) then
                     continue
                 end
 
-                Ipr_LocalPlayer:ConCommand(k.. " " ..Ipr_Auto)
-                print("Convar " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Auto.. " was updated")
+                Ipr_LocalPlayer:ConCommand(k.. " " ..Ipr_Toggle)
+                print("Convar " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle.. " was updated")
             end
         end
     end
@@ -237,8 +237,8 @@ Ipr.Func.OverridePaint = function(panel)
         ["DSlider"] = function(frame)
             for _, ent in ipairs(Ipr_PanelChild) do
                 if (ent:GetName() == "DTextEntry") then
-                     ent:SetFont("Ipr_Fps_Booster_Font")
-                     ent:SetTextColor(Ipr.Settings.TColor["blanc"])
+                    ent:SetFont("Ipr_Fps_Booster_Font")
+                    ent:SetTextColor(Ipr.Settings.TColor["blanc"])
                 end
             end
 
