@@ -35,7 +35,6 @@ Ipr.Func.CreateData = function(reset)
 
         file.Write(Ipr_Fps_Booster.Settings.Save.. "language.json", Ipr_TCountry)
     end
-    
     Ipr_Language = Ipr_TCountry or file.Read(Ipr_Fps_Booster.Settings.Save.. "language.json", "DATA") or Ipr_Fps_Booster.Settings.Language
 
     local Ipr_FileConvars, Ipr_TData = file.Exists(Ipr_Fps_Booster.Settings.Save.. "convars.json", "DATA")
@@ -61,7 +60,6 @@ Ipr.Func.CreateData = function(reset)
 
         file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_TData))
     end
-    
     Ipr_Fps_Booster.Settings.Convars = Ipr_TData or util.JSONToTable(file.Read(Ipr_Fps_Booster.Settings.Save.. "convars.json", "DATA"))
 end
 
