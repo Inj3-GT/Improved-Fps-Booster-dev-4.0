@@ -28,8 +28,7 @@ Ipr.Func.CreateData = function(reset)
         file.CreateDir(Ipr_Fps_Booster.Settings.Save)
     end
 
-    local Ipr_FileLangs = file.Exists(Ipr_Fps_Booster.Settings.Save.. "language.json", "DATA")
-    local Ipr_TCountry = false
+    local Ipr_FileLangs, Ipr_TCountry = file.Exists(Ipr_Fps_Booster.Settings.Save.. "language.json", "DATA")
     if not Ipr_FileLangs then
         local Ipr_GCountry = not game.IsDedicated() and system.GetCountry()
         Ipr_TCountry = (Ipr_GCountry) and Ipr.Settings.Country[Ipr_GCountry] and "FR" or Ipr_Fps_Booster.Settings.Language
@@ -39,8 +38,7 @@ Ipr.Func.CreateData = function(reset)
     
     Ipr_Language = Ipr_TCountry or file.Read(Ipr_Fps_Booster.Settings.Save.. "language.json", "DATA") or Ipr_Fps_Booster.Settings.Language
 
-    local Ipr_FileConvars = file.Exists(Ipr_Fps_Booster.Settings.Save.. "convars.json", "DATA")
-    local Ipr_TData = false
+    local Ipr_FileConvars, Ipr_TData = file.Exists(Ipr_Fps_Booster.Settings.Save.. "convars.json", "DATA")
     if (reset) or not Ipr_FileConvars then
         Ipr_TData = {}
 
