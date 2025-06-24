@@ -340,6 +340,7 @@ local function Ipr_FpsBooster_Options(primary, fast)
 
         local Ipr_FpsLimit = math.Round(Ipr.Func.InfoNum("fps_max"))
         draw.SimpleText(Ipr_FpsLimit, "Ipr_Fps_Booster_Font", 67, h - 17, Ipr.Func.ColorTransition(Ipr_FpsLimit), TEXT_ALIGN_LEFT)
+        
         draw.SimpleText(Ipr_Fps_Booster.Settings.Developer, "Ipr_Fps_Booster_Font", w - 5, h - 17, Ipr.Settings.TColor["vert"], TEXT_ALIGN_RIGHT)
         draw.SimpleText(Ipr_Fps_Booster.Settings.Version.. " By", "Ipr_Fps_Booster_Font", w - 28, h - 17, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
     end
