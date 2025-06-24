@@ -18,6 +18,7 @@ Ipr.Settings = {
 }
 
 local Ipr_Language = Ipr_Fps_Booster.Settings.Language
+
 Ipr.Settings.FpsCopy = table.Copy(Ipr.Settings.FpsDefault)
 Ipr.Func = {}
 
