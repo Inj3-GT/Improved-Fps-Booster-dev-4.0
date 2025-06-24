@@ -154,6 +154,8 @@ Ipr.Func.IsChecked = function()
 end
 
 Ipr.Func.Activate = function(bool)
+    local Ipr_LocalPlayer = LocalPlayer()
+    
     for i = 1, #Ipr_Fps_Booster.DefaultCommands do
         local Ipr_NameCommand = Ipr_Fps_Booster.DefaultCommands[i].Name
 
@@ -167,8 +169,8 @@ Ipr.Func.Activate = function(bool)
                     continue
                 end
 
-                LocalPlayer():ConCommand(k.. " " ..Ipr_Auto)
-                print("Convar " ..k.. " defini " ..Ipr_InfoCmds.. " à " ..Ipr_Auto.. " à était mise à jour")
+                Ipr_LocalPlayer:ConCommand(k.. " " ..Ipr_Auto)
+                print("Convar " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Auto.. " was updated")
             end
         end
     end
