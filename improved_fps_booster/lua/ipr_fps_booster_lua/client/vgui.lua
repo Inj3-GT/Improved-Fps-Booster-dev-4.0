@@ -25,7 +25,7 @@ Ipr.Settings = {
             Lists = {},
             MaxFrame = 10,
             InProgress = false,
-            Name = "1% Low : ",
+            Name = "Low 1% : ",
         },
     },
     TColor = {
@@ -850,20 +850,21 @@ local function Ipr_FpsBooster()
     local Ipr_IconWrench = Material("icon/Ipr_boost_wrench.png", "noclamp smooth")
 
     Ipr_PrimaryProperty.Paint = function(self, w, h)
-        draw.SimpleText(Ipr.Settings.Status.Name, "Ipr_Fps_Booster_Font", w / 2, h / 2 - 63, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText(Ipr.Settings.Fps.Max.Name, "Ipr_Fps_Booster_Font", w / 2  -10, h / 2 - 31, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText(Ipr.Settings.Fps.Min.Name, "Ipr_Fps_Booster_Font", w / 2 - 10, h / 2 - 16, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText(Ipr.Settings.Fps.Low.Name, "Ipr_Fps_Booster_Font", w / 2 - 10, h / 2 - 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].FpsCurrent, "Ipr_Fps_Booster_Font", w / 2 - 10, h / 2 - 46, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-
         local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Func.FpsCalculator()
-        local Ipr_CurrentStatus = Ipr.Func.CurrentStatus()
 
-        draw.SimpleText(Ipr_FpsCurrent, "Ipr_Fps_Booster_Font", w / 2 + 15, h / 2 - 46, Ipr.Func.ColorTransition(Ipr_FpsCurrent), TEXT_ALIGN_LEFT)
-        draw.SimpleText(Ipr_FpsMax, "Ipr_Fps_Booster_Font", w / 2 + 10, h / 2 - 31, Ipr.Func.ColorTransition(Ipr_FpsMax), TEXT_ALIGN_LEFT)
-        draw.SimpleText(Ipr_FpsMin, "Ipr_Fps_Booster_Font", w / 2 + 10, h / 2 - 16, Ipr.Func.ColorTransition(Ipr_FpsMin), TEXT_ALIGN_LEFT)
-        draw.SimpleText(Ipr_FpsLow, "Ipr_Fps_Booster_Font", w / 2 + 18, h / 2 - 1, Ipr.Func.ColorTransition(Ipr_FpsLow), TEXT_ALIGN_LEFT)
+        draw.SimpleText(Ipr.Settings.Status.Name, "Ipr_Fps_Booster_Font", w / 2, h / 2 - 63, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].FpsCurrent, "Ipr_Fps_Booster_Font", w / 2 + 10, h / 2 - 45, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_FpsCurrent, "Ipr_Fps_Booster_Font", w / 2 + 15, h / 2 - 45, Ipr.Func.ColorTransition(Ipr_FpsCurrent), TEXT_ALIGN_LEFT)
+
+        draw.SimpleText(Ipr.Settings.Fps.Max.Name, "Ipr_Fps_Booster_Font", w / 2 + 10, h / 2 - 30, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_FpsMax, "Ipr_Fps_Booster_Font", w / 2 + 13, h / 2 - 30, Ipr.Func.ColorTransition(Ipr_FpsMax), TEXT_ALIGN_LEFT)
+
+        draw.SimpleText(Ipr.Settings.Fps.Min.Name, "Ipr_Fps_Booster_Font", w / 2 + 5, h / 2 - 15, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_FpsMin, "Ipr_Fps_Booster_Font", w / 2 + 9, h / 2 - 15, Ipr.Func.ColorTransition(Ipr_FpsMin), TEXT_ALIGN_LEFT)
+
+        draw.SimpleText(Ipr.Settings.Fps.Low.Name, "Ipr_Fps_Booster_Font", w / 2 + 15, h / 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_FpsLow, "Ipr_Fps_Booster_Font", w / 2 + 18, h / 2, Ipr.Func.ColorTransition(Ipr_FpsLow), TEXT_ALIGN_LEFT)
 
         surface.SetMaterial(Ipr_IconComputer)
         surface.SetDrawColor(255, 255, 255, 255)
