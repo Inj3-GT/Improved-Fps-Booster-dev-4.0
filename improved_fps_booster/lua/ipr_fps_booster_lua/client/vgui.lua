@@ -232,7 +232,7 @@ Ipr.Func.FpsCalculator = function()
         else
             table.sort(Ipr.Settings.Fps.Low.Lists, function(a, b) return a < b end)
 
-            Ipr.Settings.Fps.Low.InProgress = Ipr.Settings.Fps.Low.Lists[1]
+            Ipr.Settings.Fps.Low.InProgress = Ipr.Settings.Fps.Low.Lists[2]
             Ipr.Settings.Fps.Low.Lists = {}
         end
 
