@@ -154,13 +154,19 @@ Ipr.Func.InfoNum = function(cmd, exist)
 end
 
 Ipr.Func.MatchConvar = function(bool)
+    local Ipr_ConvarsCheck = bool
+
     for i = 1, #Ipr_Fps_Booster.DefaultCommands do
         local Ipr_NameCommand = Ipr_Fps_Booster.DefaultCommands[i].Name
         local Ipr_ConvarCommand = Ipr_Fps_Booster.DefaultCommands[i].Convars
 
         for k, v in pairs(Ipr_ConvarCommand) do
             if isbool(Ipr.Func.GetConvar(Ipr_NameCommand)) then
-                local Ipr_Toggle = (bool) and v.Enabled or v.Disabled
+                if (bool) then
+                    Ipr_ConvarsCheck = Ipr.Func.GetConvar(Ipr_NameCommand)
+                end
+
+                local Ipr_Toggle = (Ipr_ConvarsCheck) and v.Enabled or v.Disabled
                 Ipr_Toggle = tonumber(Ipr_Toggle)
 
                 local Ipr_InfoCmds = Ipr.Func.InfoNum(k)
@@ -192,8 +198,9 @@ Ipr.Func.Activate = function(bool)
 
     for i = 1, #Ipr_Fps_Booster.DefaultCommands do
         local Ipr_NameCommand = Ipr_Fps_Booster.DefaultCommands[i].Name
+        local Ipr_ConvarCommand = Ipr_Fps_Booster.DefaultCommands[i].Convars
 
-        for k, v in pairs(Ipr_Fps_Booster.DefaultCommands[i].Convars) do
+        for k, v in pairs(Ipr_ConvarCommand) do
             if isbool(Ipr.Func.GetConvar(Ipr_NameCommand)) then
                 if (bool) then
                     Ipr_ConvarsCheck = Ipr.Func.GetConvar(Ipr_NameCommand)
