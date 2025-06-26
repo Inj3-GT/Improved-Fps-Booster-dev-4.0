@@ -332,7 +332,7 @@ Ipr_Fps_Booster.DefaultCommands = {
                 ["EN"] = "M9K Gas Effects (weapon)"
             },
             ToolTip = {
-                ["FR"] = "Désactive les effets de nuages de fumée ou les éclaboussures de gaz sur les armes M9K",
+                ["FR"] = "Désactive les effets de nuages de fumée et les éclaboussures de gaz sur les armes M9K",
                 ["EN"] = "Disables smoke cloud and gas splash effects on M9K weapons"
             }
         },
@@ -372,8 +372,8 @@ Ipr_Fps_Booster.DefaultCommands = {
                 ["EN"] = "Ejected shells (weapon)",
             },
             ToolTip = {
-                ["FR"] = "Désactive l'affichage des douilles éjectées",
-                ["EN"] = "Disable the display of ejected shells",
+                ["FR"] = "Désactive le rendu des douilles éjectées",
+                ["EN"] = "Disable rendering of ejected shells",
             }
         },
     },
