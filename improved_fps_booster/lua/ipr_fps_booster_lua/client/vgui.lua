@@ -188,20 +188,25 @@ end
 
 Ipr.Func.Activate = function(bool)
     local Ipr_LocalPlayer = LocalPlayer()
+    local Ipr_ConvarsCheck = bool
 
     for i = 1, #Ipr_Fps_Booster.DefaultCommands do
         local Ipr_NameCommand = Ipr_Fps_Booster.DefaultCommands[i].Name
 
         for k, v in pairs(Ipr_Fps_Booster.DefaultCommands[i].Convars) do
             if isbool(Ipr.Func.GetConvar(Ipr_NameCommand)) then
-                local Ipr_Toggle = (bool) and v.Enabled or v.Disabled
+                if (bool) then
+                    Ipr_ConvarsCheck = Ipr.Func.GetConvar(Ipr_NameCommand)
+                end
+
+                local Ipr_Toggle = (Ipr_ConvarsCheck) and v.Enabled or v.Disabled
                 Ipr_Toggle = tonumber(Ipr_Toggle)
 
                 local Ipr_InfoCmds = Ipr.Func.InfoNum(k)
                 if Ipr.Func.InfoNum(k, true) or (Ipr_InfoCmds == Ipr_Toggle) then
                     continue
                 end
-
+                
                 Ipr_LocalPlayer:ConCommand(k.. " " ..Ipr_Toggle)
                 print("Convar " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle.. " was updated")
             end
@@ -611,6 +616,12 @@ local function Ipr_FpsBooster_Options(primary, fast)
                     chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Startup launch is avorted !")
                 end
 
+                local ipr_CurrentState = Ipr.Func.CurrentStatus()
+                if (ipr_CurrentState) then
+                    Ipr.Func.Activate(true)
+                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Optimization reloaded !")
+                end
+
                 Ipr.Func.SetConvar("Startup", false, 2)
 
                 Ipr.Settings.Copy.Data = table.Copy(Ipr_Fps_Booster.Convars)
@@ -803,7 +814,8 @@ local function Ipr_FpsBooster()
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TEnabled,"Ipr_Fps_Booster_Font",w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
         
         local Ipr_TCurrentStatus = (Ipr_CurrentStatus) and "On (Boost)" or "Off"
-        draw.SimpleText(Ipr_TCurrentStatus, "Ipr_Fps_Booster_Font", (Ipr_CurrentStatus and w / 2 + 22) or w / 2 + 18, 16, Ipr_CurrentStatus and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"], TEXT_ALIGN_CENTER)
+        local ipr_TCurrentColor = (Ipr.Settings.Copy.Set) and Ipr.Settings.TColor["orange"] or (Ipr_CurrentStatus) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"]
+        draw.SimpleText(Ipr_TCurrentStatus, "Ipr_Fps_Booster_Font", (Ipr_CurrentStatus) and w / 2 + 22 or w / 2 + 18, 16, ipr_TCurrentColor, TEXT_ALIGN_CENTER)
     end
     
     Ipr_PrimaryProperty:Dock(FILL)
