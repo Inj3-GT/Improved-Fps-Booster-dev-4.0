@@ -121,18 +121,16 @@ Ipr.Func.SetConvar = function(name, value, save)
 
         file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
         print("Creating new convar : " ..name, value, save)
-    end
+    else
+        for i = 1, #Ipr_Fps_Booster.Convars do
+            local Ipr_ToggleCount = Ipr_Fps_Booster.Convars[i]
 
-    for i = 1, #Ipr_Fps_Booster.Convars do
-        local Ipr_ToggleCount = Ipr_Fps_Booster.Convars[i]
-
-        if (Ipr_ToggleCount.Name == name) then
-            Ipr_Fps_Booster.Convars[i].Checked = value
-            break
+            if (Ipr_ToggleCount.Name == name) then
+                Ipr_Fps_Booster.Convars[i].Checked = value
+                break
+            end
         end
-    end
 
-    if not Ipr_ConvarNotExists then
         if (save == 1) then
             if timer.Exists("IprFpsBooster_SetConvar") then
                 timer.Remove("IprFpsBooster_SetConvar")
