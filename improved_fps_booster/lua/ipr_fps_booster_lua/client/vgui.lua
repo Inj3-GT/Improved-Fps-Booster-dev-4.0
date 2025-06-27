@@ -1203,7 +1203,6 @@ local function Ipr_HUD()
     local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Func.FpsCalculator()
     local Ipr_HHeight = Ipr_Height * Ipr.Func.GetConvar("FpsPosHeight") / 100
     local Ipr_HWide = Ipr_Wide * Ipr.Func.GetConvar("FpsPosWidth") / 100
-    local Ipr_Status = Ipr.Func.CurrentStatus()
 
     draw.SimpleText("Fps : " ..Ipr_FpsCurrent.. " | Min : " ..Ipr_FpsMin.. " | Max : " ..Ipr_FpsMax.. " | Low 1% : " ..Ipr_FpsLow, "Ipr_Fps_Booster_Font", Ipr_HWide, Ipr_HHeight, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
     draw.SimpleText("Map : " ..Ipr_Map, "Ipr_Fps_Booster_Font", Ipr_HWide, Ipr_HHeight + 20, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
