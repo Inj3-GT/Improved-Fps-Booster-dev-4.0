@@ -34,6 +34,9 @@ Ipr.Settings = {
         ["rouge"] = Color(192, 57, 43),
         ["orange"] = Color(226, 149, 25),
         ["orangec"] = Color(175, 118, 27),
+        ["gvert"] = Color(28, 143, 24, 182),
+        ["gvert_"] = Color(28, 143, 24, 232),
+        ["orangec"] = Color(175, 118, 27),
         ["bleu"] = Color(52, 73, 94),
         ["bleuc"] = Color(27, 66, 99),
     },
@@ -456,25 +459,29 @@ local function Ipr_FpsBooster_Options(primary, fast)
         end
     end
 
-    Ipr.Settings.Vgui.CheckBox = {}
-    local Ipr_CheckUncheck = true
-    local Ipr_CheckIcon = {
-        [false] = "icon16/link.png",
-        [true] = "icon16/link_break.png",
+    local Ipr_CheckboxState = {
+        Default = true, 
+        Icon = {
+            [false] = "icon16/lorry.png", 
+            [true] = "icon16/lorry_flatbed.png"
+        }
     }
 
     Ipr_CheckUncheckAll:SetPos(3, 1)
-    Ipr_CheckUncheckAll:SetSize(16, 16)
-    Ipr_CheckUncheckAll:SetImage(Ipr_CheckIcon[true])
+    Ipr_CheckUncheckAll:SetSize(17, 17)
+    Ipr_CheckUncheckAll:SetImage(Ipr_CheckboxState.Icon[true])
     Ipr_CheckUncheckAll.Paint = nil
+
+    Ipr.Settings.Vgui.CheckBox = {}
     Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckUncheckAll, Ipr_CheckUncheckAll, true)
+
     Ipr_CheckUncheckAll.DoClick = function()
-        Ipr_CheckUncheck = not Ipr_CheckUncheck
+        Ipr_CheckboxState.Default = not Ipr_CheckboxState.Default
         for i = 1, #Ipr.Settings.Vgui.CheckBox do 
-            Ipr.Settings.Vgui.CheckBox[i]:SetValue(Ipr_CheckUncheck)
+            Ipr.Settings.Vgui.CheckBox[i]:SetValue(Ipr_CheckboxState.Default)
         end
 
-        Ipr_CheckUncheckAll:SetImage(Ipr_CheckIcon[Ipr_CheckUncheck])
+        Ipr_CheckUncheckAll:SetImage(Ipr_CheckboxState.Icon[Ipr_CheckboxState.Default])
     end
 
     local Ipr_SettingsConvars = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
@@ -814,7 +821,7 @@ local function Ipr_FpsBooster_Options(primary, fast)
                     end
                 end
             else
-               draw.RoundedBox(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["orange"] or Ipr.Settings.TColor["orangec"])
+               draw.RoundedBox(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["gvert_"] or Ipr.Settings.TColor["gvert"])
             end
             
             draw.SimpleText(Ipr_SettingsDbutton.Localization.Text, "Ipr_Fps_Booster_Font", w / 2 + 6, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
@@ -1040,6 +1047,7 @@ local function Ipr_FpsBooster()
     Ipr_PrimarySettings:SetSize(95, 20)
     Ipr_PrimarySettings:SetText("")
     Ipr_PrimarySettings:SetImage("icon16/cog.png")
+    Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Options, Ipr_PrimarySettings, true)
     function Ipr_PrimarySettings:Paint(w, h)
         draw.RoundedBox( 6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
         draw.SimpleText("Options ", "Ipr_Fps_Booster_Font", w / 2 + 7, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)

@@ -15,6 +15,7 @@ Ipr_Fps_Booster.Lang["FR"] = {
     FpsCurrent = "Actuel :",
     SelectLangue = "Langue :",
     CheckUncheckAll = "Tout cocher/décocher optimisation",
+    Options = "Modifier les paramètres d'optimisation",
 }
 
 // English
@@ -29,4 +30,5 @@ Ipr_Fps_Booster.Lang["EN"] = {
     FpsCurrent = "Actual :",
     SelectLangue = "Language :",
     CheckUncheckAll = "Check/uncheck all optimization",
+    Options = "Modify optimization settings",
 }
