@@ -967,7 +967,6 @@ local function Ipr_FpsBooster()
     Ipr_PrimaryClose:SetSize(17, 17)
     Ipr_PrimaryClose:SetImage("icon16/cross.png")
     Ipr_PrimaryClose.Paint = nil
-
     Ipr_PrimaryClose.DoClick = function()
         Ipr.Func.ClosePanel()
     end
@@ -1085,25 +1084,21 @@ local function Ipr_FpsBooster()
 
     Ipr_PrimaryLanguage.OnMenuOpened = function(self)
         local Ipr_ComboChild = self:GetChildren()
-
         for _, v in ipairs(Ipr_ComboChild) do
             v.Paint = function(p, w, h)
                 draw.RoundedBox(6, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
             end
-
             if (v:GetName() == "DPanel") then
                continue
             end
 
             local Ipr_DPanelChild = v:GetChildren()
-
             for _, d in ipairs(Ipr_DPanelChild) do
                 if (d:GetName() == "DVScrollBar") then
                    continue
                 end
 
                 local Ipr_VChild = d:GetChildren()
-
                 for _, y in ipairs(Ipr_VChild) do
                     y:SetTextColor(Ipr.Settings.TColor["blanc"])
                     y:SetFont( "Ipr_Fps_Booster_Font" )
