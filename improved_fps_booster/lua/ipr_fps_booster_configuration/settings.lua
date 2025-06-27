@@ -31,24 +31,24 @@ Ipr_Fps_Booster.DefaultSettings = {
                 ["EN"] = "Closed (enable/disable)",
             },
             ToolTip = {
-                ["FR"] = "Si vous appuyez sur les boutons activer ou désactiver, le panneau se fermera automatiquement !",
-                ["EN"] = "If you press the activate or deactivate buttons, the panel will close automatically !",
+                ["FR"] = "Si vous appuyez sur le bouton activer/désactiver, le panneau se fermera automatiquement !",
+                ["EN"] = "If you press the activate/deactivate button, the panel will close automatically !",
             },
         },
     },
     {
         Vgui = "DCheckBoxLabel",
         Name = "ForcedOpen",
-        DefaultCheck = false,
+        DefaultCheck = true,
         Wide = 210,
         Localization = {
             Text = {
-                ["FR"] = "Forcer ouverture",
-                ["EN"] = "Forced open",
+                ["FR"] = "Ouverture auto",
+                ["EN"] = "Auto opening",
             },
             ToolTip = {
-                ["FR"] = "Désactiver l'ouverture automatique du panel à la fin du chargement.",
-                ["EN"] = "Disable automatic panel opening at the end of loading.",
+                ["FR"] = "Ouverture automatique du panel à la fin du chargement",
+                ["EN"] = "Automatic opening of the panel at the end of loading",
             },
         },
     },

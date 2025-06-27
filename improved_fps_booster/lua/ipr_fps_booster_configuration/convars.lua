@@ -20,7 +20,7 @@ Ipr_Fps_Booster.DefaultCommands = {
                 ["EN"] = "Multicore Rendering"
             },
             ToolTip = {
-                ["FR"] = "Tirer parti d'un processeur multicœur avec le moteur de Garry's Mod",
+                ["FR"] = "Tirer parti d'un processeur multicoeur avec le moteur de Garry's Mod",
                 ["EN"] = "Multi-threading Source Engine"
             }
         },
