@@ -723,8 +723,8 @@ local function Ipr_FpsBooster_Options(primary, fast)
             Localization = {
                         Text = "Apply to startup",
                         ToolTip = {
-                            ["FR"] = "Optimisation lancée au démarrage du jeu.",
-                            ["EN"] = "Optimization launched at game startup.",
+                            ["FR"] = "Optimisation lancée au démarrage du jeu (orange : en attente, vert : optimisation lancée)",
+                            ["EN"] = "Optimization launched at game startup (orange : waiting, green : optimization launched)",
                         },
             },
             Func = function(name, value)
