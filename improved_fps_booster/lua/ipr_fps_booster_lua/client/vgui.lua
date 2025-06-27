@@ -112,8 +112,8 @@ Ipr.Func.GetConvar = function(name)
 end
 
 Ipr.Func.SetConvar = function(name, value, save)
-    local Ipr_ConvarExists = (Ipr.Func.GetConvar(name) == nil)
-    if (Ipr_ConvarExists) then
+    local Ipr_ConvarNotExists = (Ipr.Func.GetConvar(name) == nil)
+    if (Ipr_ConvarNotExists) then
         Ipr_Fps_Booster.Convars[#Ipr_Fps_Booster.Convars + 1] = {
             Name = name,
             Checked = value,
@@ -132,16 +132,18 @@ Ipr.Func.SetConvar = function(name, value, save)
         end
     end
 
-    if (save == 1) then
-        if timer.Exists("IprFpsBooster_SetConvar") then
-            timer.Remove("IprFpsBooster_SetConvar")
-        end
+    if not Ipr_ConvarNotExists then
+        if (save == 1) then
+            if timer.Exists("IprFpsBooster_SetConvar") then
+                timer.Remove("IprFpsBooster_SetConvar")
+            end
 
-        timer.Create("IprFpsBooster_SetConvar", 1, 1, function()
+            timer.Create("IprFpsBooster_SetConvar", 1, 1, function()
+                file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
+            end)
+        elseif (save == 2) then
             file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
-        end)
-    elseif (save == 2) then
-        file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
+        end
     end
 end
 
