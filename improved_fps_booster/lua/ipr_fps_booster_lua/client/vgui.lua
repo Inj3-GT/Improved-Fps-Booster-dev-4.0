@@ -36,7 +36,6 @@ Ipr.Settings = {
         ["orangec"] = Color(175, 118, 27),
         ["gvert"] = Color(28, 143, 24, 182),
         ["gvert_"] = Color(28, 143, 24, 232),
-        ["orangec"] = Color(175, 118, 27),
         ["bleu"] = Color(52, 73, 94),
         ["bleuc"] = Color(27, 66, 99),
     },
