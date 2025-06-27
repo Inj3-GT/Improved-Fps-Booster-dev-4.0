@@ -17,9 +17,6 @@ if (CLIENT) then
     Ipr_Fps_Booster.Settings.Save = "improvedfpsbooster/"
     Ipr_Fps_Booster.Settings.ExternalLink = "https://steamcommunity.com/sharedfiles/filedetails/?id=1762151370"
     Ipr_Fps_Booster.Settings.Developer = "Inj3"
-
-    Ipr_Fps_Booster.Convars = {}
-    Ipr_Fps_Booster.Lang = {}
     
     surface.CreateFont("Ipr_Fps_Booster_Font",{
         font = "Rajdhani Bold",
@@ -27,6 +24,9 @@ if (CLIENT) then
         weight = 250,
         antialias = true
     })
+
+    Ipr_Fps_Booster.Convars = {}
+    Ipr_Fps_Booster.Lang = {}
 
     for _, f in pairs(Ipr_SendFileLangCL) do
         include("ipr_fps_booster_language/"..f)
