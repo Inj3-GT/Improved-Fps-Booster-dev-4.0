@@ -16,6 +16,10 @@ Ipr_Fps_Booster.Lang["FR"] = {
     SelectLangue = "Langue :",
     CheckUncheckAll = "Tout cocher/décocher optimisation",
     Options = "Modifier les paramètres d'optimisation",
+    Optimization = "Optimisation désactivé !",
+    ADisabled = "Déjà désactivé !",
+    AEnabled = "Déjà activé !",
+    CheckedBox = "Veuillez cocher une case dans optimisation pour activer le booster de fps !",
 }
 
 // English
@@ -31,4 +35,8 @@ Ipr_Fps_Booster.Lang["EN"] = {
     SelectLangue = "Language :",
     CheckUncheckAll = "Check/uncheck all optimization",
     Options = "Modify optimization settings",
+    Optimization = "Optimization disabled !",
+    ADisabled = "Already disabled !",
+    AEnabled = "Already enabled !",
+    CheckedBox = "Please check the optimization boxes to activate the fps booster!",
 }

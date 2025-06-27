@@ -681,7 +681,7 @@ local function Ipr_FpsBooster_Options(primary, fast)
                         Text = "Save optimization",
                         ToolTip = {
                             ["FR"] = "Sauvegarde les paramètres d'optimisation !",
-                            ["EN"] = "Save optimization settings!",
+                            ["EN"] = "Save optimization settings !",
                         },
             },
             Func = function()
@@ -996,7 +996,7 @@ local function Ipr_FpsBooster()
     Ipr_PrimaryEnabled.DoClick = function()
         local Ipr_CheckBox = Ipr.Func.IsChecked()
         if not Ipr_CheckBox then
-            return chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Please check boxes in optimization to activate the fps booster !")
+            return chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckedBox)
         end
 
         local Ipr_ConvarsEnabled = Ipr.Func.MatchConvar(true)
@@ -1004,9 +1004,9 @@ local function Ipr_FpsBooster()
             Ipr.Func.Activate(true)
             Ipr.Func.ResetFps()
 
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Si vous rencontrez des problèmes graphiques ou crashs, utilisez le bouton options pour modifier vos paramètres. Pour ouvrir Improved FPS Booster /boost.")
+            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].PreventCrash)
         else
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Already enabled !")
+            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].AEnabled)
         end
 
         local Ipr_CloseFpsBooster = Ipr.Func.GetConvar("AutoClose")
@@ -1030,8 +1030,10 @@ local function Ipr_FpsBooster()
         if (Ipr_ConvarsEnabled) then
             Ipr.Func.Activate(false)
             Ipr.Func.ResetFps()
+
+            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Optimization)
         else
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Already disabled !")
+            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].ADisabled)
         end
 
         local Ipr_CloseFpsBooster = Ipr.Func.GetConvar("AutoClose")
