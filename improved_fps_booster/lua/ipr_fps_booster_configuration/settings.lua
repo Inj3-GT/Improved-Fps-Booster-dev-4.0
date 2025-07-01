@@ -53,6 +53,22 @@ Ipr_Fps_Booster.DefaultSettings = {
         },
     },
     {
+        Vgui = "DCheckBoxLabel",
+        Name = "EnabledFog",
+        DefaultCheck = false,
+        Wide = 210,
+        Localization = {
+            Text = {
+                ["FR"] = "Activer le brouillard",
+                ["EN"] = "Enabled Fog",
+            },
+            ToolTip = {
+                ["FR"] = "Ouverture automatique du panel à la fin du chargement",
+                ["EN"] = "Automatic opening of the panel at the end of loading",
+            },
+        },
+    },
+    {
         Vgui = "DNumSlider",
         Name = "FpsPosWidth",
         DefaultCheck = 44,
@@ -71,6 +87,30 @@ Ipr_Fps_Booster.DefaultSettings = {
             Text = {
                 ["FR"] = "FPS Position Hauteur",
                 ["EN"] = "FPS Position Height",
+            },
+        },
+    },
+    {
+        Vgui = "DNumSlider",
+        Name = "FogStart",
+        DefaultCheck = 0,
+        Max = 1000000,
+        Localization = {
+            Text = {
+                ["FR"] = "Brouillard Position Début",
+                ["EN"] = "Fog Position Start",
+            },
+        },
+    },
+    {
+        Vgui = "DNumSlider",
+        Name = "FogEnd",
+        DefaultCheck = 5000,
+        Max = 1000000,
+        Localization = {
+            Text = {
+                ["FR"] = "Brouillard Position Fin",
+                ["EN"] = "Fog Position End",
             },
         },
     },

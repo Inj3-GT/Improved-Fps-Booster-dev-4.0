@@ -626,7 +626,7 @@ local function Ipr_FpsBooster_Options(primary, fast)
                 panel:Dock(BOTTOM)
                 panel:SetSize(Ipr_PrimaryWide, 25)
 
-                panel:SetMinMax(0, 100)
+                panel:SetMinMax(0, tbl.Max or 100)
                 panel:SetValue(Ipr.Func.GetConvar(tbl.Name))
                 panel:SetDecimals(0)
 
@@ -778,6 +778,28 @@ local function Ipr_FpsBooster_Options(primary, fast)
                 Ipr_FpsBooster_Options(primary, true)
 
                 chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "The default configuration has been loaded !")
+            end
+        },
+        {
+            Vgui = "DButton",
+            Icon = "icon16/bullet_wrench.png",
+            Sound = "buttons/button9.wav",
+            DrawLine = false,
+            Localization = {
+                        Text = "Revert",
+                        ToolTip = {
+                            ["FR"] = "Revenir à vos paramètres précedent !",
+                            ["EN"] = "Set default parameters !",
+                        },
+            },
+            Func = function()
+                Ipr_Fps_Booster.Convars = Ipr.Settings.Copy.Data
+
+                // for i = 1, #Ipr.Settings.Vgui.CheckBox do 
+                  //  Ipr.Settings.Vgui.CheckBox[i]:SetValue(Ipr_CheckboxState.Default)
+                // end
+                        
+                chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], "Paramètre précedent appliqué !")
             end
         },
     }
@@ -1216,6 +1238,36 @@ local function Ipr_OnScreenSize()
     Ipr_Wide, Ipr_Height = ScrW(), ScrH()
 end
 
+local function Ipr_SetupWorldFog()
+    local Ipr_EnabledFog = Ipr.Func.GetConvar("EnabledFog")
+    if (Ipr_EnabledFog) then
+        render.FogMode(MATERIAL_FOG_LINEAR)
+        render.FogStart(Ipr.Func.GetConvar("FogStart"))
+        render.FogEnd(Ipr.Func.GetConvar("FogEnd"))
+        render.FogMaxDensity(0.9)
+    
+        render.FogColor(171, 174, 176)
+    
+        return true
+    end
+end
+
+local function Ipr_SetupSkyboxFog(scale)
+    local Ipr_EnabledFog = Ipr.Func.GetConvar("EnabledFog")
+    if (Ipr_EnabledFog) then
+        render.FogMode(MATERIAL_FOG_LINEAR)
+        render.FogStart(Ipr.Func.GetConvar("FogStart") * scale)
+        render.FogEnd(Ipr.Func.GetConvar("FogEnd") * scale)
+        render.FogMaxDensity(0.9)
+    
+        render.FogColor(171, 174, 176)
+    
+        return true
+    end
+end
+
+hook.Add("SetupWorldFog", "IprFpsBooster_WorldFog", Ipr_SetupWorldFog)
+hook.Add("SetupSkyboxFog", "IprFpsBooster_SkyboxFog", Ipr_SetupSkyboxFog)
 hook.Add("ShutDown", "IprFpsBooster_ShutDown", Ipr_PlayerShutDown)
 hook.Add("PostDrawHUD", "IprFpsBooster_HUD", Ipr_HUD)
 hook.Add("OnScreenSizeChanged", "IprFpsBooster_OnScreen", Ipr_OnScreenSize)
