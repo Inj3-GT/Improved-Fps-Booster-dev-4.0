@@ -8,7 +8,6 @@ Ipr_Fps_Booster.DefaultSettings = {
         Vgui = "DCheckBoxLabel",
         Name = "FpsView",
         DefaultCheck = false,
-        Wide = 210,
         Localization = {
             Text = {
                 ["FR"] = "Compteur FPS visible",
@@ -21,42 +20,34 @@ Ipr_Fps_Booster.DefaultSettings = {
         },
     },
     {
-        Vgui = "DCheckBoxLabel",
-        Name = "AutoClose",
-        DefaultCheck = true,
-        Wide = 210,
+        Vgui = "DNumSlider",
+        Name = "FpsPosWidth",
+        Paired = "FpsView",
+        DefaultCheck = 44,
         Localization = {
             Text = {
-                ["FR"] = "Fermer (activer/désactiver)",
-                ["EN"] = "Closed (enable/disable)",
-            },
-            ToolTip = {
-                ["FR"] = "Si vous appuyez sur le bouton activer/désactiver, le panneau se fermera automatiquement !",
-                ["EN"] = "If you press the activate/deactivate button, the panel will close automatically !",
+                ["FR"] = "FPS Position Largeur",
+                ["EN"] = "FPS Position Width",
             },
         },
     },
     {
-        Vgui = "DCheckBoxLabel",
-        Name = "ForcedOpen",
-        DefaultCheck = true,
-        Wide = 210,
+        Vgui = "DNumSlider",
+        Name = "FpsPosHeight",
+        Paired = "FpsView",
+        DefaultCheck = 28,
         Localization = {
             Text = {
-                ["FR"] = "Ouverture auto",
-                ["EN"] = "Auto opening",
-            },
-            ToolTip = {
-                ["FR"] = "Ouverture automatique du panel à la fin du chargement",
-                ["EN"] = "Automatic opening of the panel at the end of loading",
+                ["FR"] = "FPS Position Hauteur",
+                ["EN"] = "FPS Position Height",
             },
         },
     },
     {
         Vgui = "DCheckBoxLabel",
         Name = "EnabledFog",
+        HookFog = true,
         DefaultCheck = false,
-        Wide = 210,
         Localization = {
             Text = {
                 ["FR"] = "Activer le brouillard",
@@ -70,29 +61,8 @@ Ipr_Fps_Booster.DefaultSettings = {
     },
     {
         Vgui = "DNumSlider",
-        Name = "FpsPosWidth",
-        DefaultCheck = 44,
-        Localization = {
-            Text = {
-                ["FR"] = "FPS Position Largeur",
-                ["EN"] = "FPS Position Width",
-            },
-        },
-    },
-    {
-        Vgui = "DNumSlider",
-        Name = "FpsPosHeight",
-        DefaultCheck = 28,
-        Localization = {
-            Text = {
-                ["FR"] = "FPS Position Hauteur",
-                ["EN"] = "FPS Position Height",
-            },
-        },
-    },
-    {
-        Vgui = "DNumSlider",
         Name = "FogStart",
+        Paired = "EnabledFog",
         DefaultCheck = 0,
         Max = 1000000,
         Localization = {
@@ -105,12 +75,43 @@ Ipr_Fps_Booster.DefaultSettings = {
     {
         Vgui = "DNumSlider",
         Name = "FogEnd",
+        Paired = "EnabledFog",
         DefaultCheck = 5000,
         Max = 1000000,
         Localization = {
             Text = {
                 ["FR"] = "Brouillard Position Fin",
                 ["EN"] = "Fog Position End",
+            },
+        },
+    },
+    {
+        Vgui = "DCheckBoxLabel",
+        Name = "AutoClose",
+        DefaultCheck = true,
+        Localization = {
+            Text = {
+                ["FR"] = "Quitter (activer/désactiver)",
+                ["EN"] = "Closed (enable/disable)",
+            },
+            ToolTip = {
+                ["FR"] = "Si vous appuyez sur le bouton activer/désactiver, le panneau se fermera automatiquement !",
+                ["EN"] = "If you press the activate/deactivate button, the panel will close automatically !",
+            },
+        },
+    },
+    {
+        Vgui = "DCheckBoxLabel",
+        Name = "ForcedOpen",
+        DefaultCheck = true,
+        Localization = {
+            Text = {
+                ["FR"] = "Ouverture automatique",
+                ["EN"] = "Auto opening",
+            },
+            ToolTip = {
+                ["FR"] = "Ouverture automatique du panel à la fin du chargement",
+                ["EN"] = "Automatic opening of the panel at the end of loading",
             },
         },
     },
