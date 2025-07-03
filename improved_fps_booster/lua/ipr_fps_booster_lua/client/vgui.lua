@@ -980,7 +980,7 @@ local function Ipr_FpsBooster()
             return 
          end
 
-         input.SetCursorPos(Ipr.Settings.Vgui.Primary:GetX() + Ipr.Settings.Vgui.Primary:GetWide() / 2, Ipr.Settings.Vgui.Primary:GetY() + Ipr.Settings.Vgui.Primary:GetTall())
+         input.SetCursorPos(Ipr.Settings.Vgui.Primary:GetX() + (Ipr.Settings.Vgui.Primary:GetWide() / 2), Ipr.Settings.Vgui.Primary:GetY() + (Ipr.Settings.Vgui.Primary:GetTall() - 50))
          Ipr.Settings.Vgui.Primary:SetMouseInputEnabled(true)
     end)
 
