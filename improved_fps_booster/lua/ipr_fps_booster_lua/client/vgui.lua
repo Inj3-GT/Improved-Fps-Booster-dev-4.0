@@ -578,11 +578,13 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr_CheckUncheckAll:SetImage(Ipr_CheckboxState.Icon[Ipr_CheckboxState.Default])
     end
 
+    local Ipr_CenterVgui = Ipr.Settings.Vgui.Secondary:GetWide() / 2
+
     local Ipr_SettingsConvars = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
-    Ipr_SettingsConvars:SetPos(5, 90)
     Ipr_SettingsConvars:SetSize(232, 165)
+    Ipr_SettingsConvars:SetPos(Ipr_CenterVgui - (Ipr_SettingsConvars:GetWide() / 2), 90)
     Ipr_SettingsConvars.Paint = function(self, w, h)
-        draw.RoundedBox(6, 0, 0, w, h, ColorAlpha(color_black, 90))
+        draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 90))
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TSettings, "Ipr_Fps_Booster_Font", w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     local Ipr_ScrollBarConvars = vgui.Create("DScrollPanel", Ipr_SettingsConvars)
@@ -653,10 +655,10 @@ local function Ipr_FpsBooster_Options(primary)
     end
 
     local Ipr_SettingsCheckBox = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
-    Ipr_SettingsCheckBox:SetPos(5, 260)
     Ipr_SettingsCheckBox:SetSize(232, 165)
+    Ipr_SettingsCheckBox:SetPos(Ipr_CenterVgui - (Ipr_SettingsCheckBox:GetWide() / 2), 260)
     Ipr_SettingsCheckBox.Paint = function(self, w, h)
-        draw.RoundedBox(6, 0, 0, w, h, ColorAlpha(color_black, 90))
+        draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 90))
         draw.SimpleText("Configuration :", "Ipr_Fps_Booster_Font", w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     local Ipr_ScrollBarCheckBox = vgui.Create("DScrollPanel", Ipr_SettingsCheckBox)
@@ -775,10 +777,10 @@ local function Ipr_FpsBooster_Options(primary)
     end
 
     local Ipr_SettingsBut = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
-    Ipr_SettingsBut:SetPos(45, 25)
     Ipr_SettingsBut:SetSize(150, 60)
+    Ipr_SettingsBut:SetPos(Ipr_CenterVgui - (Ipr_SettingsBut:GetWide() / 2), 25)
     Ipr_SettingsBut.Paint = function(self, w, h)
-        draw.RoundedBox(6, 0, 0, w, h, ColorAlpha(color_black, 90))
+        draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 90))
     end
     local Ipr_ScrollBut = vgui.Create("DScrollPanel", Ipr_SettingsBut)
     Ipr_ScrollBut:Dock(FILL)
