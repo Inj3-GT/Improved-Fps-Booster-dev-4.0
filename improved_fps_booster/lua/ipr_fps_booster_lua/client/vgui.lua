@@ -442,7 +442,6 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr.Settings.Vgui.Secondary:MakePopup()
     Ipr.Settings.Vgui.Secondary:ShowCloseButton(false)
     Ipr.Settings.Vgui.Secondary:SetDraggable(true)
-    Ipr.Settings.Vgui.Secondary:AlphaTo(0, 0, 0)
 
     if IsValid(primary) then
         local function Ipr_MovedVgui()
@@ -458,6 +457,8 @@ local function Ipr_FpsBooster_Options(primary)
             local Ipr_CenterSecondaryW = Ipr_FirstPosW + 10
             Ipr.Settings.Vgui.Secondary:MoveTo(Ipr_CenterSecondaryW, Ipr_CenterSecondaryH, 0.5, 0.5)
         end
+
+        Ipr.Settings.Vgui.Secondary:AlphaTo(0, 0, 0)
 
         if not primary.PMoved then
             primary:MoveTo(primary:GetX() - (Ipr.Settings.Vgui.Secondary:GetWide() / 2), primary:GetY(), 0.3, 0, -1, Ipr_MovedVgui)
