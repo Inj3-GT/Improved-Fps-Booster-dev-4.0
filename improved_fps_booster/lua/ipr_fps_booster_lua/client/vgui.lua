@@ -74,7 +74,7 @@ Ipr.Func.CreateData = function()
 
         file.Write(Ipr_Fps_Booster.Settings.Save.. "language.json", Ipr_TCountry)
     end
-    Ipr.Settings.SetLang = Ipr_TCountry or file.Read(Ipr_Fps_Booster.Settings.Save.. "language.json", "DATA") or Ipr_Fps_Booster.Settings.Language
+    Ipr.Settings.SetLang = Ipr_TCountry or file.Read(Ipr_Fps_Booster.Settings.Save.. "language.json", "DATA")
 
     local Ipr_FileConvars, Ipr_TData = file.Exists(Ipr_Fps_Booster.Settings.Save.. "convars.json", "DATA")
     if not Ipr_FileConvars then
