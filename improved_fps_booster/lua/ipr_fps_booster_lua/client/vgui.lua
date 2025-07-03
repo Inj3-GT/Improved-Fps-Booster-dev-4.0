@@ -548,6 +548,7 @@ local function Ipr_FpsBooster_Options(primary)
         end)
     end
 
+    local Ipr_CenterVgui = Ipr.Settings.Vgui.Secondary:GetWide() / 2
     local Ipr_CheckboxState = {
         Default = Ipr.Func.IsChecked(), 
         Icon = {
@@ -577,8 +578,6 @@ local function Ipr_FpsBooster_Options(primary)
 
         Ipr_CheckUncheckAll:SetImage(Ipr_CheckboxState.Icon[Ipr_CheckboxState.Default])
     end
-
-    local Ipr_CenterVgui = Ipr.Settings.Vgui.Secondary:GetWide() / 2
 
     local Ipr_SettingsConvars = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
     Ipr_SettingsConvars:SetSize(232, 165)
