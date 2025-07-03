@@ -977,7 +977,7 @@ local function Ipr_FpsBooster()
     
     Ipr.Settings.Vgui.Primary:SetMouseInputEnabled(false)
 
-    timer.Simple(0.0001, function()
+    timer.Simple(0.01, function()
          if not IsValid(Ipr.Settings.Vgui.Primary) then
             return 
          end
