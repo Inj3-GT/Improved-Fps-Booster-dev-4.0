@@ -1307,7 +1307,7 @@ local function Ipr_InitPostPlayer()
         Ipr.Func.Activate(Ipr_Startup)
         
         local Ipr_ForcedOpen = Ipr.Func.GetConvar("ForcedOpen")
-        if (Ipr_ForcedOpen) then
+        if not IsValid(Ipr.Settings.Vgui.Primary) and (Ipr_ForcedOpen) then
             Ipr_FpsBooster()
         end
         
