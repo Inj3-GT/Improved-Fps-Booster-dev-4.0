@@ -349,7 +349,17 @@ end
 
 Ipr.Func.ClosePanel = function()
     for _, v in pairs(Ipr.Settings.Vgui) do
-        if IsValid(v) then
+        if not IsValid(v) then
+            continue
+        end
+
+        if (v:GetName() == "DFrame") then
+            v:AlphaTo(0, 0.3, 0, function()
+                if IsValid(v) then
+                    v:Remove()
+                end
+            end)
+        else
             v:Remove()
         end
     end
