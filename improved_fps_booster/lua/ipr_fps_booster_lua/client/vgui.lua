@@ -389,7 +389,7 @@ Ipr.Func.SetToolTip = function(text, panel, hover)
 
             Ipr.Settings.Vgui.ToolTip:SetVisible(true)
 
-            Ipr.Settings.Vgui.ToolTip:AlphaTo(0, 0, 0)
+            Ipr.Settings.Vgui.ToolTip:SetAlpha(0)
             Ipr.Settings.Vgui.ToolTip:AlphaTo(255, 0.8, 0)
 
             timer.Simple(0.0001, function()
@@ -458,7 +458,7 @@ local function Ipr_FpsBooster_Options(primary)
             Ipr.Settings.Vgui.Secondary:MoveTo(Ipr_CenterSecondaryW, Ipr_CenterSecondaryH, 0.5, 0.5)
         end
 
-        Ipr.Settings.Vgui.Secondary:AlphaTo(0, 0, 0)
+        Ipr.Settings.Vgui.Secondary:SetAlpha(0)
 
         if not primary.PMoved then
             primary:MoveTo(primary:GetX() - (Ipr.Settings.Vgui.Secondary:GetWide() / 2), primary:GetY(), 0.3, 0, -1, Ipr_MovedVgui)
@@ -476,6 +476,10 @@ local function Ipr_FpsBooster_Options(primary)
             Ipr_CenterPrimaryH = Ipr_CenterPrimaryH - (primary:GetTall() / 2)
 
             primary:SetPos(Ipr_CenterPrimaryW, Ipr_CenterPrimaryH)
+
+            if not primary.PMoved then
+               primary.PMoved = true
+            end
         end
 
         Ipr.Func.RenderBlur(self, ColorAlpha(color_black, 130), 6)
@@ -948,7 +952,8 @@ local function Ipr_FpsBooster()
     Ipr.Settings.Vgui.Primary:ShowCloseButton(false)
     Ipr.Settings.Vgui.Primary:SetDraggable(true)
     Ipr.Settings.Vgui.Primary:Center()
-    Ipr.Settings.Vgui.Primary:AlphaTo(5, 0, 0)
+
+    Ipr.Settings.Vgui.Primary:SetAlpha(0)
     Ipr.Settings.Vgui.Primary:AlphaTo(255, 1, 0)
 
     Ipr.Settings.Copy.Data = table.Copy(Ipr_Fps_Booster.Convars)
