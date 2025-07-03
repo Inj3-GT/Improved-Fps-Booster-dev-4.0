@@ -384,15 +384,27 @@ Ipr.Func.SetToolTip = function(text, panel, hover)
 
     for i = 1, #Ipr_OverrideChildren do
         Ipr_OverrideChildren[i].OnCursorMoved = function(self)
+            if not IsValid(Ipr.Settings.Vgui.ToolTip) then
+                return
+            end
+
             local ipr_InputX, ipr_InputY = input.GetCursorPos()
             local ipr_Pos = ipr_InputX - Ipr.Settings.Vgui.ToolTip:GetWide() / 2
 
             Ipr.Settings.Vgui.ToolTip:SetPos(ipr_Pos, ipr_InputY - 30)
         end
         Ipr_OverrideChildren[i].OnCursorExited = function()
+            if not IsValid(Ipr.Settings.Vgui.ToolTip) then
+                return
+            end
+
             Ipr.Settings.Vgui.ToolTip:SetVisible(false)
         end
         Ipr_OverrideChildren[i].OnCursorEntered = function(self)
+            if not IsValid(Ipr.Settings.Vgui.ToolTip) then
+                return
+            end
+            
             Ipr.Settings.Vgui.ToolTip:SetText((hover) and text or text[Ipr.Settings.SetLang])
             Ipr.Settings.Vgui.ToolTip:SetTextColor(color_white)
             Ipr.Settings.Vgui.ToolTip:SetFont("Ipr_Fps_Booster_Font")
@@ -958,10 +970,22 @@ local function Ipr_FpsBooster()
 
     Ipr.Settings.Vgui.Primary:SetTitle("")
     Ipr.Settings.Vgui.Primary:SetSize(300, 270)
+    Ipr.Settings.Vgui.Primary:Center()
     Ipr.Settings.Vgui.Primary:MakePopup()
+    
+    Ipr.Settings.Vgui.Primary:SetMouseInputEnabled(false)
+
+    timer.Simple(0.0001, function()
+         if not IsValid(Ipr.Settings.Vgui.Primary) then
+            return 
+         end
+
+         input.SetCursorPos(Ipr.Settings.Vgui.Primary:GetX() + Ipr.Settings.Vgui.Primary:GetWide() / 2, Ipr.Settings.Vgui.Primary:GetY() + Ipr.Settings.Vgui.Primary:GetTall())
+         Ipr.Settings.Vgui.Primary:SetMouseInputEnabled(true)
+    end)
+
     Ipr.Settings.Vgui.Primary:ShowCloseButton(false)
     Ipr.Settings.Vgui.Primary:SetDraggable(true)
-    Ipr.Settings.Vgui.Primary:Center()
 
     Ipr.Settings.Vgui.Primary:SetAlpha(0)
     Ipr.Settings.Vgui.Primary:AlphaTo(255, 1, 0)
