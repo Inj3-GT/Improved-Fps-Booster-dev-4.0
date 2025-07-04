@@ -1378,17 +1378,17 @@ local function Ipr_HUD()
            {Name = Ipr_FpsMax, FColor = Ipr.Func.ColorTransition(Ipr_FpsMax)},
            {Name = "|", FColor = color_white},
            {Name = "Low 1% :", FColor = color_white},
-           {Name = Ipr_FpsLow, FColor = Ipr.Func.ColorTransition(Ipr_FpsMax)},
+           {Name = Ipr_FpsLow, FColor = Ipr.Func.ColorTransition(Ipr_FpsLow)},
 
            Pos = {PWide = Ipr_HWide, PHeight = Ipr_HHeight},
         },
 
         {
            {Name = "Map :", FColor = color_white},
-           {Name = Ipr_Map, FColor = Ipr.Settings.TColor["bleu"]},
+           {Name = Ipr_Map, FColor = Ipr.Settings.TColor["bleuc"]},
            {Name = "|", FColor = color_white},
            {Name = "Ping :", FColor = color_white},
-           {Name = Ipr_PlayerPing, FColor = Ipr.Settings.TColor["bleu"]},
+           {Name = Ipr_PlayerPing, FColor = Ipr.Settings.TColor["bleuc"]},
 
            Pos = {PWide = Ipr_HWide - 1, PHeight = Ipr_HHeight + 20},
         },
