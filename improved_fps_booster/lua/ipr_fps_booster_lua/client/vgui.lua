@@ -1334,7 +1334,7 @@ local function Ipr_DrawMultipleTextAligned(tbl)
 
     for t = 1, #tbl do
         local Ipr_TextTbl = tbl[t]
-        local FirstText = (t == 1)
+        local Ipr_FirstText = (t == 1)
         local Ipr_Pos = Ipr_TextTbl.Pos
 
         for i = 1, #Ipr_TextTbl do
@@ -1343,7 +1343,7 @@ local function Ipr_DrawMultipleTextAligned(tbl)
             surface.SetFont(Ipr.Settings.Font)
             local Ipr_TWide = surface.GetTextSize(Ipr_NameText)
 
-            if not FirstText or (i > 1) then
+            if not Ipr_FirstText or (i > 1) then
                Ipr_NewWide = Ipr_OldWide
             end
             Ipr_OldWide = Ipr_OldWide + Ipr_TWide + Ipr_Escape
