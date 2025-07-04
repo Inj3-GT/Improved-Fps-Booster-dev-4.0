@@ -21,13 +21,14 @@ Ipr_Fps_Booster.Lang["FR"] = {
     AEnabled = "Déjà activé !",
     CheckedBox = "Veuillez cocher une case dans optimisation pour sauvegarder/activer le booster de fps !",
     DefaultConfig = "La configuration par défaut a été chargée !",
-    StartupEnabled = "Le lancement au démarrage est maintenant activé !",
+    StartupEnabled = "[Optimisation] Le lancement au démarrage est activé !",
     StartupDisabled = "Le lancement au démarrage est désactivé !",
     StartupAbandoned = "Le lancement au démarrage est abandonné !",
     StartupLaunched = "[Démarrage au lancement] Activé dans 5 minutes pour prévenir tout crash durant la sauvegarde, veuillez patienter !",
     OptimizationReloaded = "Optimisation rechargée !",
     SettingsSaved = "Les paramètres d'optimisation ont été sauvegardés !",
     SReset = "L'optimisation est désactivé !",
+    FogEnabled = "[Settings] Le brouillard est activé automatiquement !",
 }
 
 // English
@@ -48,11 +49,12 @@ Ipr_Fps_Booster.Lang["EN"] = {
     AEnabled = "Already enabled !",
     CheckedBox = "Please check the optimization boxes to activate the fps booster!",
     DefaultConfig = "The default configuration has been loaded !",
-    StartupEnabled = "Startup launch is now enabled !",
+    StartupEnabled = "[Optimization] Startup launch is now enabled !",
     StartupDisabled = "Startup launch is disabled !",
     StartupAbandoned = "Startup launch abandoned !",
     StartupLaunched = "[Startup on launch] Activated in 5 minutes to prevent any crashes during the backup, please wait !",
     OptimizationReloaded = "Optimization reloaded !",
     SettingsSaved = "Optimization parameters were saved !",
     SReset = "Optimization disabled !",
+    FogEnabled = "[Settings] Fog is activated automatically !",
 }

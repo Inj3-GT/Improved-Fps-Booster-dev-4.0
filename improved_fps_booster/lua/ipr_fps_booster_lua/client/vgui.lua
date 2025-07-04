@@ -10,6 +10,7 @@ Ipr.Settings = {
     Blur = Material("pp/blurscreen"),
     SetLang = Ipr_Fps_Booster.Settings.Language,
     Debug = true,
+    Font = "Ipr_Fps_Booster_Font",
     Status = {
         Name = "FPS Status",
         State = false,
@@ -295,7 +296,7 @@ Ipr.Func.OverridePaint = function(panel)
         ["DSlider"] = function(frame)
             for _, ent in ipairs(Ipr_PanelChild) do
                 if (ent:GetName() == "DTextEntry") then
-                    ent:SetFont("Ipr_Fps_Booster_Font")
+                    ent:SetFont(Ipr.Settings.Font)
                     ent:SetTextColor(Ipr.Settings.TColor["blanc"])
                 end
             end
@@ -370,7 +371,7 @@ Ipr.Func.SetToolTip = function(text, panel, hover)
         Ipr.Settings.Vgui.ToolTip = vgui.Create("DTooltip")
         Ipr.Settings.Vgui.ToolTip:SetText("")
         Ipr.Settings.Vgui.ToolTip:SetTextColor(color_white)
-        Ipr.Settings.Vgui.ToolTip:SetFont("Ipr_Fps_Booster_Font")
+        Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
 
         Ipr.Settings.Vgui.ToolTip.Paint = function(self, w, h)
             Ipr.Func.RenderBlur(self, ColorAlpha(color_black, 130), 6)
@@ -407,7 +408,7 @@ Ipr.Func.SetToolTip = function(text, panel, hover)
             
             Ipr.Settings.Vgui.ToolTip:SetText((hover) and text or text[Ipr.Settings.SetLang])
             Ipr.Settings.Vgui.ToolTip:SetTextColor(color_white)
-            Ipr.Settings.Vgui.ToolTip:SetFont("Ipr_Fps_Booster_Font")
+            Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
 
             Ipr.Settings.Vgui.ToolTip:SetVisible(true)
 
@@ -507,14 +508,14 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr.Func.RenderBlur(self, ColorAlpha(color_black, 130), 6)
         
         draw.RoundedBoxEx(6, 0, 0, w, 20, Ipr.Settings.TColor["bleu"], true, true, false, false)
-        draw.SimpleText("Options FPS Booster", "Ipr_Fps_Booster_Font", w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText("FPS Limit : ", "Ipr_Fps_Booster_Font", 5, h - 20, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+        draw.SimpleText("Options FPS Booster", Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("FPS Limit : ", Ipr.Settings.Font, 5, h - 20, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
 
         local Ipr_FpsLimit = math.Round(Ipr.Func.InfoNum("fps_max"))
-        draw.SimpleText(Ipr_FpsLimit, "Ipr_Fps_Booster_Font", 67, h - 20, Ipr.Func.ColorTransition(Ipr_FpsLimit), TEXT_ALIGN_LEFT)
+        draw.SimpleText(Ipr_FpsLimit, Ipr.Settings.Font, 67, h - 20, Ipr.Func.ColorTransition(Ipr_FpsLimit), TEXT_ALIGN_LEFT)
         
-        draw.SimpleText(Ipr_Fps_Booster.Settings.Developer, "Ipr_Fps_Booster_Font", w - 5, h - 20, Ipr.Settings.TColor["vert"], TEXT_ALIGN_RIGHT)
-        draw.SimpleText(Ipr_Fps_Booster.Settings.Version.. " By", "Ipr_Fps_Booster_Font", w - 28, h - 20, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_Fps_Booster.Settings.Developer, Ipr.Settings.Font, w - 5, h - 20, Ipr.Settings.TColor["vert"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_Fps_Booster.Settings.Version.. " By", Ipr.Settings.Font, w - 28, h - 20, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
     end
 
     local function Ipr_PaintBar(Scroll)
@@ -532,8 +533,8 @@ local function Ipr_FpsBooster_Options(primary)
     end
 
     local Ipr_Close = vgui.Create("DImageButton", Ipr.Settings.Vgui.Secondary)
-    Ipr_Close:SetPos(222, 2)
     Ipr_Close:SetSize(16, 16)
+    Ipr_Close:SetPos(Ipr.Settings.Vgui.Secondary:GetWide() - Ipr_Close:GetWide() - 1, 2)
     Ipr_Close:SetImage("icon16/cross.png")
     Ipr_Close.Paint = nil
     Ipr_Close.DoClick = function()
@@ -584,7 +585,7 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SettingsConvars:SetPos(Ipr_CenterVgui - (Ipr_SettingsConvars:GetWide() / 2), 90)
     Ipr_SettingsConvars.Paint = function(self, w, h)
         draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 90))
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TSettings, "Ipr_Fps_Booster_Font", w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TSettings, Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     local Ipr_ScrollBarConvars = vgui.Create("DScrollPanel", Ipr_SettingsConvars)
     Ipr_ScrollBarConvars:Dock(FILL)
@@ -619,7 +620,7 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr.Func.OverridePaint(Ipr_DboxConvars)
         
         function Ipr_DboxConvars:Paint(w, h)
-            draw.SimpleText(Ipr_Fps_Booster.DefaultCommands[i].Localization.Text[Ipr.Settings.SetLang], "Ipr_Fps_Booster_Font", 22, 5, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+            draw.SimpleText(Ipr_Fps_Booster.DefaultCommands[i].Localization.Text[Ipr.Settings.SetLang], Ipr.Settings.Font, 22, 5, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
         end
         Ipr_DboxConvars.OnChange = function(self)
             Ipr.Func.SetConvar(Ipr_ConvarsLists[i].Name, self:GetChecked())
@@ -658,7 +659,7 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SettingsCheckBox:SetPos(Ipr_CenterVgui - (Ipr_SettingsCheckBox:GetWide() / 2), 260)
     Ipr_SettingsCheckBox.Paint = function(self, w, h)
         draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 90))
-        draw.SimpleText("Configuration :", "Ipr_Fps_Booster_Font", w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("Configuration :", Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     local Ipr_ScrollBarCheckBox = vgui.Create("DScrollPanel", Ipr_SettingsCheckBox)
     Ipr_ScrollBarCheckBox:Dock(FILL)
@@ -671,7 +672,7 @@ local function Ipr_FpsBooster_Options(primary)
         ["DCheckBoxLabel"] = {
             Func = function(panel, tbl, primary)
                 function panel:Paint(w, h)
-                    draw.SimpleText(tbl.Localization.Text[Ipr.Settings.SetLang], "Ipr_Fps_Booster_Font", 22, 4, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+                    draw.SimpleText(tbl.Localization.Text[Ipr.Settings.SetLang], Ipr.Settings.Font, 22, 4, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
                 end
 
                 panel:SetValue(Ipr.Func.GetConvar(tbl.Name))
@@ -715,7 +716,7 @@ local function Ipr_FpsBooster_Options(primary)
         ["DNumSlider"] = {
             Func = function(panel, tbl, primary)
                 function primary:Paint(w, h)
-                    draw.SimpleText(tbl.Localization.Text[Ipr.Settings.SetLang].. " [" ..math.Round(panel:GetValue()).. "]", "Ipr_Fps_Booster_Font", w / 2, 0, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+                    draw.SimpleText(tbl.Localization.Text[Ipr.Settings.SetLang].. " [" ..math.Round(panel:GetValue()).. "]", Ipr.Settings.Font, w / 2, 0, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
                 end
 
                 local Ipr_DNumChildren = panel:GetChildren()
@@ -929,7 +930,7 @@ local function Ipr_FpsBooster_Options(primary)
                draw.RoundedBox(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["gvert_"] or Ipr.Settings.TColor["gvert"])
             end
             
-            draw.SimpleText(Ipr_SettingsDbutton.Localization.Text, "Ipr_Fps_Booster_Font", w / 2 + 6, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+            draw.SimpleText(Ipr_SettingsDbutton.Localization.Text, Ipr.Settings.Font, w / 2 + 6, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
         end
 
         Ipr_SettingsCreate.DoClick = function()
@@ -1014,13 +1015,13 @@ local function Ipr_FpsBooster()
         draw.RoundedBoxEx(6, 0, 0, w, 33, Ipr.Settings.TColor["bleu"], true, true, false, false)
 
         local Ipr_CurrentStatus = Ipr.Func.CurrentStatus()
-        draw.SimpleText("FPS :","Ipr_Fps_Booster_Font", (Ipr_CurrentStatus) and w / 2 - 25 or w / 2 -10, 16, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("FPS :",Ipr.Settings.Font, (Ipr_CurrentStatus) and w / 2 - 25 or w / 2 -10, 16, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
         
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TEnabled,"Ipr_Fps_Booster_Font",w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TEnabled,Ipr.Settings.Font,w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
         
         local Ipr_TCurrentStatus = (Ipr_CurrentStatus) and "On (Boost)" or "Off"
         local ipr_TCurrentColor = (Ipr_CurrentStatus) and (Ipr.Settings.Copy.Set) and Ipr.Settings.TColor["orange"] or (Ipr_CurrentStatus) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"]
-        draw.SimpleText(Ipr_TCurrentStatus, "Ipr_Fps_Booster_Font", (Ipr_CurrentStatus) and w / 2 + 22 or w / 2 + 18, 16, ipr_TCurrentColor, TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_TCurrentStatus, Ipr.Settings.Font, (Ipr_CurrentStatus) and w / 2 + 22 or w / 2 + 18, 16, ipr_TCurrentColor, TEXT_ALIGN_CENTER)
     end
     
     Ipr_PrimaryProperty:Dock(FILL)
@@ -1070,19 +1071,19 @@ local function Ipr_FpsBooster()
     Ipr_PrimaryProperty.Paint = function(self, w, h)
         local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Func.FpsCalculator()
 
-        draw.SimpleText(Ipr.Settings.Status.Name, "Ipr_Fps_Booster_Font", w / 2, h / 2 - 63, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr.Settings.Status.Name, Ipr.Settings.Font, w / 2, h / 2 - 63, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].FpsCurrent, "Ipr_Fps_Booster_Font", w / 2 + 10, h / 2 - 45, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
-        draw.SimpleText(Ipr_FpsCurrent, "Ipr_Fps_Booster_Font", w / 2 + 15, h / 2 - 45, Ipr.Func.ColorTransition(Ipr_FpsCurrent), TEXT_ALIGN_LEFT)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].FpsCurrent, Ipr.Settings.Font, w / 2 + 10, h / 2 - 45, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_FpsCurrent, Ipr.Settings.Font, w / 2 + 15, h / 2 - 45, Ipr.Func.ColorTransition(Ipr_FpsCurrent), TEXT_ALIGN_LEFT)
 
-        draw.SimpleText(Ipr.Settings.Fps.Max.Name, "Ipr_Fps_Booster_Font", w / 2 + 10, h / 2 - 30, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
-        draw.SimpleText(Ipr_FpsMax, "Ipr_Fps_Booster_Font", w / 2 + 13, h / 2 - 30, Ipr.Func.ColorTransition(Ipr_FpsMax), TEXT_ALIGN_LEFT)
+        draw.SimpleText(Ipr.Settings.Fps.Max.Name, Ipr.Settings.Font, w / 2 + 10, h / 2 - 30, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_FpsMax, Ipr.Settings.Font, w / 2 + 13, h / 2 - 30, Ipr.Func.ColorTransition(Ipr_FpsMax), TEXT_ALIGN_LEFT)
 
-        draw.SimpleText(Ipr.Settings.Fps.Min.Name, "Ipr_Fps_Booster_Font", w / 2 + 5, h / 2 - 15, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
-        draw.SimpleText(Ipr_FpsMin, "Ipr_Fps_Booster_Font", w / 2 + 9, h / 2 - 15, Ipr.Func.ColorTransition(Ipr_FpsMin), TEXT_ALIGN_LEFT)
+        draw.SimpleText(Ipr.Settings.Fps.Min.Name, Ipr.Settings.Font, w / 2 + 5, h / 2 - 15, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_FpsMin, Ipr.Settings.Font, w / 2 + 9, h / 2 - 15, Ipr.Func.ColorTransition(Ipr_FpsMin), TEXT_ALIGN_LEFT)
 
-        draw.SimpleText(Ipr.Settings.Fps.Low.Name, "Ipr_Fps_Booster_Font", w / 2 + 15, h / 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
-        draw.SimpleText(Ipr_FpsLow, "Ipr_Fps_Booster_Font", w / 2 + 18, h / 2, Ipr.Func.ColorTransition(Ipr_FpsLow), TEXT_ALIGN_LEFT)
+        draw.SimpleText(Ipr.Settings.Fps.Low.Name, Ipr.Settings.Font, w / 2 + 15, h / 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_FpsLow, Ipr.Settings.Font, w / 2 + 18, h / 2, Ipr.Func.ColorTransition(Ipr_FpsLow), TEXT_ALIGN_LEFT)
 
         surface.SetMaterial(Ipr_Icon.Computer)
         surface.SetDrawColor(255, 255, 255, 255)
@@ -1118,7 +1119,7 @@ local function Ipr_FpsBooster()
     Ipr_PrimaryEnabled:SetText("")
     function Ipr_PrimaryEnabled:Paint(w, h)
         draw.RoundedBox( 6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VEnabled, "Ipr_Fps_Booster_Font", w / 2 + 3, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VEnabled, Ipr.Settings.Font, w / 2 + 3, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     Ipr_PrimaryEnabled.DoClick = function()
         local Ipr_CheckBox = Ipr.Func.IsChecked()
@@ -1150,7 +1151,7 @@ local function Ipr_FpsBooster()
     Ipr_PrimaryDisabled:SetText("")
     function Ipr_PrimaryDisabled:Paint(w, h)
         draw.RoundedBox( 6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VDisabled, "Ipr_Fps_Booster_Font", w / 2 + 6, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VDisabled, Ipr.Settings.Font, w / 2 + 6, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     Ipr_PrimaryDisabled.DoClick = function()
         local Ipr_ConvarsEnabled = Ipr.Func.MatchConvar(false)
@@ -1178,7 +1179,7 @@ local function Ipr_FpsBooster()
     Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Options, Ipr_PrimarySettings, true)
     function Ipr_PrimarySettings:Paint(w, h)
         draw.RoundedBox( 6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
-        draw.SimpleText("Options ", "Ipr_Fps_Booster_Font", w / 2 + 7, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 7, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     Ipr_PrimarySettings.DoClick = function()
         if IsValid(Ipr.Settings.Vgui.Secondary) then
@@ -1195,7 +1196,7 @@ local function Ipr_FpsBooster()
     Ipr_PrimaryResetFps:SetImage("icon16/arrow_refresh.png")
     function Ipr_PrimaryResetFps:Paint(w, h)
         draw.RoundedBox( 6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
-        draw.SimpleText("Reset FPS max/min", "Ipr_Fps_Booster_Font", w / 2 + 7, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("Reset FPS max/min", Ipr.Settings.Font, w / 2 + 7, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     Ipr_PrimaryResetFps.DoClick = function()
         Ipr.Func.ResetFps()
@@ -1205,7 +1206,7 @@ local function Ipr_FpsBooster()
 
     Ipr_PrimaryLanguage:SetPos(5, 38)
     Ipr_PrimaryLanguage:SetSize(105, 20)
-    Ipr_PrimaryLanguage:SetFont("Ipr_Fps_Booster_Font")
+    Ipr_PrimaryLanguage:SetFont(Ipr.Settings.Font)
     Ipr_PrimaryLanguage:SetValue(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..Ipr.Settings.SetLang)
     
     for k, v in pairs(Ipr_Fps_Booster.Lang) do
@@ -1237,7 +1238,7 @@ local function Ipr_FpsBooster()
                 local Ipr_VChild = d:GetChildren()
                 for _, y in ipairs(Ipr_VChild) do
                     y:SetTextColor(Ipr.Settings.TColor["blanc"])
-                    y:SetFont( "Ipr_Fps_Booster_Font" )
+                    y:SetFont( Ipr.Settings.Font )
                 end
             end
         end
@@ -1266,11 +1267,6 @@ end
 local Ipr_DefaultCommands = {
     ["/boost"] = {
         Func = function()
-            if timer.Exists("IprFpsBooster_Startup") then
-                timer.Remove("IprFpsBooster_Startup")
-                chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupDisabled)
-            end
-            
             Ipr.Func.CreateData()
             Ipr_FpsBooster()
 
@@ -1306,6 +1302,9 @@ local function Ipr_InitPostPlayer()
     timer.Create("IprFpsBooster_Startup", 5, 1, function()
         local Ipr_Startup = Ipr.Func.GetConvar("Startup")
         Ipr.Func.Activate(Ipr_Startup)
+        if (Ipr_Startup) then
+            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupEnabled)
+        end
         
         local Ipr_ForcedOpen = Ipr.Func.GetConvar("ForcedOpen")
         if (Ipr_ForcedOpen) and not IsValid(Ipr.Settings.Vgui.Primary) then
@@ -1315,6 +1314,7 @@ local function Ipr_InitPostPlayer()
         local Ipr_EnabledFog = Ipr.Func.GetConvar("EnabledFog")
         if (Ipr_EnabledFog) then
            Ipr.Func.FogActivate(Ipr_EnabledFog)
+           chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].FogEnabled)
         end
     end)
 end
@@ -1326,6 +1326,34 @@ local function Ipr_PlayerShutDown()
 end
 
 local Ipr_Map = game.GetMap()
+local Ipr_Escape = 5
+
+local function Ipr_DrawMultipleTextAligned(tbl)
+    local Ipr_OldWide = 0
+    local Ipr_NewWide = 0
+
+    for t = 1, #tbl do
+        local Ipr_TextTbl = tbl[t]
+        local FirstText = (t == 1)
+        local Ipr_Pos = Ipr_TextTbl.Pos
+
+        for i = 1, #Ipr_TextTbl do
+            local Ipr_NameText = Ipr_TextTbl[i].Name
+
+            surface.SetFont(Ipr.Settings.Font)
+            local Ipr_TWide = surface.GetTextSize(Ipr_NameText)
+
+            if not FirstText or (i > 1) then
+               Ipr_NewWide = Ipr_OldWide
+            end
+            Ipr_OldWide = Ipr_OldWide + Ipr_TWide + Ipr_Escape
+
+            draw.SimpleText(Ipr_NameText, Ipr.Settings.Font, Ipr_Pos.PWide + Ipr_NewWide, Ipr_Pos.PHeight, Ipr_TextTbl[i].FColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+        end
+
+        Ipr_OldWide = 0
+    end
+end
 
 local function Ipr_HUD()
     local Ipr_HudEnable = Ipr.Func.GetConvar("FpsView")
@@ -1336,9 +1364,37 @@ local function Ipr_HUD()
     local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Func.FpsCalculator()
     local Ipr_HHeight = Ipr_Height * Ipr.Func.GetConvar("FpsPosHeight") / 100
     local Ipr_HWide = Ipr_Wide * Ipr.Func.GetConvar("FpsPosWidth") / 100
+    local Ipr_PlayerPing = LocalPlayer():Ping()
+    
+    local Ipr_RenderFpsText = {
+        {
+           {Name = "FPS :", FColor = color_white},
+           {Name = Ipr_FpsCurrent, FColor = Ipr.Func.ColorTransition(Ipr_FpsCurrent)},
+           {Name = "|", FColor = color_white},
+           {Name = "Min :", FColor = color_white},
+           {Name = Ipr_FpsMin, FColor = Ipr.Func.ColorTransition(Ipr_FpsMin)},
+           {Name = "|", FColor = color_white},
+           {Name = "Max :", FColor = color_white},
+           {Name = Ipr_FpsMax, FColor = Ipr.Func.ColorTransition(Ipr_FpsMax)},
+           {Name = "|", FColor = color_white},
+           {Name = "Low 1% :", FColor = color_white},
+           {Name = Ipr_FpsLow, FColor = Ipr.Func.ColorTransition(Ipr_FpsMax)},
 
-    draw.SimpleText("Fps : " ..Ipr_FpsCurrent.. " | Min : " ..Ipr_FpsMin.. " | Max : " ..Ipr_FpsMax.. " | Low 1% : " ..Ipr_FpsLow, "Ipr_Fps_Booster_Font", Ipr_HWide, Ipr_HHeight, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-    draw.SimpleText("Map : " ..Ipr_Map, "Ipr_Fps_Booster_Font", Ipr_HWide, Ipr_HHeight + 20, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+           Pos = {PWide = Ipr_HWide, PHeight = Ipr_HHeight},
+        },
+
+        {
+           {Name = "Map :", FColor = color_white},
+           {Name = Ipr_Map, FColor = Ipr.Settings.TColor["bleu"]},
+           {Name = "|", FColor = color_white},
+           {Name = "Ping :", FColor = color_white},
+           {Name = Ipr_PlayerPing, FColor = Ipr.Settings.TColor["bleu"]},
+
+           Pos = {PWide = Ipr_HWide - 1, PHeight = Ipr_HHeight + 20},
+        },
+    }
+
+    Ipr_DrawMultipleTextAligned(Ipr_RenderFpsText)
 end
 
 local function Ipr_OnScreenSize()
