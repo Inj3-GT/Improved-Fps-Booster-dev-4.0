@@ -1338,14 +1338,15 @@ local function Ipr_DrawMultipleTextAligned(tbl)
         local Ipr_Pos = Ipr_TextTbl.Pos
 
         for i = 1, #Ipr_TextTbl do
-            local Ipr_NameText = Ipr_TextTbl[i].Name
-
-            surface.SetFont(Ipr.Settings.Font)
-            local Ipr_TWide = surface.GetTextSize(Ipr_NameText)
-
             if not Ipr_FirstText or (i > 1) then
                Ipr_NewWide = Ipr_OldWide
             end
+
+            surface.SetFont(Ipr.Settings.Font)
+
+            local Ipr_NameText = Ipr_TextTbl[i].Name
+            local Ipr_TWide = surface.GetTextSize(Ipr_NameText)
+            
             Ipr_OldWide = Ipr_OldWide + Ipr_TWide + Ipr_Escape
 
             draw.SimpleText(Ipr_NameText, Ipr.Settings.Font, Ipr_Pos.PWide + Ipr_NewWide, Ipr_Pos.PHeight, Ipr_TextTbl[i].FColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
