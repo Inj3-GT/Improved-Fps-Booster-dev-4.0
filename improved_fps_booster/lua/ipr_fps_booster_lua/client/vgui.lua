@@ -473,6 +473,71 @@ Ipr.Func.FogActivate = function(bool)
     end
 end
 
+local Ipr_Map = game.GetMap()
+local Ipr_Escape = 5
+
+local function Ipr_DrawMultipleTextAligned(tbl)
+    local Ipr_OldWide = 0
+    local Ipr_NewWide = 0
+
+    for t = 1, #tbl do
+        local Ipr_TextTbl = tbl[t]
+        local Ipr_Pos = Ipr_TextTbl.Pos
+
+        for i = 1, #Ipr_TextTbl do
+            Ipr_NewWide = Ipr_OldWide
+
+            surface.SetFont(Ipr.Settings.Font)
+
+            local Ipr_NameText = Ipr_TextTbl[i].Name
+            local Ipr_TWide = surface.GetTextSize(Ipr_NameText)
+            
+            Ipr_OldWide = Ipr_OldWide + Ipr_TWide + Ipr_Escape
+
+            draw.SimpleText(Ipr_NameText, Ipr.Settings.Font, Ipr_Pos.PWide + Ipr_NewWide, Ipr_Pos.PHeight, Ipr_TextTbl[i].FColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+        end
+
+        Ipr_OldWide = 0
+    end
+end
+
+Ipr.Func.FpsHud = function()
+    local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Func.FpsCalculator()
+    local Ipr_HHeight = Ipr_Height * Ipr.Func.GetConvar("FpsPosHeight") / 100
+    local Ipr_HWide = Ipr_Wide * Ipr.Func.GetConvar("FpsPosWidth") / 100
+    local Ipr_PlayerPing = LocalPlayer():Ping()
+    
+    local Ipr_RenderFpsText = {
+        {
+           {Name = "FPS :", FColor = color_white},
+           {Name = Ipr_FpsCurrent, FColor = Ipr.Func.ColorTransition(Ipr_FpsCurrent)},
+           {Name = "|", FColor = color_white},
+           {Name = "Min :", FColor = color_white},
+           {Name = Ipr_FpsMin, FColor = Ipr.Func.ColorTransition(Ipr_FpsMin)},
+           {Name = "|", FColor = color_white},
+           {Name = "Max :", FColor = color_white},
+           {Name = Ipr_FpsMax, FColor = Ipr.Func.ColorTransition(Ipr_FpsMax)},
+           {Name = "|", FColor = color_white},
+           {Name = "Low 1% :", FColor = color_white},
+           {Name = Ipr_FpsLow, FColor = Ipr.Func.ColorTransition(Ipr_FpsLow)},
+
+           Pos = {PWide = Ipr_HWide, PHeight = Ipr_HHeight},
+        },
+
+        {
+           {Name = "Map :", FColor = color_white},
+           {Name = Ipr_Map, FColor = Ipr.Settings.TColor["bleuc"]},
+           {Name = "|", FColor = color_white},
+           {Name = "Ping :", FColor = color_white},
+           {Name = Ipr_PlayerPing, FColor = Ipr.Settings.TColor["bleuc"]},
+
+           Pos = {PWide = Ipr_HWide - 1, PHeight = Ipr_HHeight + 20},
+        },
+    }
+
+    Ipr_DrawMultipleTextAligned(Ipr_RenderFpsText)
+end
+
 local function Ipr_FpsBooster_Options(primary)
     if IsValid(Ipr.Settings.Vgui.Secondary) then
         Ipr.Settings.Vgui.Secondary:Remove()
@@ -713,6 +778,12 @@ local function Ipr_FpsBooster_Options(primary)
 
                    if (tbl.HookFog) then
                         Ipr.Func.FogActivate(Ipr_GetChecked)
+                   elseif (tbl.HookFps) then
+                        if (Ipr_GetChecked) then
+                            hook.Add("PostDrawHUD", "IprFpsBooster_HUD", Ipr.Func.FpsHud)
+                        else
+                            hook.Remove("PostDrawHUD", "IprFpsBooster_HUD", Ipr.Func.FpsHud)
+                        end
                    end
                 end
             end,
@@ -1321,18 +1392,23 @@ local function Ipr_ChatCmds(ply, text)
 end
 
 local function Ipr_InitPostPlayer()
-    Ipr.Func.CreateData()
-    
-    timer.Create("IprFpsBooster_Startup", 5, 1, function()
+    timer.Simple(5, function()
+        Ipr.Func.CreateData()
+
         local Ipr_Startup = Ipr.Func.GetConvar("Startup")
         Ipr.Func.Activate(Ipr_Startup)
         if (Ipr_Startup) then
             chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupEnabled)
         end
-        
+
         local Ipr_ForcedOpen = Ipr.Func.GetConvar("ForcedOpen")
         if (Ipr_ForcedOpen) and not IsValid(Ipr.Settings.Vgui.Primary) then
             Ipr_FpsBooster()
+        end
+
+        local Ipr_HudEnable = Ipr.Func.GetConvar("FpsView")
+        if (Ipr_HudEnable) then
+           hook.Add("PostDrawHUD", "IprFpsBooster_HUD", Ipr.Func.FpsHud)
         end
         
         local Ipr_EnabledFog = Ipr.Func.GetConvar("EnabledFog")
@@ -1348,82 +1424,11 @@ local function Ipr_PlayerShutDown()
     end
 end
 
-local Ipr_Map = game.GetMap()
-local Ipr_Escape = 5
-
-local function Ipr_DrawMultipleTextAligned(tbl)
-    local Ipr_OldWide = 0
-    local Ipr_NewWide = 0
-
-    for t = 1, #tbl do
-        local Ipr_TextTbl = tbl[t]
-        local Ipr_Pos = Ipr_TextTbl.Pos
-
-        for i = 1, #Ipr_TextTbl do
-            Ipr_NewWide = Ipr_OldWide
-
-            surface.SetFont(Ipr.Settings.Font)
-
-            local Ipr_NameText = Ipr_TextTbl[i].Name
-            local Ipr_TWide = surface.GetTextSize(Ipr_NameText)
-            
-            Ipr_OldWide = Ipr_OldWide + Ipr_TWide + Ipr_Escape
-
-            draw.SimpleText(Ipr_NameText, Ipr.Settings.Font, Ipr_Pos.PWide + Ipr_NewWide, Ipr_Pos.PHeight, Ipr_TextTbl[i].FColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-        end
-
-        Ipr_OldWide = 0
-    end
-end
-
-local function Ipr_HUD()
-    local Ipr_HudEnable = Ipr.Func.GetConvar("FpsView")
-    if not Ipr_HudEnable then
-        return
-    end
-
-    local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Func.FpsCalculator()
-    local Ipr_HHeight = Ipr_Height * Ipr.Func.GetConvar("FpsPosHeight") / 100
-    local Ipr_HWide = Ipr_Wide * Ipr.Func.GetConvar("FpsPosWidth") / 100
-    local Ipr_PlayerPing = LocalPlayer():Ping()
-    
-    local Ipr_RenderFpsText = {
-        {
-           {Name = "FPS :", FColor = color_white},
-           {Name = Ipr_FpsCurrent, FColor = Ipr.Func.ColorTransition(Ipr_FpsCurrent)},
-           {Name = "|", FColor = color_white},
-           {Name = "Min :", FColor = color_white},
-           {Name = Ipr_FpsMin, FColor = Ipr.Func.ColorTransition(Ipr_FpsMin)},
-           {Name = "|", FColor = color_white},
-           {Name = "Max :", FColor = color_white},
-           {Name = Ipr_FpsMax, FColor = Ipr.Func.ColorTransition(Ipr_FpsMax)},
-           {Name = "|", FColor = color_white},
-           {Name = "Low 1% :", FColor = color_white},
-           {Name = Ipr_FpsLow, FColor = Ipr.Func.ColorTransition(Ipr_FpsLow)},
-
-           Pos = {PWide = Ipr_HWide, PHeight = Ipr_HHeight},
-        },
-
-        {
-           {Name = "Map :", FColor = color_white},
-           {Name = Ipr_Map, FColor = Ipr.Settings.TColor["bleuc"]},
-           {Name = "|", FColor = color_white},
-           {Name = "Ping :", FColor = color_white},
-           {Name = Ipr_PlayerPing, FColor = Ipr.Settings.TColor["bleuc"]},
-
-           Pos = {PWide = Ipr_HWide - 1, PHeight = Ipr_HHeight + 20},
-        },
-    }
-
-    Ipr_DrawMultipleTextAligned(Ipr_RenderFpsText)
-end
-
 local function Ipr_OnScreenSize()
     Ipr_Wide, Ipr_Height = ScrW(), ScrH()
 end
 
 hook.Add("ShutDown", "IprFpsBooster_ShutDown", Ipr_PlayerShutDown)
-hook.Add("PostDrawHUD", "IprFpsBooster_HUD", Ipr_HUD)
 hook.Add("OnScreenSizeChanged", "IprFpsBooster_OnScreen", Ipr_OnScreenSize)
 hook.Add("InitPostEntity", "IprFpsBooster_InitPlayer", Ipr_InitPostPlayer)
 hook.Add("OnPlayerChat", "IprFpsBooster_ChatCmds", Ipr_ChatCmds)

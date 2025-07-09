@@ -8,6 +8,7 @@ Ipr_Fps_Booster.DefaultSettings = {
         Vgui = "DCheckBoxLabel",
         Name = "FpsView",
         DefaultCheck = false,
+        HookFps = true,
         Localization = {
             Text = {
                 ["FR"] = "Compteur FPS visible",
