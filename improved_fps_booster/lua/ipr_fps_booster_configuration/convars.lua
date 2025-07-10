@@ -153,10 +153,6 @@ Ipr_Fps_Booster.DefaultCommands = {
                 Enabled = "-1",
                 Disabled = "0"
             },
-            ["cl_threaded_client_leaf_system"] = {
-                Enabled = "1",
-                Disabled = "0"
-            },
             ["r_threaded_client_shadow_manager"] = {
                 Enabled = "1",
                 Disabled = "0"
