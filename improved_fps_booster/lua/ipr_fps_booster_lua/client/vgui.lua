@@ -248,10 +248,11 @@ Ipr.Func.Activate = function(bool)
 end
 
 Ipr.Func.FpsCalculator = function()
-    local Ipr_CurTime = CurTime()
+    local Ipr_SysTime = SysTime()
 
-    if (Ipr_CurTime > (Ipr.CurNext or 0)) then
-        Ipr.Settings.FpsCurrent = math.Round(1 / FrameTime())
+    if (Ipr_SysTime > (Ipr.CurNext or 0)) then
+        local Ipr_AbsoluteFrameTime = engine.AbsoluteFrameTime()
+        Ipr.Settings.FpsCurrent = math.Round(1 / Ipr_AbsoluteFrameTime)
         Ipr.Settings.FpsCurrent = (Ipr.Settings.FpsCurrent > 999) and 999 or Ipr.Settings.FpsCurrent
 
         if (Ipr.Settings.FpsCurrent < Ipr.Settings.Fps.Min.Int) then
@@ -272,7 +273,7 @@ Ipr.Func.FpsCalculator = function()
             Ipr.Settings.Fps.Low.Lists = {}
         end
 
-        Ipr.CurNext = Ipr_CurTime + 0.3
+        Ipr.CurNext = Ipr_SysTime + 0.3
     end
 
     return Ipr.Settings.FpsCurrent, Ipr.Settings.Fps.Min.Int, Ipr.Settings.Fps.Max.Int, Ipr.Settings.Fps.Low.InProgress
