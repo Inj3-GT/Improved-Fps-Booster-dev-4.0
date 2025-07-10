@@ -149,7 +149,7 @@ Ipr.Func.SetConvar = function(name, value, save, exist, copy)
         end
 
         if (save == 1) then
-            if timer.Exists("IprFpsBooster_SetConvar") then
+            if (timer.Exists("IprFpsBooster_SetConvar")) then
                 timer.Remove("IprFpsBooster_SetConvar")
             end
 
@@ -657,14 +657,14 @@ local function Ipr_FpsBooster_Options(primary)
         end
     end
 
+    local Ipr_CenterVgui = Ipr_SSize.w / 2
+    Ipr.Settings.Vgui.CheckBox = {}
+
     Ipr_SUncheck:SetSize(16, 16)
     Ipr_SUncheck:SetPos(2, 2)
     Ipr_SUncheck:SetImage(Ipr_CheckboxState.Icon[true])
     Ipr_SUncheck.Paint = nil
-
-    Ipr.Settings.Vgui.CheckBox = {}
     Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckUncheckAll, Ipr_SUncheck, true)
-
     Ipr_SUncheck.DoClick = function()
         Ipr_CheckboxState.Default = not Ipr_CheckboxState.Default
         for i = 1, #Ipr.Settings.Vgui.CheckBox do 
@@ -677,8 +677,6 @@ local function Ipr_FpsBooster_Options(primary)
 
         Ipr_SUncheck:SetImage(Ipr_CheckboxState.Icon[Ipr_CheckboxState.Default])
     end
-
-    local Ipr_CenterVgui = Ipr_SSize.w / 2
 
     local Ipr_SOpti = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
     Ipr_SOpti:SetSize(232, 165)
@@ -715,7 +713,7 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr.Func.SetToolTip(Ipr_Fps_Booster.DefaultCommands[i].Localization.ToolTip, Ipr_SOptiButton)
         Ipr.Func.OverridePaint(Ipr_SOptiButton)
         
-        function Ipr_SOptiButton:Paint(w, h)
+        Ipr_SOptiButton.Paint = function(self, w, h)
             draw.SimpleText(Ipr_Fps_Booster.DefaultCommands[i].Localization.Text[Ipr.Settings.SetLang], Ipr.Settings.Font, 22, 5, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
         end
         Ipr_SOptiButton.OnChange = function(self)
@@ -761,13 +759,12 @@ local function Ipr_FpsBooster_Options(primary)
     local Ipr_OverrideVgui = {
         ["DCheckBoxLabel"] = {
             Func = function(panel, tbl, primary)
-                function panel:Paint(w, h)
+                panel.Paint = function(self, w, h)
                     draw.SimpleText(tbl.Localization.Text[Ipr.Settings.SetLang], Ipr.Settings.Font, 22, 4, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
                 end
 
                 panel:SetValue(Ipr.Func.GetConvar(tbl.Name))
                 panel:SetWide(210)
-
                 panel:Dock(FILL)
 
                 Ipr.Func.SetToolTip(tbl.Localization.ToolTip, panel)
@@ -811,7 +808,7 @@ local function Ipr_FpsBooster_Options(primary)
         },
         ["DNumSlider"] = {
             Func = function(panel, tbl, primary)
-                function primary:Paint(w, h)
+                primary.Paint = function(self, w, h)
                     draw.SimpleText(tbl.Localization.Text[Ipr.Settings.SetLang].. " [" ..math.Round(panel:GetValue()).. "]", Ipr.Settings.Font, w / 2, 0, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
                 end
 
@@ -834,7 +831,6 @@ local function Ipr_FpsBooster_Options(primary)
 
                 panel:SetSize(Ipr_PrimaryWide, 25)
                 panel:Dock(BOTTOM)
-
                 panel:SetMinMax(0, tbl.Max or 100)
                 panel:SetValue(Ipr.Func.GetConvar(tbl.Name))
                 panel:SetDecimals(0)
@@ -906,15 +902,15 @@ local function Ipr_FpsBooster_Options(primary)
                     return
                 end
 
-                if timer.Exists(Ipr.Settings.StartupLaunch.Name) then
-                    timer.Remove(Ipr.Settings.StartupLaunch.Name)
-                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned)
-                end
-
                 local Ipr_CurrentState = Ipr.Func.CurrentState()
                 if (Ipr_CurrentState) then
                     Ipr.Func.Activate(true)
                     chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].OptimizationReloaded)
+                end
+
+                if (timer.Exists(Ipr.Settings.StartupLaunch.Name)) then
+                    timer.Remove(Ipr.Settings.StartupLaunch.Name)
+                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned)
                 end
 
                 Ipr.Func.SetConvar("Startup", false, 2)
@@ -942,7 +938,7 @@ local function Ipr_FpsBooster_Options(primary)
                         },
             },
             Func = function(name, value)
-                if timer.Exists(Ipr.Settings.StartupLaunch.Name) then
+                if (timer.Exists(Ipr.Settings.StartupLaunch.Name)) then
                     timer.Remove(Ipr.Settings.StartupLaunch.Name)
                     chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned)
                 end
@@ -999,7 +995,6 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr_SManageCreate:SetImage(Ipr_SManageTbl.Icon)
 
         Ipr.Func.SetToolTip(Ipr_SManageTbl.Localization.ToolTip, Ipr_SManageCreate)
-
         if (Ipr_SManageTbl.Convar) then
             Ipr.Func.SetConvar(Ipr_SManageTbl.Convar.Name, Ipr_SManageTbl.Convar.DefaultCheck, nil, true)
         end
@@ -1152,7 +1147,7 @@ local function Ipr_FpsBooster()
 
         return Ipr_Copy.start
     end
-    
+
     Ipr_Copy.Draw = function(x, y, w, h, rotate, x0)
         local Ipr_Rad = math.rad(rotate)
         local Ipr_Cos, Ipr_Sin = math.cos(Ipr_Rad), math.sin(Ipr_Rad)
@@ -1177,7 +1172,6 @@ local function Ipr_FpsBooster()
     Ipr_PFps:SetSize(110, 83)
     Ipr_PFps:SetPos(Ipr_PSize.w / 2 - Ipr_PFps:GetWide() / 2 + 1, Ipr_PSize.h / 2 - Ipr_PFps:GetTall() / 2 - 15)
     Ipr_PFps:SetText("")
-
     Ipr_PFps.Paint = function(self, w, h)
         local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Func.FpsCalculator()
 
@@ -1211,8 +1205,8 @@ local function Ipr_FpsBooster()
     Ipr_PEnabled:SetPos(5, Ipr_PSize.h - Ipr_PEnabled:GetTall() - 5)
     Ipr_PEnabled:SetImage("icon16/tick.png")
     Ipr_PEnabled:SetText("")
-    function Ipr_PEnabled:Paint(w, h)
-        draw.RoundedBox( 6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
+    Ipr_PEnabled.Paint = function(self, w, h)
+        draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VEnabled, Ipr.Settings.Font, w / 2 + 3, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     Ipr_PEnabled.DoClick = function()
@@ -1243,8 +1237,8 @@ local function Ipr_FpsBooster()
     Ipr_PDisabled:SetPos(Ipr_PSize.w - Ipr_PDisabled:GetWide() - 5, Ipr_PSize.h - Ipr_PDisabled:GetTall() - 5)
     Ipr_PDisabled:SetImage("icon16/cross.png")
     Ipr_PDisabled:SetText("")
-    function Ipr_PDisabled:Paint(w, h)
-        draw.RoundedBox( 6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
+    Ipr_PDisabled.Paint = function(self, w, h)
+        draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VDisabled, Ipr.Settings.Font, w / 2 + 6, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
     Ipr_PDisabled.DoClick = function()
@@ -1271,8 +1265,7 @@ local function Ipr_FpsBooster()
     Ipr_PResetFps:SetText("")
     Ipr_PResetFps:SetImage("icon16/arrow_refresh.png")
     Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TReset, Ipr_PResetFps, true)
-
-    function Ipr_PResetFps:Paint(w, h)
+    Ipr_PResetFps.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
         draw.SimpleText("Reset FPS Max/Min", Ipr.Settings.Font, w / 2 + 5, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
@@ -1281,13 +1274,11 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/button9.wav")
     end
 
-    local ipr_MatLoading = Material("materials/icon16/cog.png")
-
     Ipr_PSettings:SetSize(95, 20)
     Ipr_PSettings:SetPos(Ipr_PSize.w - Ipr_PSettings:GetWide() - 5, 37)
     Ipr_PSettings:SetText("")
     Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Options, Ipr_PSettings, true)
-
+    local ipr_MatLoading = Material("materials/icon16/cog.png")
     Ipr_PSettings.Paint = function(self, w, h)
         local Ipr_IsHovered = self:IsHovered()
         draw.RoundedBox(6, 0, 0, w, h, (Ipr_IsHovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
@@ -1303,7 +1294,6 @@ local function Ipr_FpsBooster()
         end
         surface.DrawTexturedRectRotated(13, 11, 16, 16, Ipr_PRotation)
     end
-
     Ipr_PSettings.DoClick = function()
         if IsValid(Ipr.Settings.Vgui.Secondary) then
             return
@@ -1317,17 +1307,16 @@ local function Ipr_FpsBooster()
     Ipr_PLanguage:SetPos(5, 37)
     Ipr_PLanguage:SetFont(Ipr.Settings.Font)
     Ipr_PLanguage:SetValue(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..Ipr.Settings.SetLang)
+    Ipr_PLanguage:SetTextColor(Ipr.Settings.TColor["blanc"])
     
     for k, v in pairs(Ipr_Fps_Booster.Lang) do
         Ipr_PLanguage:AddChoice(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..k, k, false, "materials/flags16/" ..v.Icon)
     end
-    Ipr_PLanguage:SetTextColor(Ipr.Settings.TColor["blanc"])
 
-    function Ipr_PLanguage:Paint(w, h)
+    Ipr_PLanguage.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
     end
     Ipr.Func.OverridePaint(Ipr_PLanguage)
-
     Ipr_PLanguage.OnMenuOpened = function(self)
         local Ipr_PLanguageChild = self:GetChildren()
 
@@ -1434,8 +1423,8 @@ local function Ipr_InitPostPlayer()
 end
 
 local function Ipr_PlayerShutDown()
-    if timer.Exists(Ipr.Settings.StartupLaunch.Name) then
-        print(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned)
+    if (timer.Exists(Ipr.Settings.StartupLaunch.Name)) then
+        MsgC(Ipr.Settings.TColor["orange"], "[Improved FPS Booster] : " ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned.. "\n")
     end
 end
 
