@@ -210,6 +210,10 @@ Ipr.Func.IsChecked = function()
     return false
 end
 
+Ipr.Func.CurrentState = function()
+    return Ipr.Settings.Status.State
+end
+
 Ipr.Func.Activate = function(bool)
     local Ipr_LocalPlayer = LocalPlayer()
     local Ipr_ConvarsCheck = bool
@@ -249,7 +253,7 @@ Ipr.Func.FpsCalculator = function()
 
     if (Ipr_CurTime > (Ipr.CurNext or 0)) then
         Ipr.Settings.FpsCurrent = math.Round(1 / FrameTime())
-        Ipr.Settings.FpsCurrent = math.abs(Ipr.Settings.FpsCurrent) > 999 and 999 or Ipr.Settings.FpsCurrent
+        Ipr.Settings.FpsCurrent = (Ipr.Settings.FpsCurrent > 999) and 999 or Ipr.Settings.FpsCurrent
 
         if (Ipr.Settings.FpsCurrent < Ipr.Settings.Fps.Min.Int) then
             Ipr.Settings.Fps.Min.Int = Ipr.Settings.FpsCurrent
@@ -401,7 +405,13 @@ Ipr.Func.SetToolTip = function(text, panel, hover)
     end
 
     local Ipr_OverrideChildren = panel:GetChildren()
-    Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = panel
+    local Ipr_WhiteListPanel = {
+        ["DButton"] = true,
+    }
+
+    if Ipr_WhiteListPanel[panel:GetName()] then
+        Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = panel
+    end
 
     for i = 1, #Ipr_OverrideChildren do
         Ipr_OverrideChildren[i].OnCursorMoved = function(self)
@@ -598,13 +608,15 @@ local function Ipr_FpsBooster_Options(primary)
         
         draw.RoundedBoxEx(6, 0, 0, w, 20, Ipr.Settings.TColor["bleu"], true, true, false, false)
         draw.SimpleText("Options FPS Booster", Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText("FPS Limit : ", Ipr.Settings.Font, 5, h - 20, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
 
+        draw.SimpleText("FPS Limit : ", Ipr.Settings.Font, 5, h - 19, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
         local Ipr_FpsLimit = math.Round(Ipr.Func.InfoNum("fps_max"))
-        draw.SimpleText(Ipr_FpsLimit, Ipr.Settings.Font, 67, h - 20, Ipr.Func.ColorTransition(Ipr_FpsLimit), TEXT_ALIGN_LEFT)
+        Ipr_FpsLimit = (Ipr_FpsLimit > 1000) and 1000 or Ipr_FpsLimit
+
+        draw.SimpleText(Ipr_FpsLimit, Ipr.Settings.Font, 67, h - 19, Ipr.Func.ColorTransition(Ipr_FpsLimit), TEXT_ALIGN_LEFT)
         
-        draw.SimpleText(Ipr_Fps_Booster.Settings.Developer, Ipr.Settings.Font, w - 5, h - 20, Ipr.Settings.TColor["vert"], TEXT_ALIGN_RIGHT)
-        draw.SimpleText(Ipr_Fps_Booster.Settings.Version.. " By", Ipr.Settings.Font, w - 28, h - 20, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText("v" ..Ipr_Fps_Booster.Settings.Version, Ipr.Settings.Font, w - 39, h - 19, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText("[" ..Ipr_Fps_Booster.Settings.Developer.. "]", Ipr.Settings.Font, w - 5, h - 19, Ipr.Settings.TColor["vert"], TEXT_ALIGN_RIGHT)
     end
 
     Ipr_SClose:SetSize(16, 16)
@@ -899,7 +911,8 @@ local function Ipr_FpsBooster_Options(primary)
                     chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned)
                 end
 
-                if (Ipr.Settings.Status.State) then
+                local Ipr_CurrentState = Ipr.Func.CurrentState()
+                if (Ipr_CurrentState) then
                     Ipr.Func.Activate(true)
                     chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].OptimizationReloaded)
                 end
@@ -936,7 +949,8 @@ local function Ipr_FpsBooster_Options(primary)
 
                 local Ipr_SetStartup = value
                 if (Ipr_SetStartup) then
-                    if not Ipr.Settings.Status.State then
+                    local Ipr_CurrentState = Ipr.Func.CurrentState()
+                    if not Ipr_CurrentState then
                         Ipr.Func.Activate(true)
                     end
                     Ipr.Func.SetConvar(name, Ipr_SetStartup)
@@ -1099,12 +1113,12 @@ local function Ipr_FpsBooster()
         draw.RoundedBoxEx(6, 0, 0, w, 33, Ipr.Settings.TColor["bleu"], true, true, false, false)
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TEnabled,Ipr.Settings.Font,w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
-        local Ipr_CurrentStatus = Ipr.Settings.Status.State
-        local Ipr_TCurrentStatus = (Ipr_CurrentStatus) and "On (Boost)" or "Off"
-        local ipr_TCurrentColor = (Ipr_CurrentStatus) and (Ipr.Settings.Data.Set) and Ipr.Settings.TColor["orange"] or (Ipr_CurrentStatus) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"]
+        local Ipr_CurrentState = Ipr.Func.CurrentState()
+        local Ipr_TCurrentStatus = (Ipr_CurrentState) and "On (Boost)" or "Off"
+        local ipr_TCurrentColor = (Ipr_CurrentState) and (Ipr.Settings.Data.Set) and Ipr.Settings.TColor["orange"] or (Ipr_CurrentState) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"]
         
-        draw.SimpleText("FPS :",Ipr.Settings.Font, (Ipr_CurrentStatus) and w / 2 - 25 or w / 2 -10, 16, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText(Ipr_TCurrentStatus, Ipr.Settings.Font, (Ipr_CurrentStatus) and w / 2 + 22 or w / 2 + 18, 16, ipr_TCurrentColor, TEXT_ALIGN_CENTER)
+        draw.SimpleText("FPS :",Ipr.Settings.Font, (Ipr_CurrentState) and w / 2 - 25 or w / 2 -10, 16, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_TCurrentStatus, Ipr.Settings.Font, (Ipr_CurrentState) and w / 2 + 22 or w / 2 + 18, 16, ipr_TCurrentColor, TEXT_ALIGN_CENTER)
     end
 
     local Ipr_Icon = {
@@ -1163,7 +1177,6 @@ local function Ipr_FpsBooster()
     Ipr_PFps:SetSize(110, 83)
     Ipr_PFps:SetPos(Ipr_PSize.w / 2 - Ipr_PFps:GetWide() / 2 + 1, Ipr_PSize.h / 2 - Ipr_PFps:GetTall() / 2 - 15)
     Ipr_PFps:SetText("")
-    Ipr.Func.SetToolTip("Improved FPS Booster System " ..Ipr_Fps_Booster.Settings.Version.. " by Inj3", Ipr_PFps, true)
 
     Ipr_PFps.Paint = function(self, w, h)
         local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Func.FpsCalculator()
@@ -1257,6 +1270,8 @@ local function Ipr_FpsBooster()
     Ipr_PResetFps:SetPos(Ipr_PSize.w / 2 - Ipr_PResetFps:GetWide() / 2 + 1, 190)
     Ipr_PResetFps:SetText("")
     Ipr_PResetFps:SetImage("icon16/arrow_refresh.png")
+    Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TReset, Ipr_PResetFps, true)
+
     function Ipr_PResetFps:Paint(w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
         draw.SimpleText("Reset FPS Max/Min", Ipr.Settings.Font, w / 2 + 5, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)

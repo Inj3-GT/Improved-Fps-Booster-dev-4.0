@@ -29,6 +29,7 @@ Ipr_Fps_Booster.Lang["FR"] = {
     SettingsSaved = "Les paramètres d'optimisation ont été sauvegardés !",
     SReset = "L'optimisation est désactivé !",
     FogEnabled = "[Settings] Le brouillard est activé automatiquement !",
+    TReset = "Réinitialise les FPS minimum/maximum du compteur de FPS",
 }
 
 // English
@@ -57,4 +58,5 @@ Ipr_Fps_Booster.Lang["EN"] = {
     SettingsSaved = "Optimization parameters were saved !",
     SReset = "Optimization disabled !",
     FogEnabled = "[Settings] Fog is activated automatically !",
+    TReset = "Reset the minimum/maximum FPS of the FPS counter.",
 }
