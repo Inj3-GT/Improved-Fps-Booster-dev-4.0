@@ -8,7 +8,6 @@ Ipr_Fps_Booster.DefaultSettings = {
         Vgui = "DCheckBoxLabel",
         Name = "FpsView",
         DefaultCheck = false,
-        HookFps = true,
         Localization = {
             Text = {
                 ["FR"] = "Compteur FPS visible",
@@ -19,6 +18,7 @@ Ipr_Fps_Booster.DefaultSettings = {
                 ["EN"] = "Fps counter is visible on your screen",
             },
         },
+        HookFps = true,
     },
     {
         Vgui = "DNumSlider",
@@ -47,7 +47,6 @@ Ipr_Fps_Booster.DefaultSettings = {
     {
         Vgui = "DCheckBoxLabel",
         Name = "EnabledFog",
-        HookFog = true,
         DefaultCheck = false,
         Localization = {
             Text = {
@@ -59,6 +58,7 @@ Ipr_Fps_Booster.DefaultSettings = {
                 ["EN"] = "Automatic opening of the panel at the end of loading",
             },
         },
+        HookFog = true,
     },
     {
         Vgui = "DNumSlider",
@@ -134,7 +134,6 @@ Ipr_Fps_Booster.DefaultSettings = {
     {
         Vgui = "DCheckBoxLabel",
         Name = "EnableDebug",
-        Debug = false,
         DefaultCheck = false,
         Localization = {
             Text = {
@@ -146,5 +145,6 @@ Ipr_Fps_Booster.DefaultSettings = {
                 ["EN"] = "Displays the actions of the script in the console !",
             },
         },
+        Debug = true,
     },
 }
