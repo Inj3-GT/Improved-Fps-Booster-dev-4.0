@@ -1013,8 +1013,8 @@ local function Ipr_FpsBooster_Options(primary)
                     draw.RoundedBox(0, 0, h- 1, w, h, Ipr_ConvarColor)
                 else
                     if (Ipr.Settings.Data.Set) then
-                        local Ipr_CurTime = CurTime()
-                        local Ipr_ColorAbs = math.abs(math.sin(Ipr_CurTime * 2.5) * 255)
+                        local Ipr_SysTime = SysTime()
+                        local Ipr_ColorAbs = math.abs(math.sin(Ipr_SysTime * 2.5) * 255)
 
                         draw.RoundedBoxEx(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"], true, true, false, false)
                         draw.RoundedBox(0, 0, h- 1, w, h, Color(Ipr_ColorAbs, Ipr_ColorAbs, 0))
@@ -1129,9 +1129,9 @@ local function Ipr_FpsBooster()
     Ipr_Copy.Update = 0
 
     Ipr_Copy.Loop = function()
-        local Ipr_CurTime = CurTime()
+        local Ipr_SysTime = SysTime()
 
-        if (Ipr_CurTime > Ipr_Copy.Update) then
+        if (Ipr_SysTime > Ipr_Copy.Update) then
             for i = Ipr_Copy.start, Ipr_Copy.s_end, Ipr_Copy.step do
                 Ipr_Copy.start = i + Ipr_Copy.step
 
@@ -1144,7 +1144,7 @@ local function Ipr_FpsBooster()
                 end
                 break
             end
-            Ipr_Copy.Update = Ipr_CurTime + Ipr_Copy.NextStep
+            Ipr_Copy.Update = Ipr_SysTime + Ipr_Copy.NextStep
         end
 
         return Ipr_Copy.start
@@ -1292,7 +1292,8 @@ local function Ipr_FpsBooster()
 
         local Ipr_PRotation = 0
         if (Ipr_IsHovered) then
-             Ipr_PRotation = math.sin(CurTime() * 80 * math.pi / 180) * 180
+            local Ipr_SysTime = SysTime()
+            Ipr_PRotation = math.sin(Ipr_SysTime * 80 * math.pi / 180) * 180
         end
         surface.DrawTexturedRectRotated(13, 11, 16, 16, Ipr_PRotation)
     end
