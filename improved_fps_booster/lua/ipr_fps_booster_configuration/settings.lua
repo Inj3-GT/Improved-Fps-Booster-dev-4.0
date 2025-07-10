@@ -18,7 +18,7 @@ Ipr_Fps_Booster.DefaultSettings = {
                 ["EN"] = "Fps counter is visible on your screen",
             },
         },
-        HookFps = true,
+        Run_HookFps = true,
     },
     {
         Vgui = "DNumSlider",
@@ -58,7 +58,7 @@ Ipr_Fps_Booster.DefaultSettings = {
                 ["EN"] = "Automatic opening of the panel at the end of loading",
             },
         },
-        HookFog = true,
+        Run_HookFog = true,
     },
     {
         Vgui = "DNumSlider",
@@ -145,6 +145,6 @@ Ipr_Fps_Booster.DefaultSettings = {
                 ["EN"] = "Displays the actions of the script in the console !",
             },
         },
-        Debug = true,
+        Run_Debug = true,
     },
 }

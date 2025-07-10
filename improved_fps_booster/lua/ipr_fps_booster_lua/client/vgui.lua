@@ -129,7 +129,7 @@ Ipr.Func.SetConvar = function(name, value, save, exist, copy)
         file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
 
         if (Ipr.Settings.Debug) then
-            print("Creating new convar : " ..name, value, save)
+            print("Creating a new convar : " ..name, value, save)
         end
         if (copy) then
             Ipr.Func.CopyData()
@@ -149,11 +149,12 @@ Ipr.Func.SetConvar = function(name, value, save, exist, copy)
         end
 
         if (save == 1) then
-            if (timer.Exists("IprFpsBooster_SetConvar")) then
-                timer.Remove("IprFpsBooster_SetConvar")
+            local Ipr_SaveConvar = "IprFpsBooster_SetConvar"
+            if (timer.Exists(Ipr_SaveConvar)) then
+                timer.Remove(Ipr_SaveConvar)
             end
 
-            timer.Create("IprFpsBooster_SetConvar", 1, 1, function()
+            timer.Create(Ipr_SaveConvar, 1, 1, function()
                 file.Write(Ipr_Fps_Booster.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
             end)
         elseif (save == 2) then
@@ -238,7 +239,7 @@ Ipr.Func.Activate = function(bool)
                 RunConsoleCommand(k, Ipr_Toggle)
 
                 if (Ipr.Settings.Debug) then
-                    print("Convar " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle.. " was updated")
+                    print("Updating " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle)
                 end
             end
         end
@@ -786,15 +787,15 @@ local function Ipr_FpsBooster_Options(primary)
                         end
                    end
 
-                   if (tbl.HookFog) then
+                   if (tbl.Run_HookFog) then
                         Ipr.Func.FogActivate(Ipr_GetChecked)
-                   elseif (tbl.HookFps) then
+                   elseif (tbl.Run_HookFps) then
                         if (Ipr_GetChecked) then
                             hook.Add("PostDrawHUD", "IprFpsBooster_HUD", Ipr.Func.FpsHud)
                         else
                             hook.Remove("PostDrawHUD", "IprFpsBooster_HUD", Ipr.Func.FpsHud)
                         end
-                    elseif (tbl.Debug) then
+                    elseif (tbl.Run_Debug) then
                         Ipr.Settings.Debug = Ipr_GetChecked
                     end
                 end
@@ -911,7 +912,8 @@ local function Ipr_FpsBooster_Options(primary)
                     chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].OptimizationReloaded)
                 end
 
-                if (timer.Exists(Ipr.Settings.StartupLaunch.Name)) then
+                local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
+                if (Ipr_StartupDelay) then
                     timer.Remove(Ipr.Settings.StartupLaunch.Name)
                     chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned)
                 end
@@ -927,7 +929,7 @@ local function Ipr_FpsBooster_Options(primary)
             Vgui = "DButton",
             Icon = "icon16/bullet_key.png",
             Sound = "buttons/button9.wav",
-            DataDelayed = {Name = Ipr.Settings.StartupLaunch.Name, Start = Ipr.Settings.StartupLaunch.Delay},
+            DataDelayed = true,
             DrawLine = true,
             Convar = {
                 Name = "Startup",
@@ -941,7 +943,8 @@ local function Ipr_FpsBooster_Options(primary)
                         },
             },
             Func = function(name, value)
-                if (timer.Exists(Ipr.Settings.StartupLaunch.Name)) then
+                local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
+                if (Ipr_StartupDelay) then
                     timer.Remove(Ipr.Settings.StartupLaunch.Name)
                     chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned)
                 end
@@ -1010,7 +1013,9 @@ local function Ipr_FpsBooster_Options(primary)
                 if (Ipr_SManageTbl.Convar) then
                     draw.RoundedBoxEx(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"], true, true, false, false)
 
-                    Ipr_ConvarColor = (Ipr_SManageTbl.DataDelayed and timer.Exists(Ipr_SManageTbl.DataDelayed.Name)) and Ipr.Settings.TColor["orange"] or Ipr.Func.GetConvar(Ipr_SManageTbl.Convar.Name) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"]
+                    local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
+                    Ipr_ConvarColor = (Ipr_StartupDelay) and Ipr.Settings.TColor["orange"] or Ipr.Func.GetConvar(Ipr_SManageTbl.Convar.Name) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"]
+                    
                     draw.RoundedBox(0, 0, h- 1, w, h, Ipr_ConvarColor)
                 else
                     if (Ipr.Settings.Data.Set) then
@@ -1034,16 +1039,16 @@ local function Ipr_FpsBooster_Options(primary)
             surface.PlaySound(Ipr_SManageTbl.Sound)
 
             if (Ipr_SManageTbl.Convar) then
-                local Ipr_TimerData = timer.Exists(Ipr_SManageTbl.DataDelayed.Name)
-                local Ipr_GConvar = false
+                local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
+                local Ipr_DataBool = false
 
-                if (Ipr_SManageTbl.DataDelayed) and (Ipr_TimerData) then
-                    Ipr_GConvar = not Ipr_TimerData
+                if (Ipr_SManageTbl.DataDelayed) and (Ipr_StartupDelay) then
+                    Ipr_DataBool = not Ipr_StartupDelay
                 else
-                    Ipr_GConvar = not Ipr.Func.GetConvar(Ipr_SManageTbl.Convar.Name)
+                    Ipr_DataBool = not Ipr.Func.GetConvar(Ipr_SManageTbl.Convar.Name)
                 end
 
-                Ipr_SManageTbl.Func(Ipr_SManageTbl.Convar.Name, Ipr_GConvar)
+                Ipr_SManageTbl.Func(Ipr_SManageTbl.Convar.Name, Ipr_DataBool)
                 return
             end
 
@@ -1437,7 +1442,8 @@ local function Ipr_PlayerShutDown()
         Ipr.Func.Activate(false)
     end
 
-    if (timer.Exists(Ipr.Settings.StartupLaunch.Name)) then
+    local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
+    if (Ipr_StartupDelay) then
         MsgC(Ipr.Settings.TColor["orange"], "[Improved FPS Booster] : " ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned.. "\n")
     end
 end
