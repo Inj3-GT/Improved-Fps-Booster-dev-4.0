@@ -410,7 +410,7 @@ Ipr.Func.SetToolTip = function(text, panel, hover)
         ["DButton"] = true,
     }
 
-    if Ipr_WhiteListPanel[panel:GetName()] then
+    if (Ipr_WhiteListPanel[panel:GetName()]) then
         Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = panel
     end
 
@@ -570,7 +570,7 @@ local function Ipr_FpsBooster_Options(primary)
         local function Ipr_MovedVgui()
             Ipr.Settings.Vgui.Secondary:AlphaTo(255, 1.5, 0)
 
-            local Ipr_CenterSecondaryH = primary:GetY() - (Ipr.Settings.Vgui.Secondary:GetTall() / 2)
+            local Ipr_CenterSecondaryH = primary:GetY() - (Ipr_SSize.h / 2)
             local Ipr_FirstPosW = primary:GetX() + primary:GetWide()
             Ipr.Settings.Vgui.Secondary:SetPos(Ipr_FirstPosW, Ipr_CenterSecondaryH)
 
@@ -584,7 +584,7 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr.Settings.Vgui.Secondary:SetAlpha(0)
 
         if not primary.PMoved then
-            primary:MoveTo(primary:GetX() - (Ipr.Settings.Vgui.Secondary:GetWide() / 2), primary:GetY(), 0.3, 0, -1, Ipr_MovedVgui)
+            primary:MoveTo(primary:GetX() - (Ipr_SSize.w / 2), primary:GetY(), 0.3, 0, -1, Ipr_MovedVgui)
         else
             Ipr_MovedVgui()
         end
@@ -595,7 +595,7 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr.Settings.Vgui.Secondary.Paint = function(self, w, h)
         if (self.Dragging) and IsValid(primary) then
             local Ipr_CenterPrimaryW = self:GetX() - primary:GetWide() - 10
-            local Ipr_CenterPrimaryH = self:GetY() + (self:GetTall() / 2)
+            local Ipr_CenterPrimaryH = self:GetY() + (Ipr_SSize.h / 2)
             Ipr_CenterPrimaryH = Ipr_CenterPrimaryH - (primary:GetTall() / 2)
 
             primary:SetPos(Ipr_CenterPrimaryW, Ipr_CenterPrimaryH)
@@ -1094,9 +1094,9 @@ local function Ipr_FpsBooster()
     Ipr.Settings.Vgui.Primary.Paint = function(self, w, h)
         if (self.Dragging) then
             if IsValid(Ipr.Settings.Vgui.Secondary) then
-                local Ipr_CenterSecondaryW = self:GetX() + self:GetWide() + 10
+                local Ipr_CenterSecondaryW = self:GetX() + Ipr_PSize.w + 10
                 local Ipr_CenterSecondaryH = self:GetY() - (Ipr.Settings.Vgui.Secondary:GetTall() / 2)
-                Ipr_CenterSecondaryH = Ipr_CenterSecondaryH + (self:GetTall() / 2)
+                Ipr_CenterSecondaryH = Ipr_CenterSecondaryH + (Ipr_PSize.h / 2)
     
                 Ipr.Settings.Vgui.Secondary:SetPos(Ipr_CenterSecondaryW, Ipr_CenterSecondaryH)
             end
