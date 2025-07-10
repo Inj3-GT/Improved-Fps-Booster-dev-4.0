@@ -1400,8 +1400,8 @@ local function Ipr_InitPostPlayer()
         Ipr.Func.CreateData()
 
         local Ipr_Startup = Ipr.Func.GetConvar("Startup")
-        Ipr.Func.Activate(Ipr_Startup)
         if (Ipr_Startup) then
+            Ipr.Func.Activate(true)
             chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupEnabled)
         end
 
