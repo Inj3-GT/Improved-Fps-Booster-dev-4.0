@@ -894,7 +894,7 @@ local function Ipr_FpsBooster_Options(primary)
             Sound = "buttons/button9.wav",
             DrawLine = true,
             Localization = {
-                        Text = "Save optimization",
+                        Text = Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].BSaveOpti,
                         ToolTip = {
                             ["FR"] = "Sauvegarde les paramètres d'optimisation !",
                             ["EN"] = "Save optimization settings !",
@@ -1410,7 +1410,7 @@ local function Ipr_InitPostPlayer()
 
         local Ipr_DebugEnable = Ipr.Func.GetConvar("EnableDebug")
         if (Ipr_DebugEnable) then
-            Ipr.Settings.Debug = true 
+            Ipr.Settings.Debug = true
         end
 
         local Ipr_Startup = Ipr.Func.GetConvar("Startup")
@@ -1420,18 +1420,22 @@ local function Ipr_InitPostPlayer()
         end
 
         local Ipr_ForcedOpen = Ipr.Func.GetConvar("ForcedOpen")
-        if (Ipr_ForcedOpen) and not IsValid(Ipr.Settings.Vgui.Primary) then
-            Ipr_FpsBooster()
+        if not IsValid(Ipr.Settings.Vgui.Primary) then
+            if (Ipr_ForcedOpen) then
+                Ipr_FpsBooster()
+            else
+                chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CForcedOpen)
+            end
         end
 
         local Ipr_HudEnable = Ipr.Func.GetConvar("FpsView")
         if (Ipr_HudEnable) then
-           hook.Add("PostDrawHUD", "IprFpsBooster_HUD", Ipr.Func.FpsHud)
+            hook.Add("PostDrawHUD", "IprFpsBooster_HUD", Ipr.Func.FpsHud)
         end
-        
+
         local Ipr_EnabledFog = Ipr.Func.GetConvar("EnabledFog")
         if (Ipr_EnabledFog) then
-           Ipr.Func.FogActivate(true)
+            Ipr.Func.FogActivate(true)
         end
     end)
 end
