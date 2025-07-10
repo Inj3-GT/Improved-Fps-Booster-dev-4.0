@@ -119,7 +119,7 @@ Ipr_Fps_Booster.DefaultSettings = {
     {
         Vgui = "DCheckBoxLabel",
         Name = "ServerLeaveSettings",
-        DefaultCheck = true,
+        DefaultCheck = false,
         Localization = {
             Text = {
                 ["FR"] = "[Leave] Désactivation",
