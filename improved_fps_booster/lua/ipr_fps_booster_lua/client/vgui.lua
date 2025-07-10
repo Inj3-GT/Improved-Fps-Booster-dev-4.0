@@ -9,7 +9,7 @@ local Ipr_Infinity = math.huge
 Ipr.Settings = {
     Blur = Material("pp/blurscreen"),
     SetLang = Ipr_Fps_Booster.Settings.Language,
-    Debug = true,
+    Debug = false,
     Font = "Ipr_Fps_Booster_Font",
     Status = {
         Name = "FPS Status",
@@ -215,7 +215,6 @@ Ipr.Func.CurrentState = function()
 end
 
 Ipr.Func.Activate = function(bool)
-    local Ipr_LocalPlayer = LocalPlayer()
     local Ipr_ConvarsCheck = bool
 
     for i = 1, #Ipr_Fps_Booster.DefaultCommands do
@@ -235,8 +234,8 @@ Ipr.Func.Activate = function(bool)
                 if Ipr.Func.InfoNum(k, true) or (Ipr_InfoCmds == Ipr_Toggle) then
                     continue
                 end
-                
-                Ipr_LocalPlayer:ConCommand(k.. " " ..Ipr_Toggle)
+
+                RunConsoleCommand(k, Ipr_Toggle)
 
                 if (Ipr.Settings.Debug) then
                     print("Convar " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle.. " was updated")
@@ -793,7 +792,9 @@ local function Ipr_FpsBooster_Options(primary)
                         else
                             hook.Remove("PostDrawHUD", "IprFpsBooster_HUD", Ipr.Func.FpsHud)
                         end
-                   end
+                    elseif (tbl.Debug) then
+                        Ipr.Settings.Debug = Ipr_GetChecked
+                    end
                 end
             end,
 
@@ -1374,8 +1375,8 @@ local Ipr_DefaultCommands = {
     },
     ["/reset"] = {
         Func = function()
-            Ipr.Func.ResetFps()
             Ipr.Func.Activate(false)
+            Ipr.Func.ResetFps()
 
             chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SReset)
             surface.PlaySound("buttons/combine_button5.wav")
@@ -1398,6 +1399,11 @@ end
 local function Ipr_InitPostPlayer()
     timer.Simple(5, function()
         Ipr.Func.CreateData()
+
+        local Ipr_DebugEnable = Ipr.Func.GetConvar("EnableDebug")
+        if (Ipr_DebugEnable) then
+            Ipr.Settings.Debug = true 
+        end
 
         local Ipr_Startup = Ipr.Func.GetConvar("Startup")
         if (Ipr_Startup) then
@@ -1423,6 +1429,11 @@ local function Ipr_InitPostPlayer()
 end
 
 local function Ipr_PlayerShutDown()
+    local Ipr_ServerLeave = Ipr.Func.GetConvar("ServerLeaveConvars")
+    if (Ipr_ServerLeave) then
+        Ipr.Func.Activate(false)
+    end
+
     if (timer.Exists(Ipr.Settings.StartupLaunch.Name)) then
         MsgC(Ipr.Settings.TColor["orange"], "[Improved FPS Booster] : " ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned.. "\n")
     end

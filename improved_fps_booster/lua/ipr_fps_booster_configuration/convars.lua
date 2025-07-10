@@ -107,7 +107,7 @@ Ipr_Fps_Booster.DefaultCommands = {
             },
             ["nb_shadow_dist"] = {
                 Enabled = "0",
-                Disabled = "400"
+                Disabled = "3000"
             }
         },
         Localization = {
@@ -251,7 +251,7 @@ Ipr_Fps_Booster.DefaultCommands = {
             },
             ["cl_phys_props_max"] = {
                 Enabled = "0",
-                Disabled = "128"
+                Disabled = "300"
             },
             ["props_break_max_pieces"] = {
                 Enabled = "0",

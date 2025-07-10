@@ -92,8 +92,8 @@ Ipr_Fps_Booster.DefaultSettings = {
         DefaultCheck = true,
         Localization = {
             Text = {
-                ["FR"] = "Quitter (activer/désactiver)",
-                ["EN"] = "Closed (enable/disable)",
+                ["FR"] = "[Activer/Désactiver]",
+                ["EN"] = "[Enable/Disable]",
             },
             ToolTip = {
                 ["FR"] = "Si vous appuyez sur le bouton activer/désactiver, le panneau se fermera automatiquement !",
@@ -107,12 +107,43 @@ Ipr_Fps_Booster.DefaultSettings = {
         DefaultCheck = true,
         Localization = {
             Text = {
-                ["FR"] = "Ouverture automatique",
-                ["EN"] = "Auto opening",
+                ["FR"] = "[Join] Ouverture",
+                ["EN"] = "[Join] Opening",
             },
             ToolTip = {
-                ["FR"] = "Ouverture automatique du panel à la fin du chargement",
-                ["EN"] = "Automatic opening of the panel at the end of loading",
+                ["FR"] = "Ouverture automatique du panel lorsque vous entrez sur le serveur !",
+                ["EN"] = "Automatic opening of the panel when you enter the server !",
+            },
+        },
+    },
+    {
+        Vgui = "DCheckBoxLabel",
+        Name = "ServerLeaveSettings",
+        DefaultCheck = true,
+        Localization = {
+            Text = {
+                ["FR"] = "[Leave] Désactivation",
+                ["EN"] = "[Leave] Deactivation",
+            },
+            ToolTip = {
+                ["FR"] = "Désactive automatiquement le FPS Booster une fois que vous quittez le serveur !",
+                ["EN"] = "Automatically disables the FPS Booster once you leave the server !",
+            },
+        },
+    },
+    {
+        Vgui = "DCheckBoxLabel",
+        Name = "EnableDebug",
+        Debug = false,
+        DefaultCheck = false,
+        Localization = {
+            Text = {
+                ["FR"] = "[Dev] Debug",
+                ["EN"] = "Debug",
+            },
+            ToolTip = {
+                ["FR"] = "Affiche dans la console les actions du script !",
+                ["EN"] = "Displays the actions of the script in the console !",
             },
         },
     },
