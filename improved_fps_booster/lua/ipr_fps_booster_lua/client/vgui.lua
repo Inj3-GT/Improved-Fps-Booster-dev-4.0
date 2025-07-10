@@ -1417,7 +1417,7 @@ local function Ipr_InitPostPlayer()
         
         local Ipr_EnabledFog = Ipr.Func.GetConvar("EnabledFog")
         if (Ipr_EnabledFog) then
-           Ipr.Func.FogActivate(Ipr_EnabledFog)
+           Ipr.Func.FogActivate(true)
         end
     end)
 end
