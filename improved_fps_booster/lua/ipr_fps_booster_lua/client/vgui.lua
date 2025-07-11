@@ -409,6 +409,7 @@ Ipr.Func.SetToolTip = function(text, panel, hover)
     local Ipr_OverrideChildren = panel:GetChildren()
     local Ipr_WhiteListPanel = {
         ["DButton"] = true,
+        ["DImageButton"] = true,
     }
 
     if (Ipr_WhiteListPanel[panel:GetName()]) then
@@ -559,7 +560,6 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr.Settings.Vgui.Secondary = vgui.Create("DFrame")
     
     local Ipr_SClose = vgui.Create("DImageButton", Ipr.Settings.Vgui.Secondary)
-    local Ipr_SUncheck = vgui.Create("DImageButton", Ipr.Settings.Vgui.Secondary)
 
     Ipr.Settings.Vgui.Secondary:SetTitle("")
     Ipr.Settings.Vgui.Secondary:SetSize(Ipr_SSize.w, Ipr_SSize.h)
@@ -637,13 +637,8 @@ local function Ipr_FpsBooster_Options(primary)
         end)
     end
 
-    local Ipr_CheckboxState = {
-        Default = Ipr.Func.IsChecked(), 
-        Icon = {
-            [false] = "icon16/joystick_add.png", 
-            [true] = "icon16/joystick_delete.png"
-        }
-    }
+    local Ipr_CenterVgui = Ipr_SSize.w / 2
+    Ipr.Settings.Vgui.CheckBox = {}
     
     local function Ipr_SScrollPaint(panel)
         panel.Paint = nil
@@ -659,27 +654,6 @@ local function Ipr_FpsBooster_Options(primary)
         end
     end
 
-    local Ipr_CenterVgui = Ipr_SSize.w / 2
-    Ipr.Settings.Vgui.CheckBox = {}
-
-    Ipr_SUncheck:SetSize(16, 16)
-    Ipr_SUncheck:SetPos(2, 2)
-    Ipr_SUncheck:SetImage(Ipr_CheckboxState.Icon[true])
-    Ipr_SUncheck.Paint = nil
-    Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckUncheckAll, Ipr_SUncheck, true)
-    Ipr_SUncheck.DoClick = function()
-        Ipr_CheckboxState.Default = not Ipr_CheckboxState.Default
-        for i = 1, #Ipr.Settings.Vgui.CheckBox do 
-            if (i > #Ipr_Fps_Booster.DefaultCommands) then
-                break
-            end
-
-            Ipr.Settings.Vgui.CheckBox[i].Vgui:SetValue(Ipr_CheckboxState.Default)
-        end
-
-        Ipr_SUncheck:SetImage(Ipr_CheckboxState.Icon[Ipr_CheckboxState.Default])
-    end
-
     local Ipr_SOpti = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
     Ipr_SOpti:SetSize(232, 165)
     Ipr_SOpti:SetPos(Ipr_CenterVgui - (Ipr_SOpti:GetWide() / 2), 90)
@@ -688,6 +662,69 @@ local function Ipr_FpsBooster_Options(primary)
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TSettings, Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
 
+    local Ipr_Revert = vgui.Create("DImageButton", Ipr_SOpti)
+    Ipr_Revert:SetSize(16, 16)
+    Ipr_Revert:SetPos(Ipr_SOpti:GetWide() - Ipr_Revert:GetWide() - 2, 2)
+    Ipr_Revert:SetImage("icon16/arrow_rotate_clockwise.png")
+    Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertData, Ipr_Revert, true)
+    Ipr_Revert.Paint = nil
+    Ipr_Revert.DoClick = function()
+        local Ipr_CopyFind = false
+
+        for i = 1, #Ipr_Fps_Booster.Convars do
+           local Ipr_ConvarList = Ipr_Fps_Booster.Convars[i]
+           local Ipr_ConvarName = Ipr_ConvarList.Name
+           local Ipr_ConvarCheck = Ipr_ConvarList.Checked
+
+            for i = 1, #Ipr.Settings.Data.Copy do 
+               local Ipr_CopyList = Ipr.Settings.Data.Copy[i]
+               local Ipr_CopyName = Ipr_CopyList.Name
+               local Ipr_CopyDefault = Ipr_CopyList.Checked
+
+                if (Ipr_ConvarName == Ipr_CopyName) and (Ipr_ConvarCheck ~= Ipr_CopyDefault) then
+                    for i = 1, #Ipr.Settings.Vgui.CheckBox do 
+                       local Ipr_CheckList = Ipr.Settings.Vgui.CheckBox[i]
+                       local Ipr_CheckName = Ipr_CheckList.Name
+
+                        if (Ipr_CopyName == Ipr_CheckName) then
+                            Ipr_CheckList.Vgui:SetValue(Ipr_CopyDefault)
+                            Ipr_CopyFind = true
+                            break
+                        end
+                    end
+                    break
+                end
+            end
+        end
+
+        chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], (Ipr_CopyFind) and Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataApply or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataCancel)
+    end
+
+    local Ipr_CheckboxState = {
+        [true] = {Icon = "icon16/lorry_flatbed.png", PoH = 0},
+        [false] = {Icon = "icon16/lorry.png", PoH = 3},
+    }
+
+    local Ipr_SUncheck, Ipr_SChecked = vgui.Create("DImageButton", Ipr_SOpti), Ipr.Func.IsChecked()
+    Ipr_SUncheck:SetSize(16, 16)
+    Ipr_SUncheck:SetPos(5, Ipr_CheckboxState[Ipr_SChecked].PoH)
+    Ipr_SUncheck:SetImage(Ipr_CheckboxState[Ipr_SChecked].Icon)
+    Ipr_SUncheck.Paint = nil
+    Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckUncheckAll, Ipr_SUncheck, true)
+    Ipr_SUncheck.DoClick = function()
+        Ipr_SChecked = not Ipr_SChecked
+        for i = 1, #Ipr.Settings.Vgui.CheckBox do 
+            if (i > #Ipr_Fps_Booster.DefaultCommands) then
+                break
+            end
+
+            Ipr.Settings.Vgui.CheckBox[i].Vgui:SetValue(Ipr_SChecked)
+        end
+
+        Ipr_SUncheck:SetImage(Ipr_CheckboxState[Ipr_SChecked].Icon)
+        Ipr_SUncheck:SetY(Ipr_CheckboxState[Ipr_SChecked].PoH)
+    end
+      
     local Ipr_SScrollOpti = vgui.Create("DScrollPanel", Ipr_SOpti)
     Ipr_SScrollOpti:Dock(FILL)
     Ipr_SScrollOpti:DockMargin(5, 22, 0, 5)

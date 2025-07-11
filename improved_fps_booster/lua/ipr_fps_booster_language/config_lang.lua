@@ -32,6 +32,9 @@ Ipr_Fps_Booster.Lang["FR"] = {
     TReset = "Réinitialise les FPS minimum/maximum du compteur de FPS",
     BSaveOpti = "Save optimisation",
     CForcedOpen = "Pour ouvrir Improved FPS Booster /boost",
+    RevertData = "Revenir à vos paramètres précédents [optimisation]",
+    RevertDataApply = "Paramètre précédent rétabli !",
+    RevertDataCancel = "Aucun paramètre précédent n'a été détecté !",
 }
 
 // English
@@ -63,4 +66,7 @@ Ipr_Fps_Booster.Lang["EN"] = {
     TReset = "Reset the minimum/maximum FPS of the FPS counter.",
     BSaveOpti = "Save optimization",
     CForcedOpen = "To open Improved FPS Booster /boost",
+    RevertData = "Return to your previous settings [optimisation]",
+    RevertDataApply = "Previous parameter restored !",
+    RevertDataCancel = "No previous parameter detected !",
 }
