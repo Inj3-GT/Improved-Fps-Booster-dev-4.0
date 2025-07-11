@@ -1328,7 +1328,7 @@ local function Ipr_FpsBooster()
         local Ipr_IsHovered = self:IsHovered()
         draw.RoundedBox(6, 0, 0, w, h, (Ipr_IsHovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
-        draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 10, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 9, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
         surface.SetMaterial(ipr_MatLoading)
         surface.SetDrawColor(color_white)
