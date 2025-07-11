@@ -141,8 +141,8 @@ Ipr_Fps_Booster.DefaultSettings = {
                 ["EN"] = "Debug",
             },
             ToolTip = {
-                ["FR"] = "Affiche dans la console les actions du script !",
-                ["EN"] = "Displays the actions of the script in the console !",
+                ["FR"] = "Affiche des logs dans la console !",
+                ["EN"] = "Displays logs in the console !",
             },
         },
         Run_Debug = true,
