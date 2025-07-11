@@ -1338,7 +1338,7 @@ local function Ipr_FpsBooster()
             local Ipr_SysTime = SysTime()
             Ipr_PRotation = math.sin(Ipr_SysTime * 80 * math.pi / 180) * 180
         end
-        surface.DrawTexturedRectRotated(13, 11, 16, 16, Ipr_PRotation)
+        surface.DrawTexturedRectRotated(11, 10, 16, 16, Ipr_PRotation)
     end
     Ipr_PSettings.DoClick = function()
         if IsValid(Ipr.Settings.Vgui.Secondary) then
