@@ -1319,7 +1319,7 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/button9.wav")
     end
 
-    Ipr_PSettings:SetSize(95, 20)
+    Ipr_PSettings:SetSize(85, 20)
     Ipr_PSettings:SetPos(Ipr_PSize.w - Ipr_PSettings:GetWide() - 5, 37)
     Ipr_PSettings:SetText("")
     Ipr.Func.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Options, Ipr_PSettings, true)
@@ -1328,7 +1328,7 @@ local function Ipr_FpsBooster()
         local Ipr_IsHovered = self:IsHovered()
         draw.RoundedBox(6, 0, 0, w, h, (Ipr_IsHovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
-        draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 7, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 10, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
         surface.SetMaterial(ipr_MatLoading)
         surface.SetDrawColor(color_white)
@@ -1349,29 +1349,38 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/button9.wav")
     end
 
-    Ipr_PLanguage:SetSize(105, 20)
+    Ipr_PLanguage:SetSize(80, 20)
     Ipr_PLanguage:SetPos(5, 37)
     Ipr_PLanguage:SetFont(Ipr.Settings.Font)
-    Ipr_PLanguage:SetValue(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..Ipr.Settings.SetLang)
+    Ipr_PLanguage:SetValue(Ipr.Settings.SetLang)
     Ipr_PLanguage:SetTextColor(Ipr.Settings.TColor["blanc"])
     
     for k, v in pairs(Ipr_Fps_Booster.Lang) do
         Ipr_PLanguage:AddChoice(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..k, k, false, "materials/flags16/" ..v.Icon)
     end
 
+    Ipr_PLanguage:SetImage("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Icon)
+    Ipr_PLanguage:SetText("")
+
     Ipr_PLanguage.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
+
+        surface.SetFont(Ipr.Settings.Font)
+        local Ipr_TLang = "| " ..Ipr.Settings.SetLang.. " |"
+        local Ipr_PTWide = surface.GetTextSize(Ipr_TLang)
+
+        draw.SimpleText(Ipr_TLang, Ipr.Settings.Font, w / 2 - Ipr_PTWide / 2 + 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
     end
-    Ipr.Func.OverridePaint(Ipr_PLanguage)
+
     Ipr_PLanguage.OnMenuOpened = function(self)
         local Ipr_PLanguageChild = self:GetChildren()
 
         for _, v in ipairs(Ipr_PLanguageChild) do
-            v.Paint = function(p, w, h)
-                draw.RoundedBox(6, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
-            end
-
             if (v:GetName() == "DMenu") then
+                v.Paint = function(p, w, h)
+                   draw.RoundedBox(6, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
+                end
+                
                 local Ipr_PLanguageDMenu = v:GetChildren()
                 for _, d in ipairs(Ipr_PLanguageDMenu) do
 
@@ -1388,25 +1397,30 @@ local function Ipr_FpsBooster()
                 end
             end
         end
+
         Ipr.Func.OverridePaint(self)
     end
     Ipr_PLanguage.OnSelect = function(self, index, value)
         local Ipr_SetLang = self.Data[index]
-        if (Ipr_SetLang == Ipr.Settings.SetLang) then
-            return
-        end
 
         self:Clear()
-        self:SetValue(Ipr_Fps_Booster.Lang[Ipr_SetLang].SelectLangue.. " " ..Ipr_SetLang)
+        self:SetValue(Ipr_SetLang)
+        
         for k, v in pairs(Ipr_Fps_Booster.Lang) do
             self:AddChoice(Ipr_Fps_Booster.Lang[Ipr_SetLang].SelectLangue.. " " ..k, k, false, "materials/flags16/" ..v.Icon)
         end
 
-        Ipr.Settings.SetLang = Ipr_SetLang
-        file.Write(Ipr_Fps_Booster.Settings.Save.. "language.json", Ipr_SetLang)
-        
-        surface.PlaySound("buttons/button9.wav")
+        self:SetImage("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr_SetLang].Icon)
+        self:SetText("")
+
+        if (Ipr_SetLang ~= Ipr.Settings.SetLang) then
+            file.Write(Ipr_Fps_Booster.Settings.Save.. "language.json", Ipr_SetLang)
+
+            Ipr.Settings.SetLang = Ipr_SetLang
+            surface.PlaySound("buttons/button9.wav")
+        end
     end
+    Ipr.Func.OverridePaint(Ipr_PLanguage)
 end
 
 local Ipr_DefaultCommands = {
