@@ -1,3 +1,9 @@
+// Script by Inj3
+// Steam : https://steamcommunity.com/id/Inj3/
+// Discord : Inj3
+// General Public License v3.0
+// https://github.com/Inj3-GT
+
 return {
     // Icon Flag
     Icon = "fr.png",
