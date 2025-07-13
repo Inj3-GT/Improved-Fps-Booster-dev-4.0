@@ -1,6 +1,7 @@
 return {
     // Icon Flag
     Icon = "fr.png",
+
     // Vgui
     TEnabled = "Voulez-vous activer Improved FPS Booster ?",
     TSettings = "Optimisation :",
@@ -29,6 +30,7 @@ return {
     RevertData = "Revenir à vos paramètres précédents [optimisation]",
     RevertDataApply = "Paramètre précédent rétabli !",
     RevertDataCancel = "Aucun paramètre précédent n'a été détecté !",
+
     // Convars
     MultiCore = "Rendu Multicoeur",
     TMultiCore = "Tirer parti d'un processeur multicoeur avec le moteur de Garry's Mod",
@@ -62,6 +64,7 @@ return {
     TMuzzleflash = "Désactive la lumière générée par le flash de bouche",
     Ejectedshells = "Douilles éjectées (arme)",
     TEjectedshells = "Désactive le rendu des douilles éjectées",
+
     // Settings
     FpsView = "Compteur FPS visible",
     TFpsView = "Compteur de FPS visible sur votre HUD",
@@ -79,6 +82,7 @@ return {
     TServerLeave = "Désactive automatiquement le FPS Booster une fois que vous quittez le serveur !",
     EnableDebug = "[Dev] Debug",
     TEnableDebug = "Affiche des logs dans la console !",
+    
     // Buttons
     SaveOpti = "Save optimisation",
     TSaveOpti = "Sauvegarde les paramètres d'optimisation !",
