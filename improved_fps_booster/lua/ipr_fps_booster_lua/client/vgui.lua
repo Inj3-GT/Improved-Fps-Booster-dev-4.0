@@ -928,28 +928,6 @@ local function Ipr_FpsBooster()
     Ipr.Function.OverridePaint(Ipr_PLanguage)
 end
 
-local Ipr_ChatCommands = {
-    ["/boost"] = {
-        Function = function()
-            Ipr.Function.CreateData()
-            Ipr_FpsBooster()
-
-            return true
-        end
-    },
-    ["/reset"] = {
-        Function = function()
-            Ipr.Function.Activate(false)
-            Ipr.Function.ResetFps()
-
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SReset)
-            surface.PlaySound("buttons/combine_button5.wav")
-
-            return true
-        end
-    },
-}
-
 local function Ipr_InitPostPlayer()
     timer.Simple(5, function()
         Ipr.Function.CreateData()
@@ -1001,6 +979,28 @@ end
 local function Ipr_OnScreenSize()
     Ipr.Settings.Pos.w, Ipr.Settings.Pos.h = ScrW(), ScrH()
 end
+
+local Ipr_ChatCommands = {
+    ["/boost"] = {
+        Function = function()
+            Ipr.Function.CreateData()
+            Ipr_FpsBooster()
+
+            return true
+        end
+    },
+    ["/reset"] = {
+        Function = function()
+            Ipr.Function.Activate(false)
+            Ipr.Function.ResetFps()
+
+            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SReset)
+            surface.PlaySound("buttons/combine_button5.wav")
+
+            return true
+        end
+    },
+}                        
 
 local function Ipr_ChatCmds(ply, text)
     local Ipr_LocalPlayer = LocalPlayer()
