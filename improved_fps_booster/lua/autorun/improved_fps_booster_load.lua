@@ -5,7 +5,6 @@
 
 Ipr_Fps_Booster = Ipr_Fps_Booster or {}
 
-local Ipr_SendFileCL = file.Find("ipr_fps_booster_lua/client/*", "LUA")
 local Ipr_SendFileCLConfig = file.Find("ipr_fps_booster_configuration/*", "LUA")
 local Ipr_SendFileLangCL = file.Find("ipr_fps_booster_language/*", "LUA")
 
@@ -49,6 +48,8 @@ else
     for _, f in pairs(Ipr_SendFileCLConfig) do
         AddCSLuaFile("ipr_fps_booster_configuration/"..f)
     end
+    
+    local Ipr_SendFileCL = file.Find("ipr_fps_booster_lua/client/*", "LUA")
     for _, f in pairs(Ipr_SendFileCL) do
         AddCSLuaFile("ipr_fps_booster_lua/client/"..f)
     end
