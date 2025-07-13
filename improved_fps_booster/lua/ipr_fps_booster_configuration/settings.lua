@@ -3,20 +3,14 @@
 // General Public License v3.0
 // https://github.com/Inj3-GT
 
-Ipr_Fps_Booster.DefaultSettings = {
+return {
     {
         Vgui = "DCheckBoxLabel",
         Name = "FpsView",
         DefaultCheck = false,
         Localization = {
-            Text = {
-                ["FR"] = "Compteur FPS visible",
-                ["EN"] = "Display FPS on hud",
-            },
-            ToolTip = {
-                ["FR"] = "Compteur de FPS visible sur votre HUD",
-                ["EN"] = "Fps counter is visible on your screen",
-            },
+            Text = "FpsView",
+            ToolTip = "TFpsView",
         },
         Run_HookFps = true,
     },
@@ -26,10 +20,7 @@ Ipr_Fps_Booster.DefaultSettings = {
         Paired = "FpsView",
         DefaultCheck = 44,
         Localization = {
-            Text = {
-                ["FR"] = "FPS Position Largeur",
-                ["EN"] = "FPS Position Width",
-            },
+            Text = "FpsPosWidth",
         },
     },
     {
@@ -38,10 +29,7 @@ Ipr_Fps_Booster.DefaultSettings = {
         Paired = "FpsView",
         DefaultCheck = 28,
         Localization = {
-            Text = {
-                ["FR"] = "FPS Position Hauteur",
-                ["EN"] = "FPS Position Height",
-            },
+            Text = "FpsPosHeight",
         },
     },
     {
@@ -49,14 +37,8 @@ Ipr_Fps_Booster.DefaultSettings = {
         Name = "EnabledFog",
         DefaultCheck = false,
         Localization = {
-            Text = {
-                ["FR"] = "Activer le brouillard",
-                ["EN"] = "Enabled Fog",
-            },
-            ToolTip = {
-                ["FR"] = "Ouverture automatique du panel à la fin du chargement",
-                ["EN"] = "Automatic opening of the panel at the end of loading",
-            },
+            Text = "EnabledFog",
+            ToolTip = "TEnabledFog",
         },
         Run_HookFog = true,
     },
@@ -67,10 +49,7 @@ Ipr_Fps_Booster.DefaultSettings = {
         DefaultCheck = 0,
         Max = 1000000,
         Localization = {
-            Text = {
-                ["FR"] = "Brouillard Position Début",
-                ["EN"] = "Fog Position Start",
-            },
+            Text = "EnabledFogSart",
         },
     },
     {
@@ -80,10 +59,7 @@ Ipr_Fps_Booster.DefaultSettings = {
         DefaultCheck = 5000,
         Max = 1000000,
         Localization = {
-            Text = {
-                ["FR"] = "Brouillard Position Fin",
-                ["EN"] = "Fog Position End",
-            },
+            Text = "EnabledFogEnd",
         },
     },
     {
@@ -91,14 +67,8 @@ Ipr_Fps_Booster.DefaultSettings = {
         Name = "AutoClose",
         DefaultCheck = true,
         Localization = {
-            Text = {
-                ["FR"] = "[Activer/Désactiver]",
-                ["EN"] = "[Enable/Disable]",
-            },
-            ToolTip = {
-                ["FR"] = "Si vous appuyez sur le bouton activer/désactiver, le panneau se fermera automatiquement !",
-                ["EN"] = "If you press the activate/deactivate button, the panel will close automatically !",
-            },
+            Text = "AutoClose",
+            ToolTip = "TAutoClose",
         },
     },
     {
@@ -106,14 +76,8 @@ Ipr_Fps_Booster.DefaultSettings = {
         Name = "ForcedOpen",
         DefaultCheck = true,
         Localization = {
-            Text = {
-                ["FR"] = "[Join] Ouverture",
-                ["EN"] = "[Join] Opening",
-            },
-            ToolTip = {
-                ["FR"] = "Ouverture automatique du panel lorsque vous entrez sur le serveur !",
-                ["EN"] = "Automatic opening of the panel when you enter the server !",
-            },
+            Text = "ForcedOpen",
+            ToolTip = "TForcedOpen",
         },
     },
     {
@@ -121,14 +85,8 @@ Ipr_Fps_Booster.DefaultSettings = {
         Name = "ServerLeaveSettings",
         DefaultCheck = false,
         Localization = {
-            Text = {
-                ["FR"] = "[Leave] Désactivation",
-                ["EN"] = "[Leave] Deactivation",
-            },
-            ToolTip = {
-                ["FR"] = "Désactive automatiquement le FPS Booster une fois que vous quittez le serveur !",
-                ["EN"] = "Automatically disables the FPS Booster once you leave the server !",
-            },
+            Text = "ServerLeave",
+            ToolTip = "TServerLeave",
         },
     },
     {
@@ -136,14 +94,8 @@ Ipr_Fps_Booster.DefaultSettings = {
         Name = "EnableDebug",
         DefaultCheck = false,
         Localization = {
-            Text = {
-                ["FR"] = "[Dev] Debug",
-                ["EN"] = "Debug",
-            },
-            ToolTip = {
-                ["FR"] = "Affiche des logs dans la console !",
-                ["EN"] = "Displays logs in the console !",
-            },
+            Text = "EnableDebug",
+            ToolTip = "TEnableDebug",
         },
         Run_Debug = true,
     },

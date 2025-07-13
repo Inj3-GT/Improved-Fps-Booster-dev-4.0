@@ -9,13 +9,11 @@ local Ipr_SendFileCL = file.Find("ipr_fps_booster_lua/client/*", "LUA")
 local Ipr_SendFileCLConfig = file.Find("ipr_fps_booster_configuration/*", "LUA")
 local Ipr_SendFileLangCL = file.Find("ipr_fps_booster_language/*", "LUA")
 
-Ipr_Fps_Booster.Settings = {}
+Ipr_Fps_Booster.Settings = Ipr_Fps_Booster.Settings or {}
 Ipr_Fps_Booster.Settings.Version = "4.0"
 
 if (CLIENT) then
-    Ipr_Fps_Booster.Settings.Language = "EN"
-    Ipr_Fps_Booster.Settings.Save = "improvedfpsbooster/"
-    Ipr_Fps_Booster.Settings.ExternalLink = "https://steamcommunity.com/sharedfiles/filedetails/?id=1762151370"
+    Ipr_Fps_Booster.Settings.DefaultLanguage = "EN"
     Ipr_Fps_Booster.Settings.Developer = "Inj3"
     
     surface.CreateFont("Ipr_Fps_Booster_Font",{
@@ -25,18 +23,20 @@ if (CLIENT) then
         antialias = true
     })
 
-    Ipr_Fps_Booster.Convars = {}
+    Ipr_Fps_Booster.Convars = Ipr_Fps_Booster.Convars or {}
     Ipr_Fps_Booster.Lang = {}
 
     for _, f in pairs(Ipr_SendFileLangCL) do
-        include("ipr_fps_booster_language/"..f)
+       local Ipr_RefLang = string.upper(string.gsub(f, ".lua", ""))
+       Ipr_Fps_Booster.Lang[Ipr_RefLang] = include("ipr_fps_booster_language/"..f)
     end
+    
     for _, f in pairs(Ipr_SendFileCLConfig) do
-        include("ipr_fps_booster_configuration/"..f)
+        local Ipr_RefConfig = "Default" ..string.lower(string.gsub(f, ".lua", ""))
+        Ipr_Fps_Booster[Ipr_RefConfig] = include("ipr_fps_booster_configuration/"..f)
     end
-    for _, f in pairs(Ipr_SendFileCL) do
-        include("ipr_fps_booster_lua/client/"..f)
-    end
+
+    include("ipr_fps_booster_lua/client/vgui.lua")
 else
     local Ipr_Resource = {"resource/fonts/Rajdhani-Bold.ttf", "materials/icon/ipr_boost_computer.png", "materials/icon/ipr_boost_wrench.png"}
     for _, v in pairs(Ipr_Resource) do

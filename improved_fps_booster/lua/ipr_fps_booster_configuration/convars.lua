@@ -3,9 +3,8 @@
 // General Public License v3.0
 // https://github.com/Inj3-GT
 
-Ipr_Fps_Booster.DefaultCommands = {
+return {
     {
-
         Name = "Multicore",
         DefaultCheck = true,
         Convars = {
@@ -15,18 +14,11 @@ Ipr_Fps_Booster.DefaultCommands = {
             },
         },
         Localization = {
-            Text = {
-                ["FR"] = "Rendu Multicoeur",
-                ["EN"] = "Multicore Rendering"
-            },
-            ToolTip = {
-                ["FR"] = "Tirer parti d'un processeur multicoeur avec le moteur de Garry's Mod",
-                ["EN"] = "Multi-threading Source Engine"
-            }
+            Text = "MultiCore",
+            ToolTip = "TMultiCore",
         },
     },
     {
-
         Name = "Corde",
         DefaultCheck = false,
         Convars = {
@@ -36,18 +28,11 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Rendu des cordes",
-                ["EN"] = "Rope Rendering"
-            },
-            ToolTip = {
-                ["FR"] = "Utilise une méthode de rendu optimisée pour les cordes",
-                ["EN"] = "Uses a rendering method optimized for ropes"
-            }
+            Text = "Rope",
+            ToolTip = "TRope",
         },
     },
     {
-
         Name = "Skybox",
         DefaultCheck = false,
         Convars = {
@@ -57,19 +42,11 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Skybox 3D",
-                ["EN"] = "3D skybox"
-            },
-            ToolTip = {
-                ["FR"] = "Désactive le rendu du ciel",
-                ["EN"] = "Disables skybox rendering"
-            }
+            Text = "Skybox",
+            ToolTip = "TSkybox",
         },
-
     },
     {
-
         Name = "Material processing",
         DefaultCheck = false,
         Convars = {
@@ -79,14 +56,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             },
         },
         Localization = {
-            Text = {
-                ["FR"] = "Traitement des matériaux",
-                ["EN"] = "Material processing"
-            },
-            ToolTip = {
-                ["FR"] = "Ce paramètre détermine le mode de gestion des threads utilisé par le système de matériaux",
-                ["EN"] = "This setting determines the threading mode the material system uses"
-            }
+            Text = "MatProcessing",
+            ToolTip = "TMatProcessing",
         },
     },
     {
@@ -111,14 +82,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Rendu des ombres",
-                ["EN"] = "Shadow Rendering"
-            },
-            ToolTip = {
-                ["FR"] = "Réduit la qualité des ombres (ne les supprimes pas complétement)",
-                ["EN"] = "Reduces the quality of shadows (does not removed them completely)"
-            }
+            Text = "ShadowQuality",
+            ToolTip = "TShadowQuality",
         },
     },
     {
@@ -131,14 +96,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Filtrage texture",
-                ["EN"] = "Texture filtering"
-            },
-            ToolTip = {
-                ["FR"] = "Désactive le filtrage des textures",
-                ["EN"] = "Disables texture filtering"
-            }
+            Text = "TextureFiltering",
+            ToolTip = "TTextureFiltering",
         },
     },
     {
@@ -159,14 +118,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Comportement moteur",
-                ["EN"] = "Modify the behavior (engine)"
-            },
-            ToolTip = {
-                ["FR"] = "Modifie le comportement du moteur (particule, matrice osseuse, corde, pvs - threads séparés)",
-                ["EN"] = "Modifies engine behavior (particle, bone matrix, string, pvs - separate threads)"
-            }
+            Text = "SourceEngine",
+            ToolTip = "TSourceEngine",
         },
     },
     {
@@ -179,14 +132,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Accéleration materiel",
-                ["EN"] = "Hardware acceleration"
-            },
-            ToolTip = {
-                ["FR"] = "Algorithme de calcul de perspective plus rapide",
-                ["EN"] = "Faster perspective calculation algorithm"
-            }
+            Text = "HardwareAcceleration",
+            ToolTip = "THardwareAcceleration",
         },
     },
     {
@@ -199,14 +146,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Rendu des dents (PM)",
-                ["EN"] = "Teeth rendering (PM)"
-            },
-            ToolTip = {
-                ["FR"] = "Désactive l'affichage des dents (playermodel)",
-                ["EN"] = "Disables teeth rendering (playermodel)"
-            }
+            Text = "TeethPM",
+            ToolTip = "TTeethPM",
         },
     },
     {
@@ -231,14 +172,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Rendu du sang",
-                ["EN"] = "Blood rendering"
-            },
-            ToolTip = {
-                ["FR"] = "Désactive le rendu du sang",
-                ["EN"] = "Disables blood rendering"
-            }
+            Text = "Blood",
+            ToolTip = "TBlood",
         },
     },
     {
@@ -259,14 +194,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Objets physiques",
-                ["EN"] = "Physical objects"
-            },
-            ToolTip = {
-                ["FR"] = "Désactive les petits objets (bouteilles, petites boîtes de conserve, briques)",
-                ["EN"] = "Disables small objects (bottles, small cans, bricks)"
-            }
+            Text = "SmallObject",
+            ToolTip = "TSmallObject",
         },
     },
     {
@@ -283,14 +212,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Flou lumineux",
-                ["EN"] = "Bloom"
-            },
-            ToolTip = {
-                ["FR"] = "Désactive le flou lumineux (effet graphique)",
-                ["EN"] = "Disables bloom (graphical effect)"
-            }
+            Text = "Bloom",
+            ToolTip = "TBloom",
         },
     },
     {
@@ -303,14 +226,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Eclaboussures d'eau",
-                ["EN"] = "Splash Effects"
-            },
-            ToolTip = {
-                ["FR"] = "Désactiver l'effet d'éclaboussures d'eau",
-                ["EN"] = "Disable water splash effect"
-            }
+            Text = "WaterSplash",
+            ToolTip = "TWaterSplash",
         },
     },
     {
@@ -323,14 +240,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             }
         },
         Localization = {
-            Text = {
-                ["FR"] = "Effets de gaz M9K (arme)",
-                ["EN"] = "M9K Gas Effects (weapon)"
-            },
-            ToolTip = {
-                ["FR"] = "Désactive les effets de nuages de fumée et les éclaboussures de gaz sur les armes M9K",
-                ["EN"] = "Disables smoke cloud and gas splash effects on M9K weapons"
-            }
+            Text = "M9KEffect",
+            ToolTip = "TM9KEffect",
         },
     },
     {
@@ -343,14 +254,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             },
         },
         Localization = {
-            Text = {
-                ["FR"] = "Muzzle flash (arme)",
-                ["EN"] = "Muzzle flash (weapon)",
-            },
-            ToolTip = {
-                ["FR"] = "Désactive la lumière générée par le flash de bouche",
-                ["EN"] = "Disables the light generated by the muzzle flash",
-            }
+            Text = "Muzzleflash",
+            ToolTip = "TMuzzleflash",
         },
     },
     {
@@ -363,14 +268,8 @@ Ipr_Fps_Booster.DefaultCommands = {
             },
         },
         Localization = {
-            Text = {
-                ["FR"] = "Douilles éjectées (arme)",
-                ["EN"] = "Ejected shells (weapon)",
-            },
-            ToolTip = {
-                ["FR"] = "Désactive le rendu des douilles éjectées",
-                ["EN"] = "Disable rendering of ejected shells",
-            }
+            Text = "Ejectedshells",
+            ToolTip = "TEjectedshells",
         },
     },
 }
