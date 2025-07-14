@@ -107,15 +107,21 @@ local function Ipr_FpsBooster_Options(primary)
     end
     
     Ipr.Settings.Vgui.Secondary.Paint = function(self, w, h)
-        if (self.Dragging) and IsValid(primary) then
-            local Ipr_CenterPrimaryW = self:GetX() - primary:GetWide() - 10
-            local Ipr_CenterPrimaryH = self:GetY() + (Ipr_SSize.h / 2)
-            Ipr_CenterPrimaryH = Ipr_CenterPrimaryH - (primary:GetTall() / 2)
+        if IsValid(primary) then
+            if (primary.Dragging) and (self.m_AnimList) then
+                self:Stop()
+                self:SetAlpha(255)
+            end
+            if (self.Dragging) then
+                local Ipr_CenterPrimaryW = self:GetX() - primary:GetWide() - 10
+                local Ipr_CenterPrimaryH = self:GetY() + (Ipr_SSize.h / 2)
+                Ipr_CenterPrimaryH = Ipr_CenterPrimaryH - (primary:GetTall() / 2)
 
-            primary:SetPos(Ipr_CenterPrimaryW, Ipr_CenterPrimaryH)
+                primary:SetPos(Ipr_CenterPrimaryW, Ipr_CenterPrimaryH)
 
-            if not primary.PMoved then
-               primary.PMoved = true
+                if not primary.PMoved then
+                   primary.PMoved = true
+                end
             end
         end
 
