@@ -25,7 +25,7 @@ return {
     DefaultConfig = "La configuration par défaut a été chargée !",
     StartupEnabled = "[Optimisation] Le lancement au démarrage est activé !",
     StartupDisabled = "Le lancement au démarrage est désactivé !",
-    StartupAbandoned = "Le lancement au démarrage est abandonné !",
+    StartupAbandoned = "Le lancement au démarrage a été abandonné !",
     StartupLaunched = "[Apply To Startup] Sauvegarde automatique dans 5 minutes pour prévenir tout crash, veuillez laisser Improved Fps Booster activé !",
     OptimizationReloaded = "Optimisation rechargée !",
     SettingsSaved = "Les paramètres d'optimisation ont été sauvegardés !",
