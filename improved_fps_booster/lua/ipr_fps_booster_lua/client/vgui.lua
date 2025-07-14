@@ -687,17 +687,22 @@ local function Ipr_FpsBooster()
     Ipr_PLanguage.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
-        surface.SetFont(Ipr.Settings.Font)
         local Ipr_TLang = Ipr.Settings.SetLang
+
+        surface.SetFont(Ipr.Settings.Font)
         local Ipr_PTWide, Ipr_PTHeight = surface.GetTextSize(Ipr_TLang)
-        draw.SimpleText(Ipr_TLang, Ipr.Settings.Font, w / 2 - Ipr_PTWide / 2 + 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
 
-        surface.SetDrawColor(ColorAlpha(color_white, 100))
-        local Ipr_AlignLeft = w / 2 - (Ipr_PTWide + 1) / 2
-        surface.DrawLine(Ipr_AlignLeft, h - Ipr_PTHeight + 2, Ipr_AlignLeft, Ipr_PTHeight - 2)
+        local Ipr_AlignCenterText = w / 2 - Ipr_PTWide / 2 + 2
+        draw.SimpleText(Ipr_TLang, Ipr.Settings.Font, Ipr_AlignCenterText, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
 
-        local Ipr_AlignRight = w / 2 + Ipr_PTWide - 1
-        surface.DrawLine(Ipr_AlignRight, h - Ipr_PTHeight + 2, Ipr_AlignRight, Ipr_PTHeight - 2)
+        surface.SetDrawColor(ColorAlpha(color_white, 125))
+
+        local Ipr_AlignLeft = Ipr_AlignCenterText - 3
+        Ipr_AlignLeft = math.ceil(Ipr_AlignLeft)
+        surface.DrawLine(Ipr_AlignLeft, h - Ipr_PTHeight + 3, Ipr_AlignLeft, Ipr_PTHeight - 4)
+
+        local Ipr_AlignRight = Ipr_AlignCenterText + 4 + Ipr_PTWide
+        surface.DrawLine(Ipr_AlignRight, h - Ipr_PTHeight + 3, Ipr_AlignRight, Ipr_PTHeight - 4)
     end
 
     Ipr_PLanguage.OnMenuOpened = function(self)
