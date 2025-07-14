@@ -347,8 +347,8 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SScrollVbarManage:SetWide(7)
     Ipr_SScrollPaint(Ipr_SScrollVbarManage)
 
-    for i = 1, #Ipr_Fps_Booster.Defaultbutton do
-        local Ipr_SManageTbl = Ipr_Fps_Booster.Defaultbutton[i]
+    for i = 1, #Ipr_Fps_Booster.Defaultbuttons do
+        local Ipr_SManageTbl = Ipr_Fps_Booster.Defaultbuttons[i]
 
         local Ipr_SManagePanel = vgui.Create("DPanel", Ipr_SScrollManage)
         Ipr_SManagePanel:Dock(TOP)
