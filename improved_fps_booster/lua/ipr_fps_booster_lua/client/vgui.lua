@@ -183,7 +183,7 @@ local function Ipr_FpsBooster_Options(primary)
                local Ipr_CopyName = Ipr_CopyList.Name
                local Ipr_CopyDefault = Ipr_CopyList.Checked
 
-                if (Ipr_ConvarName == Ipr_CopyName) and (Ipr_ConvarCheck ~= Ipr_CopyDefault) then
+                if (Ipr_ConvarName == Ipr_CopyName and Ipr_ConvarCheck ~= Ipr_CopyDefault) then
                     for c = 1, #Ipr.Settings.Vgui.CheckBox do 
                        local Ipr_CheckList = Ipr.Settings.Vgui.CheckBox[c]
                        local Ipr_CheckName = Ipr_CheckList.Name
