@@ -271,10 +271,9 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr_SOptiButton.OnChange = function(self)
             Ipr.Function.SetConvar(Ipr_SOptiTbl.Name, self:GetChecked())
 
-            local Ipr_Compare = Ipr_SOptiTbl.Name
             local Ipr_ConvarsCount = #Ipr_Fps_Booster.Convars
-            local Ipr_ConvarFind = false
             local Ipr_TableData = Ipr.Function.GetCopyData()
+            local Ipr_ConvarFind = false
 
             for i = 1, #Ipr_TableData do
                 local Ipr_DataName = Ipr_TableData[i].Name
