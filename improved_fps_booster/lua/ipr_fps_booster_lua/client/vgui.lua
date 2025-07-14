@@ -362,11 +362,11 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr_SManageCreate:SetImage(Ipr_SManageTbl.Icon)
         Ipr.Function.SetToolTip(Ipr_SManageTbl.Localization.ToolTip, Ipr_SManageCreate)
         
-        local Ipr_ConvarColor = color_white
         if (Ipr_SManageTbl.Convar) then
             Ipr.Function.SetConvar(Ipr_SManageTbl.Convar.Name, Ipr_SManageTbl.Convar.DefaultCheck, nil, true)
         end
-
+            
+        local Ipr_ConvarColor = color_white
         Ipr_SManageCreate.Paint = function(self, w, h)
             local Ipr_Hovered = self:IsHovered()
             if (Ipr_SManageTbl.DrawLine) then
