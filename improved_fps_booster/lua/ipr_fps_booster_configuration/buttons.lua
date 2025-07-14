@@ -53,29 +53,30 @@ return {
             Text = "ApplyStartup",
             ToolTip = "TApplyStartup",
         },
-        Function = function(name, value, tbl)
+        Function = function(tbl, but)
             local Ipr_StartupDelay = timer.Exists(tbl.Settings.StartupLaunch.Name)
             if (Ipr_StartupDelay) then
                 timer.Remove(tbl.Settings.StartupLaunch.Name)
                 chat.AddText(tbl.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", tbl.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[tbl.Settings.SetLang].StartupAbandoned)
             end
 
-            local Ipr_SetStartup = value
+            local Ipr_SetStartup = not Ipr_StartupDelay
             if (Ipr_SetStartup) then
                 local Ipr_CurrentState = tbl.Function.CurrentState()
                 if not Ipr_CurrentState then
                     tbl.Function.Activate(true)
                 end
-                tbl.Function.SetConvar(name, Ipr_SetStartup)
+
+                tbl.Function.SetConvar(but.Convar.Name, Ipr_SetStartup)
 
                 timer.Create(tbl.Settings.StartupLaunch.Name, tbl.Settings.StartupLaunch.Delay, 1, function()
-                    tbl.Function.SetConvar(name, true, 2)
+                    tbl.Function.SetConvar(but.Convar.Name, true, 2)
                     chat.AddText(tbl.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", tbl.Settings.TColor["vert"], Ipr_Fps_Booster.Lang[tbl.Settings.SetLang].StartupEnabled)
                 end)
 
                 chat.AddText(tbl.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", tbl.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[tbl.Settings.SetLang].StartupLaunched)
             else
-                tbl.Function.SetConvar(name, Ipr_SetStartup, 1)
+                tbl.Function.SetConvar(but.Convar.Name, Ipr_SetStartup, 1)
                 chat.AddText(tbl.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", tbl.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[tbl.Settings.SetLang].StartupDisabled)
             end
         end

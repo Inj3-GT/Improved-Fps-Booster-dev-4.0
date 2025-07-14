@@ -68,7 +68,11 @@ local function Ipr_FpsBooster_Options(primary)
 
     local Ipr_SSize = {w = 240, h = 450}
     Ipr.Settings.Vgui.Secondary = vgui.Create("DFrame")
-    
+
+    local Ipr_SOpti = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
+    local Ipr_Revert = vgui.Create("DImageButton", Ipr_SOpti)
+    local Ipr_SUncheck = vgui.Create("DImageButton", Ipr_SOpti)
+    local Ipr_SScrollOpti = vgui.Create("DScrollPanel", Ipr_SOpti)
     local Ipr_SClose = vgui.Create("DImageButton", Ipr.Settings.Vgui.Secondary)
 
     Ipr.Settings.Vgui.Secondary:SetTitle("")
@@ -133,11 +137,6 @@ local function Ipr_FpsBooster_Options(primary)
     local Ipr_CenterVgui = Ipr_SSize.w / 2
     local Ipr_SChecked = Ipr.Function.IsChecked()
     local Ipr_CheckboxState = {[true] = {Icon = "icon16/lorry_flatbed.png", PoH = 0}, [false] = {Icon = "icon16/lorry.png", PoH = 3}}
-
-    local Ipr_SOpti = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
-    local Ipr_Revert = vgui.Create("DImageButton", Ipr_SOpti)
-    local Ipr_SUncheck = vgui.Create("DImageButton", Ipr_SOpti)
-    local Ipr_SScrollOpti = vgui.Create("DScrollPanel", Ipr_SOpti)
 
     Ipr.Settings.Vgui.CheckBox = {}
 
@@ -286,7 +285,6 @@ local function Ipr_FpsBooster_Options(primary)
                      end
                 end
             end
-
             Ipr.Settings.Data.Set = Ipr_ConvarFind
         end
 
@@ -396,22 +394,8 @@ local function Ipr_FpsBooster_Options(primary)
             draw.SimpleText(Ipr_TButton, Ipr.Settings.Font, w / 2 - Ipr_PTWide / 2 + 7, h / 2 - Ipr_PTHeight /  2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
         end
         Ipr_SManageCreate.DoClick = function()
+            Ipr_SManageTbl.Function(Ipr, Ipr_SManageTbl)
             surface.PlaySound(Ipr_SManageTbl.Sound)
-
-            if (Ipr_SManageTbl.Convar) then
-                local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
-                local Ipr_DataBool = false
-
-                if (Ipr_SManageTbl.DataDelayed) and (Ipr_StartupDelay) then
-                    Ipr_DataBool = not Ipr_StartupDelay
-                else
-                    Ipr_DataBool = not Ipr.Function.GetConvar(Ipr_SManageTbl.Convar.Name)
-                end
-
-                Ipr_SManageTbl.Function(Ipr_SManageTbl.Convar.Name, Ipr_DataBool, Ipr)
-                return
-            end
-            Ipr_SManageTbl.Function(Ipr)
         end
     end
 end
@@ -437,7 +421,6 @@ local function Ipr_FpsBooster()
     Ipr.Settings.Vgui.Primary:SetSize(Ipr_PSize.w, Ipr_PSize.h)
     Ipr.Settings.Vgui.Primary:Center()
     Ipr.Settings.Vgui.Primary:MakePopup()
-    
     Ipr.Settings.Vgui.Primary:SetMouseInputEnabled(false)
 
     timer.Simple(0.1, function()
@@ -687,7 +670,6 @@ local function Ipr_FpsBooster()
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
         local Ipr_TLang = Ipr.Settings.SetLang
-
         surface.SetFont(Ipr.Settings.Font)
         local Ipr_PTWide, Ipr_PTHeight = surface.GetTextSize(Ipr_TLang)
 
