@@ -696,7 +696,6 @@ local function Ipr_FpsBooster()
         local Ipr_AlignLeft = w / 2 - (Ipr_PTWide + 1) / 2
         surface.DrawLine(Ipr_AlignLeft, h - Ipr_PTHeight + 2, Ipr_AlignLeft, Ipr_PTHeight - 2)
 
-        surface.SetDrawColor(ColorAlpha(color_white, 100))
         local Ipr_AlignRight = w / 2 + Ipr_PTWide - 1
         surface.DrawLine(Ipr_AlignRight, h - Ipr_PTHeight + 2, Ipr_AlignRight, Ipr_PTHeight - 2)
     end
