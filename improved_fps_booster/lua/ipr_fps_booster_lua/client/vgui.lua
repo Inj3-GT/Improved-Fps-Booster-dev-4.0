@@ -697,11 +697,11 @@ local function Ipr_FpsBooster()
 
         surface.SetDrawColor(ColorAlpha(color_white, 125))
 
-        local Ipr_AlignLeft = Ipr_AlignCenterText - 3
+        local Ipr_AlignLeft = Ipr_AlignCenterText - 4
         Ipr_AlignLeft = math.ceil(Ipr_AlignLeft)
         surface.DrawLine(Ipr_AlignLeft, h - Ipr_PTHeight + 3, Ipr_AlignLeft, Ipr_PTHeight - 4)
 
-        local Ipr_AlignRight = Ipr_AlignCenterText + 4 + Ipr_PTWide
+        local Ipr_AlignRight = Ipr_AlignCenterText + 5 + Ipr_PTWide
         surface.DrawLine(Ipr_AlignRight, h - Ipr_PTHeight + 3, Ipr_AlignRight, Ipr_PTHeight - 4)
     end
 
