@@ -17,7 +17,7 @@ Ipr.Function.CreateData = function()
 
     local Ipr_FileLangs, Ipr_TCountry = file.Exists(Ipr.Settings.Save.. "language.json", "DATA")
     if not Ipr_FileLangs then
-        local Ipr_GCountry = not game.IsDedicated() and system.GetCountry()
+        local Ipr_GCountry = system.GetCountry()
         Ipr_TCountry = (Ipr_GCountry) and Ipr.Settings.Country[Ipr_GCountry] and "FR" or Ipr_Fps_Booster.Settings.DefaultLanguage
 
         file.Write(Ipr.Settings.Save.. "language.json", Ipr_TCountry)
