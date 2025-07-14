@@ -13,7 +13,7 @@ return {
     TSettings = "Optimisation :",
     VDisabled = "Désactiver",
     VEnabled = "Activer",
-    PreventCrash = "Si vous rencontrez des problèmes graphiques ou crashs, utilisez le bouton options pour modifier vos paramètres. Pour ouvrir Improved FPS Booster /boost.",
+    PreventCrash = "Si vous rencontrez des problèmes graphiques ou des crashs, utilisez le bouton Options pour modifier vos paramètres. Pour ouvrir Improved FPS Booster, utilisez /boost",
     FpsCurrent = "Actuel :",
     SelectLangue = "Langue :",
     CheckUncheckAll = "Tout cocher/décocher [optimisation]",
