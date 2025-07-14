@@ -6,6 +6,7 @@
 
 return {
     Blur = Material("pp/blurscreen"),
+    MatOptions = Material("materials/icon16/cog.png", "noclamp smooth"),
     SetLang = Ipr_Fps_Booster.Settings.DefaultLanguage,
     Debug = false,
     Map = game.GetMap(),

@@ -43,7 +43,7 @@ local function Ipr_HUD()
     Ipr.Function.DrawMultipleTextAligned(Ipr_RenderFpsText)
 end
 
-local function Ipr_ClosePanel()
+local function Ipr_CloseVgui()
     for _, v in pairs(Ipr.Settings.Vgui) do
         if not IsValid(v) then
             continue
@@ -91,7 +91,6 @@ local function Ipr_FpsBooster_Options(primary)
             local Ipr_CenterSecondaryW = Ipr_FirstPosW + 10
             Ipr.Settings.Vgui.Secondary:MoveTo(Ipr_CenterSecondaryW, Ipr_CenterSecondaryH, 0.5, 0.5)
         end
-
         Ipr.Settings.Vgui.Secondary:SetAlpha(0)
 
         if not primary.PMoved then
@@ -131,6 +130,17 @@ local function Ipr_FpsBooster_Options(primary)
         draw.SimpleText("[" ..Ipr_Fps_Booster.Settings.Developer.. "]", Ipr.Settings.Font, w - 5, h - 19, Ipr.Settings.TColor["vert"], TEXT_ALIGN_RIGHT)
     end
 
+    local Ipr_CenterVgui = Ipr_SSize.w / 2
+    local Ipr_SChecked = Ipr.Function.IsChecked()
+    local Ipr_CheckboxState = {[true] = {Icon = "icon16/lorry_flatbed.png", PoH = 0}, [false] = {Icon = "icon16/lorry.png", PoH = 3}}
+
+    local Ipr_SOpti = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
+    local Ipr_Revert = vgui.Create("DImageButton", Ipr_SOpti)
+    local Ipr_SUncheck = vgui.Create("DImageButton", Ipr_SOpti)
+    local Ipr_SScrollOpti = vgui.Create("DScrollPanel", Ipr_SOpti)
+
+    Ipr.Settings.Vgui.CheckBox = {}
+
     Ipr_SClose:SetSize(16, 16)
     Ipr_SClose:SetPos(Ipr_SSize.w - Ipr_SClose:GetWide() - 2, 2)
     Ipr_SClose:SetImage("icon16/cross.png")
@@ -147,24 +157,6 @@ local function Ipr_FpsBooster_Options(primary)
         end)
     end
 
-    local Ipr_CenterVgui = Ipr_SSize.w / 2
-    Ipr.Settings.Vgui.CheckBox = {}
-    
-    local function Ipr_SScrollPaint(panel)
-        panel.Paint = nil
-        
-        panel.btnUp.Paint = function(self, w, h)
-           draw.RoundedBoxEx(3, 0, 0, w, h, Ipr.Settings.TColor["bleu"], true, true, false, false)
-        end
-        panel.btnDown.Paint = function(self, w, h)
-           draw.RoundedBoxEx(3, 0, 0, w, h, Ipr.Settings.TColor["bleu"], false, false, true, true)
-        end
-        panel.btnGrip.Paint = function(self, w, h)
-           draw.RoundedBox(1, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
-        end
-    end
-
-    local Ipr_SOpti = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
     Ipr_SOpti:SetSize(232, 165)
     Ipr_SOpti:SetPos(Ipr_CenterVgui - (Ipr_SOpti:GetWide() / 2), 90)
     Ipr_SOpti.Paint = function(self, w, h)
@@ -172,7 +164,6 @@ local function Ipr_FpsBooster_Options(primary)
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TSettings, Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
 
-    local Ipr_Revert = vgui.Create("DImageButton", Ipr_SOpti)
     Ipr_Revert:SetSize(16, 16)
     Ipr_Revert:SetPos(Ipr_SOpti:GetWide() - Ipr_Revert:GetWide() - 2, 2)
     Ipr_Revert:SetImage("icon16/arrow_rotate_clockwise.png")
@@ -187,14 +178,14 @@ local function Ipr_FpsBooster_Options(primary)
            local Ipr_ConvarName = Ipr_ConvarList.Name
            local Ipr_ConvarCheck = Ipr_ConvarList.Checked
 
-            for i = 1, #Ipr_TableData do 
-               local Ipr_CopyList = Ipr_TableData[i]
+            for t = 1, #Ipr_TableData do 
+               local Ipr_CopyList = Ipr_TableData[t]
                local Ipr_CopyName = Ipr_CopyList.Name
                local Ipr_CopyDefault = Ipr_CopyList.Checked
 
                 if (Ipr_ConvarName == Ipr_CopyName) and (Ipr_ConvarCheck ~= Ipr_CopyDefault) then
-                    for i = 1, #Ipr.Settings.Vgui.CheckBox do 
-                       local Ipr_CheckList = Ipr.Settings.Vgui.CheckBox[i]
+                    for c = 1, #Ipr.Settings.Vgui.CheckBox do 
+                       local Ipr_CheckList = Ipr.Settings.Vgui.CheckBox[c]
                        local Ipr_CheckName = Ipr_CheckList.Name
 
                         if (Ipr_CopyName == Ipr_CheckName) then
@@ -207,15 +198,9 @@ local function Ipr_FpsBooster_Options(primary)
                 end
             end
         end
-
+        
         chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], (Ipr_CopyFind) and Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataApply or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataCancel)
     end
-
-    local Ipr_SUncheck, Ipr_SChecked = vgui.Create("DImageButton", Ipr_SOpti), Ipr.Function.IsChecked()
-    local Ipr_CheckboxState = {
-        [true] = {Icon = "icon16/lorry_flatbed.png", PoH = 0},
-        [false] = {Icon = "icon16/lorry.png", PoH = 3},
-    }
     
     Ipr_SUncheck:SetSize(16, 16)
     Ipr_SUncheck:SetPos(5, Ipr_CheckboxState[Ipr_SChecked].PoH)
@@ -223,9 +208,11 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SUncheck.Paint = nil
     Ipr.Function.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckUncheckAll, Ipr_SUncheck, true)
     Ipr_SUncheck.DoClick = function()
+        local Ipr_Defaultconvars = #Ipr_Fps_Booster.Defaultconvars
         Ipr_SChecked = not Ipr_SChecked
+        
         for i = 1, #Ipr.Settings.Vgui.CheckBox do 
-            if (i > #Ipr_Fps_Booster.Defaultconvars) then
+            if (i > Ipr_Defaultconvars) then
                 break
             end
 
@@ -235,8 +222,21 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr_SUncheck:SetImage(Ipr_CheckboxState[Ipr_SChecked].Icon)
         Ipr_SUncheck:SetY(Ipr_CheckboxState[Ipr_SChecked].PoH)
     end
+
+    local function Ipr_SScrollPaint(panel)
+        panel.Paint = nil
+        
+        panel.btnUp.Paint = function(self, w, h)
+           draw.RoundedBoxEx(3, 0, 0, w, h, Ipr.Settings.TColor["bleu"], true, true, false, false)
+        end
+        panel.btnDown.Paint = function(self, w, h)
+           draw.RoundedBoxEx(3, 0, 0, w, h, Ipr.Settings.TColor["bleu"], false, false, true, true)
+        end
+        panel.btnGrip.Paint = function(self, w, h)
+           draw.RoundedBox(1, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
+        end
+    end
       
-    local Ipr_SScrollOpti = vgui.Create("DScrollPanel", Ipr_SOpti)
     Ipr_SScrollOpti:Dock(FILL)
     Ipr_SScrollOpti:DockMargin(5, 22, 0, 5)
     local Ipr_SScrollVbarOpti = Ipr_SScrollOpti:GetVBar()
@@ -309,103 +309,9 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SScrollVbarConfig:SetWide(11)
     Ipr_SScrollPaint(Ipr_SScrollVbarConfig)
 
-    local Ipr_OverrideVgui = {
-        ["DCheckBoxLabel"] = {
-            Function = function(panel, tbl, primary)
-                panel.Paint = function(self, w, h)
-                  draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][tbl.Localization.Text], Ipr.Settings.Font, 22, 4, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
-                end
-
-                panel:SetValue(Ipr.Function.GetConvar(tbl.Name))
-                panel:SetWide(210)
-                panel:Dock(FILL)
-
-                local Ipr_Name = tbl.Name
-                panel.OnChange = function(self)
-                   local Ipr_GetChecked = self:GetChecked()
-                   Ipr.Function.SetConvar(Ipr_Name, Ipr_GetChecked, 1)
-
-                   for i = 1, #Ipr.Settings.Vgui.CheckBox do 
-                        if (Ipr.Settings.Vgui.CheckBox[i].Paired == Ipr_Name) then
-                            local Ipr_Vgui = Ipr.Settings.Vgui.CheckBox[i].Vgui
-                            Ipr_Vgui = Ipr_Vgui:GetParent()
-
-                            if IsValid(Ipr_Vgui) then
-                                Ipr_Vgui:SetDisabled(not Ipr_GetChecked)
-                            end
-                        end
-                   end
-
-                   if (tbl.Run_HookFog) then
-                        Ipr.Function.FogActivate(Ipr_GetChecked)
-                   elseif (tbl.Run_HookFps) then
-                        if (Ipr_GetChecked) then
-                            hook.Add("PostDrawHUD", "IprFpsBooster_HUD", Ipr_HUD)
-                        else
-                            hook.Remove("PostDrawHUD", "IprFpsBooster_HUD", Ipr_HUD)
-                        end
-                    elseif (tbl.Run_Debug) then
-                        Ipr.Settings.Debug = Ipr_GetChecked
-                    end
-                end
-            end,
-
-            Parent = function()
-                local Ipr_CheckBoxConfig = vgui.Create("DPanel", Ipr_SScrollConfig)
-                Ipr_CheckBoxConfig:SetSize(225, 25)
-                Ipr_CheckBoxConfig:Dock(TOP)
-                Ipr_CheckBoxConfig.Paint = nil
-
-                return Ipr_CheckBoxConfig
-            end,
-        },
-        ["DNumSlider"] = {
-            Function = function(panel, tbl, primary)
-                primary.Paint = function(self, w, h)
-                    draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][tbl.Localization.Text].. " [" ..math.Round(panel:GetValue()).. "]", Ipr.Settings.Font, w / 2, 0, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-                end
-
-                local Ipr_DNumChildren = panel:GetChildren()
-                local Ipr_PrimaryWide = primary:GetWide()
-
-                for _, v in ipairs(Ipr_DNumChildren) do
-                    local Ipr_GName = v:GetName()
-
-                    if (Ipr_GName == "DSlider") then
-                        v:Dock(FILL)
-                        v:SetSize(Ipr_PrimaryWide, 25)
-                    elseif (Ipr_GName == "DLabel") then
-                        v:GetChildren()[1]:SetVisible(false)
-                        v:SetVisible(false)
-                    elseif (Ipr_GName == "DTextEntry") then
-                        v:SetVisible(false)
-                    end
-                end
-
-                panel:SetSize(Ipr_PrimaryWide, 25)
-                panel:Dock(BOTTOM)
-                panel:SetMinMax(0, tbl.Max or 100)
-                panel:SetValue(Ipr.Function.GetConvar(tbl.Name))
-                panel:SetDecimals(0)
-
-                panel.OnValueChanged = function(self)
-                   Ipr.Function.SetConvar(tbl.Name, self:GetValue(), 1)
-                end
-            end,
-            
-            Parent = function(int, tbl)
-                local Ipr_DNumConfig = vgui.Create("DPanel", Ipr_SScrollConfig)
-                Ipr_DNumConfig:SetSize(225, 39)
-                Ipr_DNumConfig:Dock(TOP)
-                
-                return Ipr_DNumConfig
-            end,
-        },
-    }
-
     for i = 1, #Ipr_Fps_Booster.Defaultsettings do
         local Ipr_SConfigTbl = Ipr_Fps_Booster.Defaultsettings[i]
-        local Ipr_SConfigButton = Ipr_OverrideVgui[Ipr_SConfigTbl.Vgui].Parent(i, Ipr_SConfigTbl)
+        local Ipr_SConfigButton = Ipr.Function.OverrideVgui[Ipr_SConfigTbl.Vgui].Parent(Ipr_SScrollConfig)
         local Ipr_SConfigCreate = vgui.Create(Ipr_SConfigTbl.Vgui, Ipr_SConfigButton)
 
         Ipr_SConfigCreate:Dock(TOP)
@@ -414,11 +320,12 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr.Function.SetConvar(Ipr_SConfigTbl.Name, Ipr_SConfigTbl.DefaultCheck, nil, true)
         Ipr.Function.OverridePaint(Ipr_SConfigCreate)
 
+        Ipr.Function.OverrideVgui[Ipr_SConfigTbl.Vgui].Function(Ipr_SConfigCreate, Ipr_SConfigTbl, Ipr_HUD)
+
         if (Ipr_SConfigTbl.Localization.ToolTip) then
             Ipr.Function.SetToolTip(Ipr_SConfigTbl.Localization.ToolTip, Ipr_SConfigCreate)
         end
 
-        Ipr_OverrideVgui[Ipr_SConfigTbl.Vgui].Function(Ipr_SConfigCreate, Ipr_SConfigTbl, Ipr_SConfigButton)
         Ipr.Settings.Vgui.CheckBox[#Ipr.Settings.Vgui.CheckBox + 1] = {Vgui = Ipr_SConfigCreate, Default = Ipr_SConfigTbl.DefaultCheck, Name = Ipr_SConfigTbl.Name, Paired = Ipr_SConfigTbl.Paired}
    
         if (Ipr_SConfigTbl.Paired) then
@@ -432,118 +339,27 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SManage.Paint = function(self, w, h)
         draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 90))
     end
-    
+
     local Ipr_SScrollManage = vgui.Create("DScrollPanel", Ipr_SManage)
     Ipr_SScrollManage:Dock(FILL)
-    Ipr_SScrollManage:DockMargin(-1, 2, 0, 2)
+    Ipr_SScrollManage:DockMargin(0, 1, 0, 1)
     local Ipr_SScrollVbarManage = Ipr_SScrollManage:GetVBar()
-    Ipr_SScrollVbarManage:SetWide(5)
+    Ipr_SScrollVbarManage:SetWide(7)
     Ipr_SScrollPaint(Ipr_SScrollVbarManage)
 
-    local Ipr_SManageDefault = {
-        {
-            Vgui = "DButton",
-            Icon = "icon16/bullet_disk.png",
-            Sound = "buttons/button9.wav",
-            DrawLine = true,
-            Localization = {
-                Text = "SaveOpti",
-                ToolTip = "TSaveOpti",
-            },
-            Function = function()
-                if not Ipr.Settings.Data.Set then
-                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "ERROR", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckedBox)
-                    return
-                end
+    for i = 1, #Ipr_Fps_Booster.Defaultbutton do
+        local Ipr_SManageTbl = Ipr_Fps_Booster.Defaultbutton[i]
 
-                local Ipr_CurrentState = Ipr.Function.CurrentState()
-                if (Ipr_CurrentState) then
-                    Ipr.Function.Activate(true)
-                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].OptimizationReloaded)
-                end
+        local Ipr_SManagePanel = vgui.Create("DPanel", Ipr_SScrollManage)
+        Ipr_SManagePanel:Dock(TOP)
+        Ipr_SManagePanel:DockMargin(4, 3, 4, 0)
+        Ipr_SManagePanel.Paint = nil
 
-                local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
-                if (Ipr_StartupDelay) then
-                    timer.Remove(Ipr.Settings.StartupLaunch.Name)
-                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned)
-                end
-
-                Ipr.Function.SetConvar("Startup", false, 2)
-                Ipr.Function.CopyData()
-
-                file.Write(Ipr.Settings.Save.. "convars.json", util.TableToJSON(Ipr_Fps_Booster.Convars))
-                chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SettingsSaved)
-            end
-        },
-        {
-            Vgui = "DButton",
-            Icon = "icon16/bullet_key.png",
-            Sound = "buttons/button9.wav",
-            DataDelayed = true,
-            DrawLine = true,
-            Convar = {
-                Name = "Startup",
-                DefaultCheck = false,
-            },
-            Localization = {
-                Text = "ApplyStartup",
-                ToolTip = "TApplyStartup",
-            },
-            Function = function(name, value)
-                local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
-                if (Ipr_StartupDelay) then
-                    timer.Remove(Ipr.Settings.StartupLaunch.Name)
-                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned)
-                end
-
-                local Ipr_SetStartup = value
-                if (Ipr_SetStartup) then
-                    local Ipr_CurrentState = Ipr.Function.CurrentState()
-                    if not Ipr_CurrentState then
-                        Ipr.Function.Activate(true)
-                    end
-                    Ipr.Function.SetConvar(name, Ipr_SetStartup)
-
-                    timer.Create(Ipr.Settings.StartupLaunch.Name, Ipr.Settings.StartupLaunch.Delay, 1, function()
-                        Ipr.Function.SetConvar(name, true, 2)
-                        chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["vert"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupEnabled)
-                    end)
-
-                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupLaunched)
-                else
-                    Ipr.Function.SetConvar(name, Ipr_SetStartup, 1)
-                    chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupDisabled)
-                end
-            end
-        },
-        {
-            Vgui = "DButton",
-            Icon = "icon16/bullet_wrench.png",
-            Sound = "buttons/button9.wav",
-            DrawLine = false,
-            Localization = {
-                Text = "SetDefaultSettings",
-                ToolTip = "TSetDefaultSettings",
-            },
-            Function = function()
-                for i = 1, #Ipr.Settings.Vgui.CheckBox do 
-                   Ipr.Settings.Vgui.CheckBox[i].Vgui:SetValue(Ipr.Settings.Vgui.CheckBox[i].Default)
-                end
-
-                chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].DefaultConfig)
-            end
-        },
-    }
-
-    for i = 1, #Ipr_SManageDefault do
-        local Ipr_SManageTbl = Ipr_SManageDefault[i]
-        local Ipr_SManageCreate = vgui.Create(Ipr_SManageTbl.Vgui, Ipr_SScrollManage)
-
-        Ipr_SManageCreate:SetPos(7, i * (1 + 25) - 20)
-        Ipr_SManageCreate:SetSize(135, 20)
+        local Ipr_SManageCreate = vgui.Create(Ipr_SManageTbl.Vgui, Ipr_SManagePanel)
+        Ipr_SManageCreate:Dock(FILL)
+        Ipr_SManageCreate:DockMargin(0, 1, 0, 1)
         Ipr_SManageCreate:SetText("")
         Ipr_SManageCreate:SetImage(Ipr_SManageTbl.Icon)
-
         Ipr.Function.SetToolTip(Ipr_SManageTbl.Localization.ToolTip, Ipr_SManageCreate)
         
         local Ipr_ConvarColor = color_white
@@ -553,14 +369,12 @@ local function Ipr_FpsBooster_Options(primary)
 
         Ipr_SManageCreate.Paint = function(self, w, h)
             local Ipr_Hovered = self:IsHovered()
-
             if (Ipr_SManageTbl.DrawLine) then
                 if (Ipr_SManageTbl.Convar) then
                     draw.RoundedBoxEx(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"], true, true, false, false)
 
                     local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
                     Ipr_ConvarColor = (Ipr_StartupDelay) and Ipr.Settings.TColor["orange"] or Ipr.Function.GetConvar(Ipr_SManageTbl.Convar.Name) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"]
-                    
                     draw.RoundedBox(0, 0, h- 1, w, h, Ipr_ConvarColor)
                 else
                     if (Ipr.Settings.Data.Set) then
@@ -568,7 +382,7 @@ local function Ipr_FpsBooster_Options(primary)
                         local Ipr_ColorAbs = math.abs(math.sin(Ipr_SysTime * 2.5) * 255)
 
                         draw.RoundedBoxEx(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"], true, true, false, false)
-                        draw.RoundedBox(0, 0, h- 1, w, h, Color(Ipr_ColorAbs, Ipr_ColorAbs, 0))
+                        draw.RoundedBox(1, 0, h- 1, w, h, Color(Ipr_ColorAbs, Ipr_ColorAbs, 0))
                     else
                         draw.RoundedBox(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
                     end
@@ -576,8 +390,11 @@ local function Ipr_FpsBooster_Options(primary)
             else
                draw.RoundedBox(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["gvert_"] or Ipr.Settings.TColor["gvert"])
             end
+            surface.SetFont(Ipr.Settings.Font)
+            local Ipr_TButton = Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][Ipr_SManageTbl.Localization.Text]
+            local Ipr_PTWide, Ipr_PTHeight = surface.GetTextSize(Ipr_TButton)
             
-            draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][Ipr_SManageTbl.Localization.Text], Ipr.Settings.Font, w / 2 + 6, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+            draw.SimpleText(Ipr_TButton, Ipr.Settings.Font, w / 2 - Ipr_PTWide / 2 + 7, h / 2 - Ipr_PTHeight /  2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
         end
         Ipr_SManageCreate.DoClick = function()
             surface.PlaySound(Ipr_SManageTbl.Sound)
@@ -592,16 +409,16 @@ local function Ipr_FpsBooster_Options(primary)
                     Ipr_DataBool = not Ipr.Function.GetConvar(Ipr_SManageTbl.Convar.Name)
                 end
 
-                Ipr_SManageTbl.Function(Ipr_SManageTbl.Convar.Name, Ipr_DataBool)
+                Ipr_SManageTbl.Function(Ipr_SManageTbl.Convar.Name, Ipr_DataBool, Ipr)
                 return
             end
-            Ipr_SManageTbl.Function()
+            Ipr_SManageTbl.Function(Ipr)
         end
     end
 end
 
 local function Ipr_FpsBooster()
-    Ipr_ClosePanel()
+    Ipr_CloseVgui()
     Ipr.Function.CopyData()
 
     local Ipr_PSize = {w = 300, h = 270}
@@ -749,7 +566,7 @@ local function Ipr_FpsBooster()
     Ipr_PClose:SetImage("icon16/cross.png")
     Ipr_PClose.Paint = nil
     Ipr_PClose.DoClick = function()
-        Ipr_ClosePanel()
+        Ipr_CloseVgui()
     end
 
     Ipr_PEnabled:SetSize(110, 24)
@@ -778,7 +595,7 @@ local function Ipr_FpsBooster()
 
         local Ipr_CloseFpsBooster = Ipr.Function.GetConvar("AutoClose")
         if (Ipr_CloseFpsBooster) then
-            Ipr_ClosePanel()
+            Ipr_CloseVgui()
         end
 
         surface.PlaySound("buttons/combine_button7.wav")
@@ -805,7 +622,7 @@ local function Ipr_FpsBooster()
 
         local Ipr_CloseFpsBooster = Ipr.Function.GetConvar("AutoClose")
         if (Ipr_CloseFpsBooster) then
-            Ipr_ClosePanel()
+            Ipr_CloseVgui()
         end
         
         surface.PlaySound("buttons/combine_button5.wav")
@@ -829,14 +646,13 @@ local function Ipr_FpsBooster()
     Ipr_PSettings:SetPos(Ipr_PSize.w - Ipr_PSettings:GetWide() - 5, 37)
     Ipr_PSettings:SetText("")
     Ipr.Function.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Options, Ipr_PSettings, true)
-    local ipr_MatLoading = Material("materials/icon16/cog.png")
     Ipr_PSettings.Paint = function(self, w, h)
         local Ipr_IsHovered = self:IsHovered()
         draw.RoundedBox(6, 0, 0, w, h, (Ipr_IsHovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
         draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 9, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
-        surface.SetMaterial(ipr_MatLoading)
+        surface.SetMaterial(Ipr.Settings.MatOptions)
         surface.SetDrawColor(color_white)
 
         local Ipr_PRotation = 0
@@ -855,7 +671,7 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/button9.wav")
     end
 
-    Ipr_PLanguage:SetSize(80, 20)
+    Ipr_PLanguage:SetSize(85, 20)
     Ipr_PLanguage:SetPos(5, 37)
     Ipr_PLanguage:SetFont(Ipr.Settings.Font)
     Ipr_PLanguage:SetValue(Ipr.Settings.SetLang)
@@ -872,10 +688,17 @@ local function Ipr_FpsBooster()
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
         surface.SetFont(Ipr.Settings.Font)
-        local Ipr_TLang = "| " ..Ipr.Settings.SetLang.. " |"
-        local Ipr_PTWide = surface.GetTextSize(Ipr_TLang)
-
+        local Ipr_TLang = Ipr.Settings.SetLang
+        local Ipr_PTWide, Ipr_PTHeight = surface.GetTextSize(Ipr_TLang)
         draw.SimpleText(Ipr_TLang, Ipr.Settings.Font, w / 2 - Ipr_PTWide / 2 + 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+
+        surface.SetDrawColor(ColorAlpha(color_white, 100))
+        local Ipr_AlignLeft = w / 2 - (Ipr_PTWide + 1) / 2
+        surface.DrawLine(Ipr_AlignLeft, h - Ipr_PTHeight + 2, Ipr_AlignLeft, Ipr_PTHeight - 2)
+
+        surface.SetDrawColor(ColorAlpha(color_white, 100))
+        local Ipr_AlignRight = w / 2 + Ipr_PTWide - 1
+        surface.DrawLine(Ipr_AlignRight, h - Ipr_PTHeight + 2, Ipr_AlignRight, Ipr_PTHeight - 2)
     end
 
     Ipr_PLanguage.OnMenuOpened = function(self)
