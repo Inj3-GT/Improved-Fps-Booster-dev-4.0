@@ -537,19 +537,27 @@ Ipr.Function.OverrideVgui = {
 
             local Ipr_DNumChildren = panel:GetChildren()
             local Ipr_PrimaryWide = Ipr_Parent:GetWide()
+            local Ipr_OverrideSlider = {
+                ["DSlider"] = function(slide)
+                    slide:Dock(FILL)
+                    slide:SetSize(Ipr_PrimaryWide, 25)
+                end,
+                ["DLabel"] = function(slide)
+                    slide:GetChildren()[1]:SetVisible(false)
+                    slide:SetVisible(false)
+                end,
+                ["DTextEntry"] = function(slide)
+                    slide:SetVisible(false)
+                end,
+            }
 
             for i = 1, #Ipr_DNumChildren do
                 local Ipr_CDNumChild = Ipr_DNumChildren[i]
                 local Ipr_CNumPanel = Ipr_CDNumChild:GetName()
-        
-                if (Ipr_CNumPanel == "DSlider") then
-                    Ipr_CDNumChild:Dock(FILL)
-                    Ipr_CDNumChild:SetSize(Ipr_PrimaryWide, 25)
-                elseif (Ipr_CNumPanel == "DLabel") then
-                    Ipr_CDNumChild:GetChildren()[1]:SetVisible(false)
-                    Ipr_CDNumChild:SetVisible(false)
-                elseif (Ipr_CNumPanel == "DTextEntry") then
-                    Ipr_CDNumChild:SetVisible(false)
+                local Ipr_FuncSlider = Ipr_OverrideSlider[Ipr_CNumPanel]
+
+                if (Ipr_FuncSlider) then
+                    Ipr_FuncSlider(Ipr_CDNumChild)
                 end
             end
 
