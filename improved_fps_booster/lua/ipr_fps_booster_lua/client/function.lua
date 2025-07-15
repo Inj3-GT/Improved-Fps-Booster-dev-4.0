@@ -15,22 +15,26 @@ Ipr.Function.CreateData = function()
         file.CreateDir(Ipr.Settings.Save)
     end
 
-    local Ipr_FileLangs, Ipr_TCountry = file.Exists(Ipr.Settings.Save.. "language.json", "DATA")
+    local Ipr_FileLangs, Ipr_SetLang = file.Exists(Ipr.Settings.Save.. "language.json", "DATA")
     if not Ipr_FileLangs then
-        local Ipr_GCountry = system.GetCountry()
-        Ipr_TCountry = (Ipr_GCountry) and Ipr.Settings.Country[Ipr_GCountry] and "FR" or Ipr_Fps_Booster.Settings.DefaultLanguage
+        local Ipr_FileCountry = file.Exists("ipr_fps_booster_configuration/fr.lua", "LUA")
+        if (Ipr_FileCountry) then
+            local Ipr_GetCountry = system.GetCountry()
+            Ipr_SetLang = (Ipr_GetCountry) and Ipr.Settings.Country[Ipr_GetCountry] and "FR"
+        end
+        Ipr_SetLang = (Ipr_SetLang) or Ipr.Function.SearchLang()
 
-        file.Write(Ipr.Settings.Save.. "language.json", Ipr_TCountry)
+        file.Write(Ipr.Settings.Save.. "language.json", Ipr_SetLang)
     end
-    Ipr.Settings.SetLang = Ipr_TCountry or file.Read(Ipr.Settings.Save.. "language.json", "DATA")
+    Ipr.Settings.SetLang = (Ipr_SetLang) or file.Read(Ipr.Settings.Save.. "language.json", "DATA")
 
-    local Ipr_FileConvars, Ipr_TData = file.Exists(Ipr.Settings.Save.. "convars.json", "DATA")
+    local Ipr_FileConvars, Ipr_SetConvars = file.Exists(Ipr.Settings.Save.. "convars.json", "DATA")
     if not Ipr_FileConvars then
-        Ipr_TData = {}
+        Ipr_SetConvars = {}
 
         local Ipr_ConvarsLists = Ipr_Fps_Booster.Defaultconvars
         for i = 1, #Ipr_ConvarsLists do
-            Ipr_TData[#Ipr_TData + 1] = {
+            Ipr_SetConvars[#Ipr_SetConvars + 1] = {
                 Name = Ipr_ConvarsLists[i].Name,
                 Checked = Ipr_ConvarsLists[i].DefaultCheck
             }
@@ -38,16 +42,27 @@ Ipr.Function.CreateData = function()
 
         local Ipr_SettingsLists = Ipr_Fps_Booster.Defaultsettings
         for i = 1, #Ipr_SettingsLists do
-            Ipr_TData[#Ipr_TData + 1] = {
+            Ipr_SetConvars[#Ipr_SetConvars + 1] = {
                 Vgui = Ipr_SettingsLists[i].Vgui,
                 Name = Ipr_SettingsLists[i].Name,
                 Checked = Ipr_SettingsLists[i].DefaultCheck
             }
         end
 
-        file.Write(Ipr.Settings.Save.. "convars.json", util.TableToJSON(Ipr_TData))
+        file.Write(Ipr.Settings.Save.. "convars.json", util.TableToJSON(Ipr_SetConvars))
     end
-    Ipr_Fps_Booster.Convars = Ipr_TData or util.JSONToTable(file.Read(Ipr.Settings.Save.. "convars.json", "DATA"))
+    Ipr_Fps_Booster.Convars = (Ipr_SetConvars) or util.JSONToTable(file.Read(Ipr.Settings.Save.. "convars.json", "DATA"))
+end
+
+Ipr.Function.SearchLang = function()
+    local Ipr_SearchLang = file.Find("ipr_fps_booster_language/*", "LUA")
+
+    for _, v in pairs(Ipr_SearchLang) do
+        local Ipr_Size = file.Size("ipr_fps_booster_language/" ..v, "LUA")
+        if (Ipr_Size ~= 0) then
+            return string.upper(string.gsub(v, ".lua", ""))
+        end
+    end
 end
 
 Ipr.Function.GetConvar = function(name)
