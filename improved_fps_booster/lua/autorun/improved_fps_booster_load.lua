@@ -53,11 +53,13 @@ else
 
         AddCSLuaFile("ipr_fps_booster_configuration/" ..Ipr_Config)
     end
+    
     for i = 1, #Ipr_FilesLang do
         local Ipr_Lang = Ipr_FilesLang[i]
 
         AddCSLuaFile("ipr_fps_booster_language/" ..Ipr_Lang)
     end
+    
     local Ipr_FilesClient = file.Find("ipr_fps_booster_lua/client/*", "LUA")
     for i = 1, #Ipr_FilesClient do
         local Ipr_FClient = Ipr_FilesClient[i]
