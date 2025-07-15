@@ -60,14 +60,15 @@ return {
                 chat.AddText(tbl.Settings.TColor["rouge"], tbl.Settings.Script, tbl.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[tbl.Settings.SetLang].StartupAbandoned)
             end
 
-            local Ipr_SetStartup = not Ipr_StartupDelay
-            if (Ipr_SetStartup) then
+            Ipr_StartupDelay = not Ipr_StartupDelay
+
+            if (Ipr_StartupDelay) then
                 local Ipr_CurrentState = tbl.Function.CurrentState()
                 if not Ipr_CurrentState then
                     tbl.Function.Activate(true)
                 end
 
-                tbl.Function.SetConvar(but.Convar.Name, Ipr_SetStartup)
+                tbl.Function.SetConvar(but.Convar.Name, Ipr_StartupDelay)
 
                 timer.Create(tbl.Settings.StartupLaunch.Name, tbl.Settings.StartupLaunch.Delay, 1, function()
                     tbl.Function.SetConvar(but.Convar.Name, true, 2)
@@ -76,7 +77,7 @@ return {
 
                 chat.AddText(tbl.Settings.TColor["rouge"], tbl.Settings.Script, tbl.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[tbl.Settings.SetLang].StartupLaunched)
             else
-                tbl.Function.SetConvar(but.Convar.Name, Ipr_SetStartup, 1)
+                tbl.Function.SetConvar(but.Convar.Name, Ipr_StartupDelay, 1)
                 chat.AddText(tbl.Settings.TColor["rouge"], tbl.Settings.Script, tbl.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[tbl.Settings.SetLang].StartupDisabled)
             end
         end
