@@ -709,29 +709,34 @@ local function Ipr_FpsBooster()
     Ipr_PLanguage.OnMenuOpened = function(self)
         local Ipr_PLanguageChild = self:GetChildren()
 
-        for _, v in ipairs(Ipr_PLanguageChild) do
-            if (v:GetName() == "DMenu") then
-                v.Paint = function(p, w, h)
+        for i = 1, #Ipr_PLanguageChild do
+            local Ipr_NLangMenu = Ipr_PLanguageChild[i]
+            if (Ipr_NLangMenu:GetName() == "DMenu") then
+                Ipr_NLangMenu.Paint = function(p, w, h)
                    draw.RoundedBox(6, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
                 end
                 
-                local Ipr_PLanguageDMenu = v:GetChildren()
-                for _, d in ipairs(Ipr_PLanguageDMenu) do
+                local Ipr_PLanguageDMenu = Ipr_NLangMenu:GetChildren()
+                for i = 1, #Ipr_PLanguageDMenu do
+                    local Ipr_PLangDmenu = Ipr_PLanguageDMenu[i]
 
-                    if (d:GetName() == "Panel") then
-                        local Ipr_PLanguagePanel = d:GetChildren()
-                        for _, y in ipairs(Ipr_PLanguagePanel) do
-                            local Ipr_GetVal = y:GetValue()
+                    if (Ipr_PLangDmenu:GetName() == "Panel") then
+                        local Ipr_PLanguagePanel = Ipr_PLangDmenu:GetChildren()
+
+                        for i = 1, #Ipr_PLanguagePanel do
+                            local Ipr_PMenu = Ipr_PLanguagePanel[i]
+                            local Ipr_GetVal = Ipr_PMenu:GetValue()
+
                             Ipr_GetVal = string.find(Ipr_GetVal, Ipr.Settings.SetLang)
-           
-                            y:SetTextColor(Ipr_GetVal and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["blanc"])
-                            y:SetFont(Ipr.Settings.Font)
+               
+                            Ipr_PMenu:SetTextColor(Ipr_GetVal and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["blanc"])
+                            Ipr_PMenu:SetFont(Ipr.Settings.Font)
                         end
                     end
                 end
             end
         end
-
+        
         Ipr.Function.OverridePaint(self)
     end
     Ipr_PLanguage.OnSelect = function(self, index, value)

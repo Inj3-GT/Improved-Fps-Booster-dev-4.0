@@ -296,10 +296,13 @@ Ipr.Function.OverridePaint = function(panel)
             end
         end,
         ["DSlider"] = function(frame)
-            for _, ent in ipairs(Ipr_PanelChild) do
-                if (ent:GetName() == "DTextEntry") then
-                    ent:SetFont(Ipr.Settings.Font)
-                    ent:SetTextColor(Ipr.Settings.TColor["blanc"])
+            for i = 1, #Ipr_PanelChild do
+                local Ipr_CPanel = Ipr_PanelChild[i]
+                local Ipr_CNamePanel = Ipr_CPanel:GetName()
+                
+                if (Ipr_CNamePanel == "DTextEntry") then
+                    Ipr_CPanel:SetFont(Ipr.Settings.Font)
+                    Ipr_CPanel:SetTextColor(Ipr.Settings.TColor["blanc"])
                 end
             end
 
@@ -324,10 +327,13 @@ Ipr.Function.OverridePaint = function(panel)
         end,
     }
 
-    for _, v in ipairs(Ipr_PanelChild) do
-        local Ipr_FindClass = Ipr_Override[v:GetName()]
+    for i = 1, #Ipr_PanelChild do
+        local Ipr_CPanel = Ipr_PanelChild[i]
+        local Ipr_CNamePanel = Ipr_CPanel:GetName()
+
+        local Ipr_FindClass = Ipr_Override[Ipr_CNamePanel]
         if (Ipr_FindClass) then
-            Ipr_FindClass(v)
+            Ipr_FindClass(Ipr_CPanel)
         end
     end
 end
@@ -532,17 +538,18 @@ Ipr.Function.OverrideVgui = {
             local Ipr_DNumChildren = panel:GetChildren()
             local Ipr_PrimaryWide = Ipr_Parent:GetWide()
 
-            for _, v in ipairs(Ipr_DNumChildren) do
-                local Ipr_GName = v:GetName()
-
-                if (Ipr_GName == "DSlider") then
-                    v:Dock(FILL)
-                    v:SetSize(Ipr_PrimaryWide, 25)
-                elseif (Ipr_GName == "DLabel") then
-                    v:GetChildren()[1]:SetVisible(false)
-                    v:SetVisible(false)
-                elseif (Ipr_GName == "DTextEntry") then
-                    v:SetVisible(false)
+            for i = 1, #Ipr_DNumChildren do
+                local Ipr_CDNumChild = Ipr_DNumChildren[i]
+                local Ipr_CNumPanel = Ipr_CDNumChild:GetName()
+        
+                if (Ipr_CNumPanel == "DSlider") then
+                    Ipr_CDNumChild:Dock(FILL)
+                    Ipr_CDNumChild:SetSize(Ipr_PrimaryWide, 25)
+                elseif (Ipr_CNumPanel == "DLabel") then
+                    Ipr_CDNumChild:GetChildren()[1]:SetVisible(false)
+                    Ipr_CDNumChild:SetVisible(false)
+                elseif (Ipr_CNumPanel == "DTextEntry") then
+                    Ipr_CDNumChild:SetVisible(false)
                 end
             end
 
