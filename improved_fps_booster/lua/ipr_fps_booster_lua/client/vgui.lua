@@ -424,7 +424,7 @@ local function Ipr_FpsBooster()
     Ipr_CloseVgui()
     Ipr.Function.CopyData()
 
-    local Ipr_PSize = {w = 300, h = 270}
+    local Ipr_PSize = {w = 300, h = 265}
     Ipr.Settings.Vgui.Primary = vgui.Create("DFrame")
 
     local Ipr_PIcon = vgui.Create("DPanel", Ipr.Settings.Vgui.Primary)
