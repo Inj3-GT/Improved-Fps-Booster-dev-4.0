@@ -18,12 +18,13 @@ Ipr.Function.CreateData = function()
     local Ipr_FileLangs, Ipr_SetLang = file.Exists(Ipr.Settings.Save.. "language.json", "DATA")
     if not Ipr_FileLangs then
         local Ipr_FileCountry = file.Exists("ipr_fps_booster_language/fr.lua", "LUA")
+        
         if (Ipr_FileCountry) then
             local Ipr_GetCountry = system.GetCountry()
             Ipr_SetLang = (Ipr_GetCountry) and Ipr.Settings.Country[Ipr_GetCountry] and "FR"
         end
         Ipr_SetLang = (Ipr_SetLang) or Ipr.Function.SearchLang()
-
+        
         file.Write(Ipr.Settings.Save.. "language.json", Ipr_SetLang)
     end
     Ipr.Settings.SetLang = (Ipr_SetLang) or file.Read(Ipr.Settings.Save.. "language.json", "DATA")
