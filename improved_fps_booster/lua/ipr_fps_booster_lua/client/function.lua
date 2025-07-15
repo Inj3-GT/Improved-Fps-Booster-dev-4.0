@@ -5,9 +5,8 @@
 // https://github.com/Inj3-GT
 
 local Ipr = {}
-
-Ipr.Settings = include("table.lua")
 Ipr.Function = {}
+Ipr.Settings = include("table.lua")
 
 Ipr.Function.CreateData = function()
     local Ipr_CreateDir = file.Exists(Ipr.Settings.Save, "DATA")
