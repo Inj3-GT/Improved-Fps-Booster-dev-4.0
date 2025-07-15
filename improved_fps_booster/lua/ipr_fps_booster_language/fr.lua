@@ -36,6 +36,8 @@ return {
     RevertData = "Revenir à vos paramètres précédents [optimisation]",
     RevertDataApply = "Paramètre précédent rétabli !",
     RevertDataCancel = "Aucun paramètre précédent n'a été détecté !",
+    NOptions = "Options FPS Booster",
+    FPSLimit = "FPS Limit : ",
 
     // Convars
     MultiCore = "Rendu Multicoeur",

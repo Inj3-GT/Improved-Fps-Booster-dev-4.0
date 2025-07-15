@@ -63,6 +63,7 @@ return {
         Name = "IprFpsBooster_ApplyToStartup",
         Delay = 300,
     },
+    Script = "[Improved Fps Booster] : ",
     Font = "Ipr_Fps_Booster_Font",
     Save = "improvedfpsbooster/",
     ExternalLink = "https://steamcommunity.com/sharedfiles/filedetails/?id=1762151370",

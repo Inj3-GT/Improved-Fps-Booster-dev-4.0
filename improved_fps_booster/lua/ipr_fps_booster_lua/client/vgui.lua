@@ -128,14 +128,14 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 130), 6)
         
         draw.RoundedBoxEx(6, 0, 0, w, 20, Ipr.Settings.TColor["bleu"], true, true, false, false)
-        draw.SimpleText("Options FPS Booster", Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("FPS Limit : ", Ipr.Settings.Font, 5, h - 19, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].NOptions, Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].FPSLimit, Ipr.Settings.Font, 5, h - 19, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+
         local Ipr_FpsLimit = math.Round(Ipr.Function.InfoNum("fps_max"))
         Ipr_FpsLimit = (Ipr_FpsLimit > 1000) and 1000 or Ipr_FpsLimit
 
         draw.SimpleText(Ipr_FpsLimit, Ipr.Settings.Font, 67, h - 19, Ipr.Function.ColorTransition(Ipr_FpsLimit), TEXT_ALIGN_LEFT)
-        
         draw.SimpleText("v" ..Ipr_Fps_Booster.Settings.Version, Ipr.Settings.Font, w - 39, h - 19, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
         draw.SimpleText("[" ..Ipr_Fps_Booster.Settings.Developer.. "]", Ipr.Settings.Font, w - 5, h - 19, Ipr.Settings.TColor["vert"], TEXT_ALIGN_RIGHT)
     end
@@ -204,7 +204,7 @@ local function Ipr_FpsBooster_Options(primary)
             end
         end
         
-        chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], (Ipr_CopyFind) and Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataApply or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataCancel)
+        chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], (Ipr_CopyFind) and Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataApply or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataCancel)
     end
     
     Ipr_SUncheck:SetSize(16, 16)
@@ -424,7 +424,7 @@ local function Ipr_FpsBooster()
     Ipr_CloseVgui()
     Ipr.Function.CopyData()
 
-    local Ipr_PSize = {w = 300, h = 268}
+    local Ipr_PSize = {w = 300, h = 269}
     Ipr.Settings.Vgui.Primary = vgui.Create("DFrame")
 
     local Ipr_PIcon = vgui.Create("DPanel", Ipr.Settings.Vgui.Primary)
@@ -582,7 +582,7 @@ local function Ipr_FpsBooster()
     Ipr_PEnabled.DoClick = function()
         local Ipr_CheckBox = Ipr.Function.IsChecked()
         if not Ipr_CheckBox then
-            return chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckedBox)
+            return chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckedBox)
         end
 
         local Ipr_ConvarsEnabled = Ipr.Function.MatchConvar(true)
@@ -590,9 +590,9 @@ local function Ipr_FpsBooster()
             Ipr.Function.Activate(true)
             Ipr.Function.ResetFps()
 
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].PreventCrash)
+            chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].PreventCrash)
         else
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].AEnabled)
+            chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].AEnabled)
         end
 
         local Ipr_CloseFpsBooster = Ipr.Function.GetConvar("AutoClose")
@@ -617,9 +617,9 @@ local function Ipr_FpsBooster()
             Ipr.Function.Activate(false)
             Ipr.Function.ResetFps()
 
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Optimization)
+            chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Optimization)
         else
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].ADisabled)
+            chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].ADisabled)
         end
 
         local Ipr_CloseFpsBooster = Ipr.Function.GetConvar("AutoClose")
@@ -774,7 +774,7 @@ local function Ipr_InitPostPlayer()
         local Ipr_Startup = Ipr.Function.GetConvar("Startup")
         if (Ipr_Startup) then
             Ipr.Function.Activate(true)
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupEnabled)
+            chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupEnabled)
         end
 
         local Ipr_ForcedOpen = Ipr.Function.GetConvar("ForcedOpen")
@@ -782,7 +782,7 @@ local function Ipr_InitPostPlayer()
             if (Ipr_ForcedOpen) then
                 Ipr_FpsBooster()
             else
-                chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CForcedOpen)
+                chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CForcedOpen)
             end
         end
 
@@ -806,7 +806,7 @@ local function Ipr_PlayerShutDown()
 
     local Ipr_StartupDelay = timer.Exists(Ipr.Settings.StartupLaunch.Name)
     if (Ipr_StartupDelay) then
-        MsgC(Ipr.Settings.TColor["orange"], "[Improved FPS Booster] : " ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned.. "\n")
+        MsgC(Ipr.Settings.TColor["orange"], Ipr.Settings.Script ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupAbandoned.. "\n")
     end
 end
 
@@ -828,7 +828,7 @@ local Ipr_ChatCommands = {
             Ipr.Function.Activate(false)
             Ipr.Function.ResetFps()
 
-            chat.AddText(Ipr.Settings.TColor["rouge"], "[", "Improved FPS Booster", "] : ", Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SReset)
+            chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SReset)
             surface.PlaySound("buttons/combine_button5.wav")
 
             return true
