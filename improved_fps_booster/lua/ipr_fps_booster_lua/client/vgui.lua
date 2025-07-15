@@ -229,16 +229,30 @@ local function Ipr_FpsBooster_Options(primary)
     end
 
     local function Ipr_SScrollPaint(panel)
-        panel.Paint = nil
-        
-        panel.btnUp.Paint = function(self, w, h)
-           draw.RoundedBoxEx(3, 0, 0, w, h, Ipr.Settings.TColor["bleu"], true, true, false, false)
+        panel.btnUp:SetSize(0, 0)
+        panel.btnDown:SetSize(0, 0)
+
+        panel.PerformLayout = function(self)
+            local Ipr_Wide = self:GetWide()
+            local Ipr_Tall = self:GetTall()
+
+            local Ipr_Scroll = self:GetScroll() / self.CanvasSize
+            local Ipr_Bar = math.max(self:BarScale() *  Ipr_Tall, 10)
+
+            local Ipr_BarTall = Ipr_Tall - Ipr_Bar
+            Ipr_BarTall = Ipr_BarTall + 1
+
+            Ipr_Scroll = Ipr_Scroll * Ipr_BarTall
+            
+            self.btnGrip:SetPos(0, Ipr_Scroll)
+            self.btnGrip:SetSize(Ipr_Wide, Ipr_Bar)
         end
-        panel.btnDown.Paint = function(self, w, h)
-           draw.RoundedBoxEx(3, 0, 0, w, h, Ipr.Settings.TColor["bleu"], false, false, true, true)
+
+        panel.Paint = function(self, w, h)
+           draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 65))
         end
         panel.btnGrip.Paint = function(self, w, h)
-           draw.RoundedBox(1, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
+           draw.RoundedBox(4, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
         end
     end
       
