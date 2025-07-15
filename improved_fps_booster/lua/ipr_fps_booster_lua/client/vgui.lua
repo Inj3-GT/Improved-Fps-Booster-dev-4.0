@@ -799,7 +799,7 @@ local function Ipr_InitPostPlayer()
 end
 
 local function Ipr_PlayerShutDown()
-    local Ipr_ServerLeave = Ipr.Function.GetConvar("ServerLeaveConvars")
+    local Ipr_ServerLeave = Ipr.Function.GetConvar("ServerLeaveSettings")
     if (Ipr_ServerLeave) then
         Ipr.Function.Activate(false)
     end
