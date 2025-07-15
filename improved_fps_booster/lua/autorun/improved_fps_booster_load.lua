@@ -5,13 +5,12 @@
 // https://github.com/Inj3-GT
 
 Ipr_Fps_Booster = Ipr_Fps_Booster or {}
-
-local Ipr_FilesConfig = file.Find("ipr_fps_booster_configuration/*", "LUA")
-local Ipr_FilesLang = file.Find("ipr_fps_booster_language/*", "LUA")
-
 Ipr_Fps_Booster.Settings = Ipr_Fps_Booster.Settings or {}
 Ipr_Fps_Booster.Settings.Version = "4.0"
 Ipr_Fps_Booster.Settings.Developer = "Inj3"
+
+local Ipr_FilesConfig = file.Find("ipr_fps_booster_configuration/*", "LUA")
+local Ipr_FilesLang = file.Find("ipr_fps_booster_language/*", "LUA")
 
 if (CLIENT) then
     Ipr_Fps_Booster.Settings.DefaultLanguage = "EN"
