@@ -57,10 +57,12 @@ end
 Ipr.Function.SearchLang = function()
     local Ipr_SearchLang = file.Find("ipr_fps_booster_language/*", "LUA")
 
-    for _, v in pairs(Ipr_SearchLang) do
-        local Ipr_Size = file.Size("ipr_fps_booster_language/" ..v, "LUA")
+    for i = 1, #Ipr_SearchLang do
+        local Ipr_Lang = Ipr_SearchLang[i]
+        local Ipr_Size = file.Size("ipr_fps_booster_language/" ..Ipr_Lang, "LUA")
+
         if (Ipr_Size ~= 0) then
-            return string.upper(string.gsub(v, ".lua", ""))
+            return string.upper(string.gsub(Ipr_Lang, ".lua", ""))
         end
     end
 end
