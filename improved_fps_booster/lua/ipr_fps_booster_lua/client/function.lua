@@ -438,12 +438,12 @@ Ipr.Function.DCheckBoxLabel = function(panel, tbl)
     
     Ipr_SOptiButton.Paint = function(self, w, h)
         local Ipr_FrameChecked = self:GetChecked()
-        local Ipr_PosW = (Ipr_FrameChecked) and (w - h) + 2 or 2
+        local Ipr_PosW = (Ipr_FrameChecked) and (w / 2 ) + 2 or 6
 
         self.SLerp = Lerp(engine.AbsoluteFrameTime() * 13, self.SLerp or Ipr_PosW, Ipr_PosW)
 
-        draw.RoundedBox(12, 0, 0, w, h, (Ipr_FrameChecked) and Ipr.Settings.TColor["bleuc"] or Color(80, 80, 80, 130))
-        draw.RoundedBox(12, self.SLerp, 2, w / 2 - 2, h - 4, color_white)
+        draw.RoundedBox(12, 2, 2, w - 4, h - 4, (Ipr_FrameChecked) and Ipr.Settings.TColor["bleuc"] or Color(100, 100, 100, 130))
+        draw.RoundedBox(12, self.SLerp, 5, 10, 10, color_white)
     end
 
     local Ipr_SLabel = vgui.Create("DLabel", Ipr_SOptiPanel)
