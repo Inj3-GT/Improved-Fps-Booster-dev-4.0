@@ -278,66 +278,6 @@ Ipr.Function.ColorTransition = function(int)
     return (int <= 30) and Ipr.Settings.TColor["rouge"] or (int > 30 and int <= 50) and Ipr.Settings.TColor["orange"] or Ipr.Settings.TColor["vert"]
 end
 
-Ipr.Function.OverridePaint = function(panel)
-    local Ipr_PanelChild = panel:GetChildren()
-
-    local Ipr_Override = {
-        ["DPanel"] = function(frame)
-            frame.Paint = function(self, w, h)
-                local Ipr_ArrowRight = {
-                    {x = w / 2, y = h / 2 - 8 / 2},
-                    {x = w / 2 + 5, y = h / 2},
-                    {x = w / 2, y = h / 2 + 8 / 2},
-                }
-            
-                surface.SetDrawColor(ColorAlpha(color_white, 170))
-                draw.NoTexture()
-                surface.DrawPoly(Ipr_ArrowRight)
-            end
-        end,
-        ["DSlider"] = function(frame)
-            for i = 1, #Ipr_PanelChild do
-                local Ipr_CPanel = Ipr_PanelChild[i]
-                local Ipr_CNamePanel = Ipr_CPanel:GetName()
-                
-                if (Ipr_CNamePanel == "DTextEntry") then
-                    Ipr_CPanel:SetFont(Ipr.Settings.Font)
-                    Ipr_CPanel:SetTextColor(Ipr.Settings.TColor["blanc"])
-                end
-            end
-
-            frame.Knob.Paint = function(self, w, h)
-                draw.RoundedBox(3, 5, 2, w - 10, h - 4, Ipr.Settings.TColor["vert"])
-            end
-            frame.Paint = function(self, w, h)
-                draw.RoundedBox(3, 7, 8, 3, h - 16, Ipr.Settings.TColor["rouge"])
-                draw.RoundedBox(3, w / 2, 8, 3, h - 16, Ipr.Settings.TColor["rouge"])
-                draw.RoundedBox(3, w - 8, 8, 3, h - 16, Ipr.Settings.TColor["rouge"])
-
-                draw.RoundedBox(3, 7, h / 2 - 2, w - 12, h / 2 - 10, Ipr.Settings.TColor["rouge"])
-            end
-        end,
-        ["DCheckBox"] = function(frame)
-            frame.Paint = function(self, w, h)
-                local Ipr_FrameChecked = frame:GetChecked()
-                
-                draw.RoundedBox(6, 0, 0, w, h, (Ipr_FrameChecked) and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["rouge"])
-                draw.RoundedBox(12, 7, 7, 2, 2, (Ipr_FrameChecked) and Ipr.Settings.TColor["blanc"] or color_black)
-            end
-        end,
-    }
-
-    for i = 1, #Ipr_PanelChild do
-        local Ipr_CPanel = Ipr_PanelChild[i]
-        local Ipr_CNamePanel = Ipr_CPanel:GetName()
-
-        local Ipr_FindClass = Ipr_Override[Ipr_CNamePanel]
-        if (Ipr_FindClass) then
-            Ipr_FindClass(Ipr_CPanel)
-        end
-    end
-end
-
 Ipr.Function.RenderBlur = function(panel, colors, border)
     surface.SetDrawColor(color_white)
     surface.SetMaterial(Ipr.Settings.Blur)
@@ -377,6 +317,7 @@ Ipr.Function.SetToolTip = function(text, panel, hover)
     local Ipr_WhiteListPanel = {
         ["DButton"] = true,
         ["DImageButton"] = true,
+        ["DCheckBox"] = true,
     }
 
     if (Ipr_WhiteListPanel[panel:GetName()]) then
@@ -478,24 +419,124 @@ Ipr.Function.DrawMultipleTextAligned = function(tbl)
     end
 end
 
-Ipr.Function.OverrideVgui = {
-    ["DCheckBoxLabel"] = {
-        Function = function(panel, box, hud)
-            panel.Paint = function(self, w, h)
-                draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][box.Localization.Text], Ipr.Settings.Font, 22, 4, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+Ipr.Function.DCheckBoxLabel = function(panel, tbl)
+    local Ipr_SOptiPanel = vgui.Create("DPanel", panel)
+    Ipr_SOptiPanel:Dock(TOP)
+    Ipr_SOptiPanel:SetTall(20)
+    Ipr_SOptiPanel:DockMargin(0, 5, 0, 5)
+    Ipr_SOptiPanel.Paint = nil
+
+    local Ipr_SOptiButton = vgui.Create("DCheckBox", Ipr_SOptiPanel)
+    Ipr_SOptiButton:DockMargin(0, 0, 5, 0)
+    Ipr_SOptiButton:Dock(LEFT)
+    Ipr_SOptiButton:SetWide(35)
+
+    local Ipr_Checked = Ipr.Function.GetConvar(tbl.Name)
+    Ipr_SOptiButton:SetValue(Ipr_Checked)
+
+    Ipr_SOptiButton.SLerp = (Ipr_Checked) and Ipr_SOptiButton:GetTall() + 3 or 1
+    
+    Ipr_SOptiButton.Paint = function(self, w, h)
+        local Ipr_FrameChecked = self:GetChecked()
+        local Ipr_PosW = (Ipr_FrameChecked) and (w - h) + 3 or 1
+
+        self.SLerp = Lerp(engine.AbsoluteFrameTime() * 13, self.SLerp or Ipr_PosW, Ipr_PosW)
+
+        draw.RoundedBox(12, 0, 0, w, h, (Ipr_FrameChecked) and Ipr.Settings.TColor["bleuc"] or Color(80, 80, 80, 130))
+        draw.RoundedBox(10, self.SLerp, 2, h - 4, h - 4, color_white)
+    end
+
+    local Ipr_SLabel = vgui.Create("DLabel", Ipr_SOptiPanel)
+    Ipr_SLabel:Dock(FILL)
+    Ipr_SLabel:SetFont(Ipr.Settings.Font)
+    Ipr_SLabel:SetText("")
+
+    Ipr_SLabel.Paint = function(self, w, h)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][tbl.Localization.Text], Ipr.Settings.Font, 0, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+    end
+
+    return Ipr_SOptiButton, Ipr_SOptiPanel
+end
+
+Ipr.Function.DNumSlider = function(panel, tbl)
+    local Ipr_DNumPanel = vgui.Create("DPanel", panel)
+    Ipr_DNumPanel:SetSize(225, 39)
+    Ipr_DNumPanel:Dock(TOP)
+    Ipr_DNumPanel.Paint = nil
+
+    local Ipr_DNumPanelPaint = vgui.Create("DPanel", Ipr_DNumPanel)
+    Ipr_DNumPanelPaint:Dock(TOP)
+
+    local Ipr_SConfigCreate = vgui.Create("DNumSlider", Ipr_DNumPanel)
+    Ipr_SConfigCreate:SetSize(Ipr_PrimaryWide, 25)
+    Ipr_SConfigCreate:Dock(BOTTOM)
+    Ipr_SConfigCreate:SetText("")
+    Ipr_SConfigCreate:SetMinMax(0, tbl.Max or 100)
+    Ipr_SConfigCreate:SetValue(Ipr.Function.GetConvar(tbl.Name))
+    Ipr_SConfigCreate:SetDecimals(0)
+
+    Ipr_DNumPanelPaint.Paint = function(self, w, h)
+       draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][tbl.Localization.Text].. " [" ..math.Round(Ipr_SConfigCreate:GetValue()).. "]", Ipr.Settings.Font, w / 2, 0, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+    end
+
+    local Ipr_PrimaryWide = Ipr_DNumPanel:GetWide()
+    local Ipr_PanelChild = Ipr_SConfigCreate:GetChildren()
+    local Ipr_OverrideSlider = {
+        ["DSlider"] = function(slide)
+            slide:Dock(FILL)
+            slide:SetSize(Ipr_PrimaryWide, 25)
+
+            slide.Knob.Paint = function(self, w, h)
+                draw.RoundedBox(3, 5, 2, w - 10, h - 4, color_white)
             end
+            slide.Paint = function(self, w, h)
+                draw.RoundedBox(3, 7, h / 2 - 2, w - 12, h / 2 - 10, Ipr.Settings.TColor["bleuc"])
 
-            panel:SetValue(Ipr.Function.GetConvar(box.Name))
-            panel:SetWide(210)
-            panel:Dock(FILL)
+                draw.RoundedBox(3, 7, 9, 3, h - 18, ColorAlpha(color_white, 170))
+                draw.RoundedBox(3, w / 2, 11, 3, h - 22, ColorAlpha(color_white, 170))
+                draw.RoundedBox(3, w - 8, 9, 3, h - 18, ColorAlpha(color_white, 170))
+            end
+        end,
+        ["DLabel"] = function(slide)
+            slide:GetChildren()[1]:SetVisible(false)
+            slide:SetVisible(false)
+        end,
+        ["DTextEntry"] = function(slide)
+            slide:SetFont(Ipr.Settings.Font)
+            slide:SetTextColor(Ipr.Settings.TColor["blanc"])
 
-            local Ipr_Name = box.Name
-            panel.OnChange = function(self)
+            slide:SetVisible(false)
+        end,
+    }
+
+    for i = 1, #Ipr_PanelChild do
+        local Ipr_CPanel = Ipr_PanelChild[i]
+        local Ipr_CNamePanel = Ipr_CPanel:GetName()
+
+        local Ipr_FuncSlider = Ipr_OverrideSlider[Ipr_CNamePanel]
+        if (Ipr_FuncSlider) then
+            Ipr_FuncSlider(Ipr_CPanel)
+        end
+    end
+
+    Ipr_SConfigCreate.OnValueChanged = function(self)
+        Ipr.Function.SetConvar(tbl.Name, self:GetValue(), 1)
+    end
+
+    return Ipr_SConfigCreate, Ipr_DNumPanel
+end
+
+Ipr.Function.SettingsVgui = {
+    ["DCheckBoxLabel"] = {
+        Parent = function(panel, tbl, hud)
+            local Ipr_CreateCheckBoxLabel, Ipr_DPanelCheckBox = Ipr.Function.DCheckBoxLabel(panel, tbl)
+
+            Ipr_CreateCheckBoxLabel.OnChange = function(self)
                 local Ipr_GetChecked = self:GetChecked()
-                Ipr.Function.SetConvar(Ipr_Name, Ipr_GetChecked, 1)
+                Ipr.Function.SetConvar(tbl.Name, Ipr_GetChecked, 1)
 
                 for i = 1, #Ipr.Settings.Vgui.CheckBox do
-                    if (Ipr.Settings.Vgui.CheckBox[i].Paired == Ipr_Name) then
+                    if (Ipr.Settings.Vgui.CheckBox[i].Paired == tbl.Name) then
                         local Ipr_Vgui = Ipr.Settings.Vgui.CheckBox[i].Vgui
                         Ipr_Vgui = Ipr_Vgui:GetParent()
 
@@ -505,79 +546,31 @@ Ipr.Function.OverrideVgui = {
                     end
                 end
 
-                if (box.Run_HookFog) then
+                if (tbl.Run_HookFog) then
                     Ipr.Function.FogActivate(Ipr_GetChecked)
-                elseif (box.Run_HookFps) then
+                elseif (tbl.Run_HookFps) then
                     if (Ipr_GetChecked) then
                         hook.Add("PostDrawHUD", "IprFpsBooster_HUD", hud)
                     else
                         hook.Remove("PostDrawHUD", "IprFpsBooster_HUD", hud)
                     end
-                elseif (box.Run_Debug) then
+                elseif (tbl.Run_Debug) then
                     Ipr.Settings.Debug = Ipr_GetChecked
                 end
             end
-        end,
 
-        Parent = function(panel)
-            local Ipr_CheckBoxConfig = vgui.Create("DPanel", panel)
-            Ipr_CheckBoxConfig:SetSize(225, 25)
-            Ipr_CheckBoxConfig:Dock(TOP)
-            Ipr_CheckBoxConfig.Paint = nil
-
-            return Ipr_CheckBoxConfig
+            return Ipr_CreateCheckBoxLabel, Ipr_DPanelCheckBox
         end,
     },
     ["DNumSlider"] = {
-        Function = function(panel, box)
-            local Ipr_Parent = panel:GetParent()
-            Ipr_Parent.Paint = function(self, w, h)
-                draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][box.Localization.Text].. " [" ..math.Round(panel:GetValue()).. "]", Ipr.Settings.Font, w / 2, 0, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        Parent = function(panel, tbl)
+            local Ipr_CreateNumSlider, Ipr_DPanelSlider = Ipr.Function.DNumSlider(panel, tbl)
+
+            Ipr_CreateNumSlider.OnValueChanged = function(self)
+                Ipr.Function.SetConvar(tbl.Name, self:GetValue(), 1)
             end
 
-            local Ipr_DNumChildren = panel:GetChildren()
-            local Ipr_PrimaryWide = Ipr_Parent:GetWide()
-            local Ipr_OverrideSlider = {
-                ["DSlider"] = function(slide)
-                    slide:Dock(FILL)
-                    slide:SetSize(Ipr_PrimaryWide, 25)
-                end,
-                ["DLabel"] = function(slide)
-                    slide:GetChildren()[1]:SetVisible(false)
-                    slide:SetVisible(false)
-                end,
-                ["DTextEntry"] = function(slide)
-                    slide:SetVisible(false)
-                end,
-            }
-
-            for i = 1, #Ipr_DNumChildren do
-                local Ipr_CDNumChild = Ipr_DNumChildren[i]
-                local Ipr_CNumPanel = Ipr_CDNumChild:GetName()
-                local Ipr_FuncSlider = Ipr_OverrideSlider[Ipr_CNumPanel]
-
-                if (Ipr_FuncSlider) then
-                    Ipr_FuncSlider(Ipr_CDNumChild)
-                end
-            end
-
-            panel:SetSize(Ipr_PrimaryWide, 25)
-            panel:Dock(BOTTOM)
-            panel:SetMinMax(0, box.Max or 100)
-            panel:SetValue(Ipr.Function.GetConvar(box.Name))
-            panel:SetDecimals(0)
-
-            panel.OnValueChanged = function(self)
-                Ipr.Function.SetConvar(box.Name, self:GetValue(), 1)
-            end
-        end,
-
-        Parent = function(panel)
-            local Ipr_DNumConfig = vgui.Create("DPanel", panel)
-            Ipr_DNumConfig:SetSize(225, 39)
-            Ipr_DNumConfig:Dock(TOP)
-
-            return Ipr_DNumConfig
+            return Ipr_CreateNumSlider, Ipr_DPanelSlider
         end,
     },
 }
