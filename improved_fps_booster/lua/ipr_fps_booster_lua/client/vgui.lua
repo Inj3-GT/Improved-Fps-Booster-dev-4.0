@@ -164,7 +164,7 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SOpti:SetSize(232, 165)
     Ipr_SOpti:SetPos(Ipr_CenterVgui - (Ipr_SOpti:GetWide() / 2), 90)
     Ipr_SOpti.Paint = function(self, w, h)
-        draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 90))
+        draw.RoundedBox(4, 0, 0, w, h, Ipr.Settings.BackGround)
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TSettings, Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
 
@@ -299,7 +299,7 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SConfig:SetSize(232, 165)
     Ipr_SConfig:SetPos(Ipr_CenterVgui - (Ipr_SConfig:GetWide() / 2), 260)
     Ipr_SConfig.Paint = function(self, w, h)
-        draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 90))
+        draw.RoundedBox(4, 0, 0, w, h, Ipr.Settings.BackGround)
         draw.SimpleText("Configuration :", Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
 
@@ -330,7 +330,7 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SManage:SetSize(150, 60)
     Ipr_SManage:SetPos(Ipr_CenterVgui - (Ipr_SManage:GetWide() / 2), 25)
     Ipr_SManage.Paint = function(self, w, h)
-        draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 90))
+        draw.RoundedBox(4, 0, 0, w, h, Ipr.Settings.BackGround)
     end
 
     local Ipr_SScrollManage = vgui.Create("DScrollPanel", Ipr_SManage)
