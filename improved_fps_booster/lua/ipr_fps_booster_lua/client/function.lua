@@ -433,8 +433,7 @@ Ipr.Function.DCheckBoxLabel = function(panel, tbl)
 
     local Ipr_Checked = Ipr.Function.GetConvar(tbl.Name)
     Ipr_SOptiButton:SetValue(Ipr_Checked)
-
-    Ipr_SOptiButton.SLerp = (Ipr_Checked) and Ipr_SOptiButton:GetTall() + 3 or 1
+    Ipr_SOptiButton.SLerp = (Ipr_Checked) and Ipr_SOptiButton:GetTall() + 2 or 6
     
     Ipr_SOptiButton.Paint = function(self, w, h)
         local Ipr_FrameChecked = self:GetChecked()

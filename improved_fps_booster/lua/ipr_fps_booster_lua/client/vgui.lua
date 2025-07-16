@@ -141,7 +141,6 @@ local function Ipr_FpsBooster_Options(primary)
 
     local Ipr_CenterVgui = Ipr_SSize.w / 2
     local Ipr_SChecked = Ipr.Function.IsChecked()
-    local Ipr_CheckboxState = {[true] = {Icon = "icon16/lorry_flatbed.png", PoH = 0}, [false] = {Icon = "icon16/lorry.png", PoH = 3}}
 
     Ipr.Settings.Vgui.CheckBox = {}
 
@@ -165,11 +164,11 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SOpti:SetPos(Ipr_CenterVgui - (Ipr_SOpti:GetWide() / 2), 90)
     Ipr_SOpti.Paint = function(self, w, h)
         draw.RoundedBox(4, 0, 0, w, h, Ipr.Settings.BackGround)
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TSettings, Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TSettings, Ipr.Settings.Font, w / 2, 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
 
     Ipr_Revert:SetSize(16, 16)
-    Ipr_Revert:SetPos(Ipr_SOpti:GetWide() - Ipr_Revert:GetWide() - 2, 2)
+    Ipr_Revert:SetPos(Ipr_SOpti:GetWide() - Ipr_Revert:GetWide() - 1, 3)
     Ipr_Revert:SetImage("icon16/arrow_rotate_clockwise.png")
     Ipr.Function.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertData, Ipr_Revert, true)
     Ipr_Revert.Paint = nil
@@ -206,8 +205,9 @@ local function Ipr_FpsBooster_Options(primary)
         chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], (Ipr_CopyFind) and Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataApply or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataCancel)
     end
     
+    local Ipr_CheckboxState = {[true] = {Icon = "icon16/lorry_flatbed.png", PoH = 1}, [false] = {Icon = "icon16/lorry.png", PoH =3}}
     Ipr_SUncheck:SetSize(16, 16)
-    Ipr_SUncheck:SetPos(5, Ipr_CheckboxState[Ipr_SChecked].PoH)
+    Ipr_SUncheck:SetPos(6, Ipr_CheckboxState[Ipr_SChecked].PoH)
     Ipr_SUncheck:SetImage(Ipr_CheckboxState[Ipr_SChecked].Icon)
     Ipr_SUncheck.Paint = nil
     Ipr.Function.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckUncheckAll, Ipr_SUncheck, true)
@@ -300,7 +300,7 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SConfig:SetPos(Ipr_CenterVgui - (Ipr_SConfig:GetWide() / 2), 260)
     Ipr_SConfig.Paint = function(self, w, h)
         draw.RoundedBox(4, 0, 0, w, h, Ipr.Settings.BackGround)
-        draw.SimpleText("Configuration :", Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("Configuration :", Ipr.Settings.Font, w / 2, 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
 
     local Ipr_SScrollConfig = vgui.Create("DScrollPanel", Ipr_SConfig)
