@@ -444,7 +444,7 @@ Ipr.Function.DCheckBoxLabel = function(panel, tbl)
         draw.RoundedBox(12, 2, 2, w - 4, h - 4, (Ipr_FrameChecked) and Ipr.Settings.TColor["bleu"] or Ipr.Settings.TColor["gris"])
         draw.RoundedBox(12, self.SLerp, 5, 10, 10, color_white)
         
-        surface.DrawCircle(self.SLerp + 5, 10, 6, ColorAlpha(color_black, 100))
+        surface.DrawCircle(self.SLerp + 5, 10, 6, ColorAlpha(color_black, 90))
     end
 
     local Ipr_SLabel = vgui.Create("DLabel", Ipr_SOptiPanel)
