@@ -46,6 +46,7 @@ return {
         ["gvert_"] = Color(28, 143, 24, 232),
         ["bleu"] = Color(52, 73, 94),
         ["bleuc"] = Color(27, 66, 99),
+        ["gris"] = Color(128, 128, 128, 145),
     },
     Country = {
         ["BE"] = true,
