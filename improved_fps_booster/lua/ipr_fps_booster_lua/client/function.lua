@@ -295,7 +295,7 @@ Ipr.Function.RenderBlur = function(panel, colors, border)
     draw.RoundedBoxEx(border, 0, 0, Ipr_VguiWide, Ipr_VguiHeight, colors, true, true, true, true)
 end
 
-Ipr.Function.SetToolTip = function(text, panel, hover)
+Ipr.Function.SetToolTip = function(text, panel, localization)
     if not IsValid(Ipr.Settings.Vgui.ToolTip) then
         Ipr.Settings.Vgui.ToolTip = vgui.Create("DTooltip")
         Ipr.Settings.Vgui.ToolTip:SetText("")
@@ -314,18 +314,24 @@ Ipr.Function.SetToolTip = function(text, panel, hover)
     end
     
     local Ipr_OverrideChildren = panel:GetChildren()
-    local Ipr_WhiteListPanel = {
-        ["DButton"] = true,
-        ["DImageButton"] = true,
-        ["DCheckBox"] = true,
-    }
+    local Ipr_NameVgui = panel:GetName()
 
-    if (Ipr_WhiteListPanel[panel:GetName()]) then
-        Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = panel
+    local Ipr_VguiManage = {
+        ["DButton"] = {Panel = true},
+        ["DImageButton"] = {Panel = true},
+        ["DCheckBox"] = {Panel = false, Parent = panel:GetParent()},
+    }
+    if (Ipr_VguiManage[Ipr_NameVgui].Panel) then
+         Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = panel
+    end
+    if (Ipr_VguiManage[Ipr_NameVgui].Parent) then
+         Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = Ipr_VguiManage[Ipr_NameVgui].Parent
     end
 
     for i = 1, #Ipr_OverrideChildren do
-        Ipr_OverrideChildren[i].OnCursorMoved = function(self)
+        local Ipr_OverrideChild = Ipr_OverrideChildren[i]
+        
+        Ipr_OverrideChild.OnCursorMoved = function(self)
             if not IsValid(Ipr.Settings.Vgui.ToolTip) then
                 return
             end
@@ -335,19 +341,19 @@ Ipr.Function.SetToolTip = function(text, panel, hover)
 
             Ipr.Settings.Vgui.ToolTip:SetPos(ipr_Pos, ipr_InputY - 30)
         end
-        Ipr_OverrideChildren[i].OnCursorExited = function()
+        Ipr_OverrideChild.OnCursorExited = function()
             if not IsValid(Ipr.Settings.Vgui.ToolTip) then
                 return
             end
 
             Ipr.Settings.Vgui.ToolTip:SetVisible(false)
         end
-        Ipr_OverrideChildren[i].OnCursorEntered = function(self)
+        Ipr_OverrideChild.OnCursorEntered = function(self)
             if not IsValid(Ipr.Settings.Vgui.ToolTip) then
                 return
             end
 
-            Ipr.Settings.Vgui.ToolTip:SetText((hover) and text or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][text])
+            Ipr.Settings.Vgui.ToolTip:SetText((localization) and text or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][text])
             Ipr.Settings.Vgui.ToolTip:SetTextColor(Ipr.Settings.TColor["blanc"])
             Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
 
@@ -427,7 +433,7 @@ Ipr.Function.DCheckBoxLabel = function(panel, tbl)
     Ipr_SOptiPanel.Paint = nil
 
     local Ipr_SOptiButton = vgui.Create("DCheckBox", Ipr_SOptiPanel)
-    Ipr_SOptiButton:DockMargin(0, 0, 7, 0)
+    Ipr_SOptiButton:DockMargin(0, 0, 5, 0)
     Ipr_SOptiButton:Dock(LEFT)
     Ipr_SOptiButton:SetWide(35)
 
