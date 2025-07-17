@@ -205,7 +205,7 @@ local function Ipr_FpsBooster_Options(primary)
         chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], (Ipr_CopyFind) and Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataApply or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataCancel)
     end
     
-    local Ipr_CheckboxState = {[true] = {Icon = "icon16/lorry_flatbed.png", PoH = 1}, [false] = {Icon = "icon16/lorry.png", PoH =3}}
+    local Ipr_CheckboxState = {[true] = {Icon = "icon16/lorry_flatbed.png", PoH = 3}, [false] = {Icon = "icon16/lorry.png", PoH = 4}}
     Ipr_SUncheck:SetSize(16, 16)
     Ipr_SUncheck:SetPos(6, Ipr_CheckboxState[Ipr_SChecked].PoH)
     Ipr_SUncheck:SetImage(Ipr_CheckboxState[Ipr_SChecked].Icon)
