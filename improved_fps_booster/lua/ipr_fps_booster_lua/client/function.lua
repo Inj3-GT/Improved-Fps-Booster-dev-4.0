@@ -441,7 +441,7 @@ Ipr.Function.DCheckBoxLabel = function(panel, tbl)
 
         self.SLerp = Lerp(engine.AbsoluteFrameTime() * 13, self.SLerp or Ipr_PosW, Ipr_PosW)
 
-        draw.RoundedBox(12, 2, 2, w - 4, h - 4, (Ipr_FrameChecked) and Ipr.Settings.TColor["bleuc"] or Color(100, 100, 100, 130))
+        draw.RoundedBox(12, 2, 2, w - 4, h - 4, (Ipr_FrameChecked) and Ipr.Settings.TColor["bleu"] or Color(128, 128, 128, 145))
         draw.RoundedBox(12, self.SLerp, 5, 10, 10, color_white)
     end
 
@@ -489,7 +489,7 @@ Ipr.Function.DNumSlider = function(panel, tbl)
                 draw.RoundedBox(3, 5, 2, w - 10, h - 4, color_white)
             end
             slide.Paint = function(self, w, h)
-                draw.RoundedBox(3, 7, h / 2 - 2, w - 12, h / 2 - 10, Ipr.Settings.TColor["bleuc"])
+                draw.RoundedBox(3, 7, h / 2 - 2, w - 12, h / 2 - 10, Ipr.Settings.TColor["bleu"])
 
                 draw.RoundedBox(3, 7, 9, 3, h - 18, ColorAlpha(color_white, 170))
                 draw.RoundedBox(3, w / 2, 11, 3, h - 22, ColorAlpha(color_white, 170))
