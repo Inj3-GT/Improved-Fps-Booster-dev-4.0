@@ -14,26 +14,26 @@ local function Ipr_HUD()
 
     local Ipr_RenderFpsText = {
         {
-            {Name = "FPS :", FColor = color_white},
+            {Name = "FPS :", FColor = Ipr.Settings.TColor["blanc"]},
             {Name = Ipr_FpsCurrent, FColor = Ipr.Function.ColorTransition(Ipr_FpsCurrent)},
-            {Name = "|", FColor = color_white},
-            {Name = "Min :", FColor = color_white},
+            {Name = "|", FColor = Ipr.Settings.TColor["blanc"]},
+            {Name = "Min :", FColor = Ipr.Settings.TColor["blanc"]},
             {Name = Ipr_FpsMin, FColor = Ipr.Function.ColorTransition(Ipr_FpsMin)},
-            {Name = "|", FColor = color_white},
-            {Name = "Max :", FColor = color_white},
+            {Name = "|", FColor = Ipr.Settings.TColor["blanc"]},
+            {Name = "Max :", FColor = Ipr.Settings.TColor["blanc"]},
             {Name = Ipr_FpsMax, FColor = Ipr.Function.ColorTransition(Ipr_FpsMax)},
-            {Name = "|", FColor = color_white},
-            {Name = "Low 1% :", FColor = color_white},
+            {Name = "|", FColor = Ipr.Settings.TColor["blanc"]},
+            {Name = "Low 1% :", FColor = Ipr.Settings.TColor["blanc"]},
             {Name = Ipr_FpsLow, FColor = Ipr.Function.ColorTransition(Ipr_FpsLow)},
 
             Pos = {PWide = Ipr_HWide, PHeight = Ipr_HHeight},
         },
 
         {
-            {Name = "Map :", FColor = color_white},
+            {Name = "Map :", FColor = Ipr.Settings.TColor["blanc"]},
             {Name = Ipr.Settings.Map, FColor = Ipr.Settings.TColor["bleuc"]},
-            {Name = "|", FColor = color_white},
-            {Name = "Ping :", FColor = color_white},
+            {Name = "|", FColor = Ipr.Settings.TColor["blanc"]},
+            {Name = "Ping :", FColor = Ipr.Settings.TColor["blanc"]},
             {Name = Ipr_PlayerPing, FColor = Ipr.Settings.TColor["bleuc"]},
 
             Pos = {PWide = Ipr_HWide - 1, PHeight = Ipr_HHeight + 20},
@@ -248,10 +248,10 @@ local function Ipr_FpsBooster_Options(primary)
         end
 
         panel.Paint = function(self, w, h)
-           draw.RoundedBox(4, 0, 0, w, h, ColorAlpha(color_black, 65))
+           draw.RoundedBox(5, 0, 0, w, h, ColorAlpha(color_black, 65))
         end
         panel.btnGrip.Paint = function(self, w, h)
-           draw.RoundedBox(4, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
+           draw.RoundedBox(5, 0, 0, w, h, Ipr.Settings.TColor["bleu"])
         end
     end
       
@@ -359,7 +359,7 @@ local function Ipr_FpsBooster_Options(primary)
             Ipr.Function.SetConvar(Ipr_SManageTbl.Convar.Name, Ipr_SManageTbl.Convar.DefaultCheck, nil, true)
         end
             
-        local Ipr_ConvarColor = color_white
+        local Ipr_ConvarColor = Ipr.Settings.TColor["blanc"]
         Ipr_SManageCreate.Paint = function(self, w, h)
             local Ipr_Hovered = self:IsHovered()
             if (Ipr_SManageTbl.DrawLine) then
@@ -552,11 +552,14 @@ local function Ipr_FpsBooster()
 
     Ipr_PEnabled:SetSize(110, 24)
     Ipr_PEnabled:SetPos(5, Ipr_PSize.h - Ipr_PEnabled:GetTall() - 5)
-    Ipr_PEnabled:SetImage("icon16/tick.png")
     Ipr_PEnabled:SetText("")
     Ipr_PEnabled.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VEnabled, Ipr.Settings.Font, w / 2 + 3, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VEnabled, Ipr.Settings.Font, w / 2 + 7, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+
+        surface.SetMaterial(Ipr.Settings.IEnabled)
+	    surface.SetDrawColor(color_white)
+     	surface.DrawTexturedRect(4, h / 2 - 8, 16, 16)
     end
     Ipr_PEnabled.DoClick = function()
         local Ipr_CheckBox = Ipr.Function.IsChecked()
@@ -584,11 +587,14 @@ local function Ipr_FpsBooster()
 
     Ipr_PDisabled:SetSize(110, 24)
     Ipr_PDisabled:SetPos(Ipr_PSize.w - Ipr_PDisabled:GetWide() - 5, Ipr_PSize.h - Ipr_PDisabled:GetTall() - 5)
-    Ipr_PDisabled:SetImage("icon16/cross.png")
     Ipr_PDisabled:SetText("")
     Ipr_PDisabled.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VDisabled, Ipr.Settings.Font, w / 2 + 6, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VDisabled, Ipr.Settings.Font, w / 2 + 7, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+
+        surface.SetMaterial(Ipr.Settings.IDisabled)
+	    surface.SetDrawColor(color_white)
+     	surface.DrawTexturedRect(4, h / 2 - 8, 16, 16)
     end
     Ipr_PDisabled.DoClick = function()
         local Ipr_ConvarsEnabled = Ipr.Function.MatchConvar(false)
@@ -609,21 +615,24 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/combine_button5.wav")
     end
 
-    Ipr_PResetFps:SetSize(150, 20)
-    Ipr_PResetFps:SetPos(Ipr_PSize.w / 2 - Ipr_PResetFps:GetWide() / 2 + 1, 190)
+    Ipr_PResetFps:SetSize(150, 21)
+    Ipr_PResetFps:SetPos(Ipr_PSize.w / 2 - Ipr_PResetFps:GetWide() / 2 + 1, 191)
     Ipr_PResetFps:SetText("")
-    Ipr_PResetFps:SetImage("icon16/arrow_refresh.png")
     Ipr.Function.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TReset, Ipr_PResetFps, true)
     Ipr_PResetFps.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
-        draw.SimpleText("Reset FPS Max/Min", Ipr.Settings.Font, w / 2 + 5, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("Reset FPS Max/Min", Ipr.Settings.Font, w / 2 + 7, 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+
+        surface.SetMaterial(Ipr.Settings.IResetFps)
+	    surface.SetDrawColor(color_white)
+     	surface.DrawTexturedRect(4, h / 2 - 7, 16, 16)
     end
     Ipr_PResetFps.DoClick = function()
         Ipr.Function.ResetFps()
         surface.PlaySound("buttons/button9.wav")
     end
 
-    Ipr_PSettings:SetSize(85, 20)
+    Ipr_PSettings:SetSize(85, 21)
     Ipr_PSettings:SetPos(Ipr_PSize.w - Ipr_PSettings:GetWide() - 5, 37)
     Ipr_PSettings:SetText("")
     Ipr.Function.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Options, Ipr_PSettings, true)
@@ -631,10 +640,10 @@ local function Ipr_FpsBooster()
         local Ipr_IsHovered = self:IsHovered()
         draw.RoundedBox(6, 0, 0, w, h, (Ipr_IsHovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
-        draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 9, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 8, 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
-        surface.SetMaterial(Ipr.Settings.MatOptions)
-        surface.SetDrawColor(color_white)
+        surface.SetMaterial(Ipr.Settings.IMatOptions)
+        surface.SetDrawColor(Ipr.Settings.TColor["blanc"])
 
         local Ipr_PRotation = 0
         if (Ipr_IsHovered) then
@@ -652,7 +661,7 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/button9.wav")
     end
 
-    Ipr_PLanguage:SetSize(85, 20)
+    Ipr_PLanguage:SetSize(85, 21)
     Ipr_PLanguage:SetPos(5, 37)
     Ipr_PLanguage:SetFont(Ipr.Settings.Font)
     Ipr_PLanguage:SetValue(Ipr.Settings.SetLang)
@@ -662,9 +671,9 @@ local function Ipr_FpsBooster()
         Ipr_PLanguage:AddChoice(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..k, k, false, "materials/flags16/" ..v.Icon)
     end
 
-    Ipr_PLanguage:SetImage("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Icon)
     Ipr_PLanguage:SetText("")
 
+    local Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Icon, "noclamp")
     Ipr_PLanguage.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
@@ -673,16 +682,20 @@ local function Ipr_FpsBooster()
         local Ipr_PTWide, Ipr_PTHeight = surface.GetTextSize(Ipr_TLang)
 
         local Ipr_AlignCenterText = w / 2 - Ipr_PTWide / 2 + 2
-        draw.SimpleText(Ipr_TLang, Ipr.Settings.Font, Ipr_AlignCenterText, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+        draw.SimpleText(Ipr_TLang, Ipr.Settings.Font, Ipr_AlignCenterText, 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
 
-        surface.SetDrawColor(ColorAlpha(color_white, 125))
+        surface.SetDrawColor(ColorAlpha(Ipr.Settings.TColor["blanc"], 125))
 
         local Ipr_AlignLeft = Ipr_AlignCenterText - 4
         Ipr_AlignLeft = math.ceil(Ipr_AlignLeft)
-        surface.DrawLine(Ipr_AlignLeft, h - Ipr_PTHeight + 3, Ipr_AlignLeft, Ipr_PTHeight - 4)
+        surface.DrawLine(Ipr_AlignLeft, h - Ipr_PTHeight + 4, Ipr_AlignLeft, Ipr_PTHeight - 4)
 
         local Ipr_AlignRight = Ipr_AlignCenterText + 5 + Ipr_PTWide
-        surface.DrawLine(Ipr_AlignRight, h - Ipr_PTHeight + 3, Ipr_AlignRight, Ipr_PTHeight - 4)
+        surface.DrawLine(Ipr_AlignRight, h - Ipr_PTHeight + 4, Ipr_AlignRight, Ipr_PTHeight - 4)
+
+        surface.SetMaterial(Ipr_FlagMat)
+	    surface.SetDrawColor(color_white)
+     	surface.DrawTexturedRect(4, h / 2 - 5.5, 16, 11)
     end
 
     local function Ipr_OverrideLangPaint(panel)
@@ -696,7 +709,7 @@ local function Ipr_FpsBooster()
                         {x = w / 2, y = h / 2 + 8 / 2},
                     }
                 
-                    surface.SetDrawColor(ColorAlpha(color_white, 170))
+                    surface.SetDrawColor(ColorAlpha(Ipr.Settings.TColor["blanc"], 170))
                     draw.NoTexture()
                     surface.DrawPoly(Ipr_ArrowRight)
                 end
@@ -759,7 +772,7 @@ local function Ipr_FpsBooster()
             self:AddChoice(Ipr_Fps_Booster.Lang[Ipr_SetLang].SelectLangue.. " " ..k, k, false, "materials/flags16/" ..v.Icon)
         end
 
-        self:SetImage("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr_SetLang].Icon)
+        Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr_SetLang].Icon, "noclamp")
         self:SetText("")
 
         if (Ipr_SetLang ~= Ipr.Settings.SetLang) then

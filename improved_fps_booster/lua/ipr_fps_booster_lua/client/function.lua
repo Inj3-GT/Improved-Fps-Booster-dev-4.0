@@ -279,7 +279,7 @@ Ipr.Function.ColorTransition = function(int)
 end
 
 Ipr.Function.RenderBlur = function(panel, colors, border)
-    surface.SetDrawColor(color_white)
+    surface.SetDrawColor(Ipr.Settings.TColor["blanc"])
     surface.SetMaterial(Ipr.Settings.Blur)
 
     local Ipr_Posx, Ipr_Posy = panel:LocalToScreen(0, 0)
@@ -299,7 +299,7 @@ Ipr.Function.SetToolTip = function(text, panel, hover)
     if not IsValid(Ipr.Settings.Vgui.ToolTip) then
         Ipr.Settings.Vgui.ToolTip = vgui.Create("DTooltip")
         Ipr.Settings.Vgui.ToolTip:SetText("")
-        Ipr.Settings.Vgui.ToolTip:SetTextColor(color_white)
+        Ipr.Settings.Vgui.ToolTip:SetTextColor(Ipr.Settings.TColor["blanc"])
         Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
 
         Ipr.Settings.Vgui.ToolTip.Paint = function(self, w, h)
@@ -348,7 +348,7 @@ Ipr.Function.SetToolTip = function(text, panel, hover)
             end
 
             Ipr.Settings.Vgui.ToolTip:SetText((hover) and text or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][text])
-            Ipr.Settings.Vgui.ToolTip:SetTextColor(color_white)
+            Ipr.Settings.Vgui.ToolTip:SetTextColor(Ipr.Settings.TColor["blanc"])
             Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
 
             Ipr.Settings.Vgui.ToolTip:SetVisible(true)
@@ -427,13 +427,13 @@ Ipr.Function.DCheckBoxLabel = function(panel, tbl)
     Ipr_SOptiPanel.Paint = nil
 
     local Ipr_SOptiButton = vgui.Create("DCheckBox", Ipr_SOptiPanel)
-    Ipr_SOptiButton:DockMargin(0, 0, 5, 0)
+    Ipr_SOptiButton:DockMargin(0, 0, 7, 0)
     Ipr_SOptiButton:Dock(LEFT)
     Ipr_SOptiButton:SetWide(35)
 
     local Ipr_Checked = Ipr.Function.GetConvar(tbl.Name)
     Ipr_SOptiButton:SetValue(Ipr_Checked)
-    Ipr_SOptiButton.SLerp = (Ipr_Checked) and Ipr_SOptiButton:GetTall() + 2 or 6
+    Ipr_SOptiButton.SLerp = (Ipr_Checked) and Ipr_SOptiButton:GetTall() + 3 or 6
 
     Ipr_SOptiButton.Paint = function(self, w, h)
         local Ipr_FrameChecked = self:GetChecked()
@@ -442,7 +442,7 @@ Ipr.Function.DCheckBoxLabel = function(panel, tbl)
         self.SLerp = Lerp(engine.AbsoluteFrameTime() * 13, self.SLerp or Ipr_PosW, Ipr_PosW)
 
         draw.RoundedBox(12, 2, 2, w - 4, h - 4, (Ipr_FrameChecked) and Ipr.Settings.TColor["bleu"] or Ipr.Settings.TColor["gris"])
-        draw.RoundedBox(12, self.SLerp, 5, 10, 10, color_white)
+        draw.RoundedBox(12, self.SLerp, 5, 10, 10, Ipr.Settings.TColor["blanc"])
         
         surface.DrawCircle(self.SLerp + 5, 10, 6, ColorAlpha(color_black, 90))
     end
@@ -488,14 +488,20 @@ Ipr.Function.DNumSlider = function(panel, tbl)
             slide:SetSize(Ipr_PrimaryWide, 25)
 
             slide.Knob.Paint = function(self, w, h)
-                draw.RoundedBox(3, 5, 2, w - 10, h - 4, color_white)
+                draw.RoundedBox(3, 5, 2, w - 10, h - 4, Ipr.Settings.TColor["blanc"])
             end
             slide.Paint = function(self, w, h)
                 draw.RoundedBox(3, 7, h / 2 - 2, w - 12, h / 2 - 10, Ipr.Settings.TColor["bleu"])
 
-                draw.RoundedBox(3, 7, 9, 3, h - 18, ColorAlpha(color_white, 170))
-                draw.RoundedBox(3, w / 2, 11, 3, h - 22, ColorAlpha(color_white, 170))
-                draw.RoundedBox(3, w - 8, 9, 3, h - 18, ColorAlpha(color_white, 170))
+                surface.SetDrawColor(ColorAlpha(color_black, 90))
+                surface.DrawLine(9, h - 15, w - 8, h - 15)
+
+                surface.SetDrawColor(ColorAlpha(color_black, 90))
+                surface.DrawLine(9, h - 11, w - 8, h - 11)
+
+                draw.RoundedBox(3, 7, 9, 3, h - 18, ColorAlpha(Ipr.Settings.TColor["blanc"], 175))
+                draw.RoundedBox(3, w / 2, 10, 3, h - 20, ColorAlpha(Ipr.Settings.TColor["blanc"], 175))
+                draw.RoundedBox(3, w - 8, 9, 3, h - 18, ColorAlpha(Ipr.Settings.TColor["blanc"], 175))
             end
         end,
         ["DLabel"] = function(slide)

@@ -49,7 +49,7 @@ return {
     MatProcessing = "Traitement des matériaux",
     TMatProcessing = "Ce paramètre détermine le mode de gestion des threads utilisé par le système de matériaux",
     ShadowQuality = "Rendu des ombres",
-    TShadowQuality = "Réduit la qualité des ombres",
+    TShadowQuality = "Réduit la qualité des ombres !",
     TextureFiltering = "Filtrage texture",
     TTextureFiltering = "Désactive le filtrage des textures",
     SourceEngine = "Comportement moteur",

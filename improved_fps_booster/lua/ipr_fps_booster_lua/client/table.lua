@@ -6,7 +6,10 @@
 
 return {
     Blur = Material("pp/blurscreen"),
-    MatOptions = Material("materials/icon16/cog.png", "noclamp smooth"),
+    IMatOptions = Material("materials/icon16/cog.png", "noclamp smooth"),
+    IResetFps = Material("icon16/chart_organisation.png", "noclamp"),
+    IEnabled = Material("icon16/tick.png", "noclamp"),
+    IDisabled = Material("icon16/cross.png", "noclamp"),
     SetLang = Ipr_Fps_Booster.Settings.DefaultLanguage,
     Debug = false,
     Map = game.GetMap(),
@@ -37,7 +40,7 @@ return {
         },
     },
     TColor = {
-        ["blanc"] = Color(236, 240, 241),
+        ["blanc"] = Color(245, 245, 245),
         ["vert"] = Color(39, 174, 96),
         ["rouge"] = Color(192, 57, 43),
         ["orange"] = Color(226, 149, 25),
@@ -68,5 +71,5 @@ return {
     Font = "Ipr_Fps_Booster_Font",
     Save = "improvedfpsbooster/",
     ExternalLink = "https://steamcommunity.com/sharedfiles/filedetails/?id=1762151370",
-    BackGround = ColorAlpha(color_black, 140),
+    BackGround = ColorAlpha(color_black, 125),
 }
