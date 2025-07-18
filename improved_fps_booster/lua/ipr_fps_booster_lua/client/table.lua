@@ -6,8 +6,8 @@
 
 return {
     Blur = Material("pp/blurscreen"),
-    IMatOptions = Material("materials/icon16/cog.png", "noclamp smooth"),
-    IResetFps = Material("icon16/chart_organisation.png", "noclamp"),
+    IMatOptions = Material("icon16/cog.png", "noclamp smooth"),
+    IResetFps = Material("icon16/bricks.png", "noclamp"),
     IEnabled = Material("icon16/tick.png", "noclamp"),
     IDisabled = Material("icon16/cross.png", "noclamp"),
     SetLang = Ipr_Fps_Booster.Settings.DefaultLanguage,

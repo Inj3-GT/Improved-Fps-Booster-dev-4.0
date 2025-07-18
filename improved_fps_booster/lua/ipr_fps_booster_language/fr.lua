@@ -98,4 +98,5 @@ return {
     TApplyStartup = "Optimisation lancée au démarrage du jeu (orange : en attente, vert : optimisation lancée)",
     SetDefaultSettings = "Default settings",
     TSetDefaultSettings = "Rétablir tout les paramètres par défaut !",
+    ASelectLang = "Vous avez déjà sélectionné cette langue !",
 }

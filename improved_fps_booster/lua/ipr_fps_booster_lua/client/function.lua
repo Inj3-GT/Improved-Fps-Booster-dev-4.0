@@ -295,82 +295,6 @@ Ipr.Function.RenderBlur = function(panel, colors, border)
     draw.RoundedBoxEx(border, 0, 0, Ipr_VguiWide, Ipr_VguiHeight, colors, true, true, true, true)
 end
 
-Ipr.Function.SetToolTip = function(text, panel, localization)
-    if not IsValid(Ipr.Settings.Vgui.ToolTip) then
-        Ipr.Settings.Vgui.ToolTip = vgui.Create("DTooltip")
-        Ipr.Settings.Vgui.ToolTip:SetText("")
-        Ipr.Settings.Vgui.ToolTip:SetTextColor(Ipr.Settings.TColor["blanc"])
-        Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
-
-        Ipr.Settings.Vgui.ToolTip.Paint = function(self, w, h)
-            Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 130), 6)
-        end
-
-        Ipr.Settings.Vgui.ToolTip:SetVisible(false)
-    end
-
-    if not IsValid(panel) then
-        return
-    end
-    
-    local Ipr_OverrideChildren = panel:GetChildren()
-    local Ipr_NameVgui = panel:GetName()
-
-    local Ipr_VguiManage = {
-        ["DButton"] = {Panel = true},
-        ["DImageButton"] = {Panel = true},
-        ["DCheckBox"] = {Panel = false, Parent = panel:GetParent()},
-    }
-    if (Ipr_VguiManage[Ipr_NameVgui].Panel) then
-         Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = panel
-    end
-    if (Ipr_VguiManage[Ipr_NameVgui].Parent) then
-         Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = Ipr_VguiManage[Ipr_NameVgui].Parent
-    end
-
-    for i = 1, #Ipr_OverrideChildren do
-        local Ipr_OverrideChild = Ipr_OverrideChildren[i]
-        
-        Ipr_OverrideChild.OnCursorMoved = function(self)
-            if not IsValid(Ipr.Settings.Vgui.ToolTip) then
-                return
-            end
-
-            local ipr_InputX, ipr_InputY = input.GetCursorPos()
-            local ipr_Pos = ipr_InputX - Ipr.Settings.Vgui.ToolTip:GetWide() / 2
-
-            Ipr.Settings.Vgui.ToolTip:SetPos(ipr_Pos, ipr_InputY - 30)
-        end
-        Ipr_OverrideChild.OnCursorExited = function()
-            if not IsValid(Ipr.Settings.Vgui.ToolTip) then
-                return
-            end
-
-            Ipr.Settings.Vgui.ToolTip:SetVisible(false)
-        end
-        Ipr_OverrideChild.OnCursorEntered = function(self)
-            if not IsValid(Ipr.Settings.Vgui.ToolTip) then
-                return
-            end
-
-            Ipr.Settings.Vgui.ToolTip:SetText((localization) and text or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][text])
-            Ipr.Settings.Vgui.ToolTip:SetTextColor(Ipr.Settings.TColor["blanc"])
-            Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
-
-            Ipr.Settings.Vgui.ToolTip:SetVisible(true)
-
-            Ipr.Settings.Vgui.ToolTip:SetAlpha(0)
-            Ipr.Settings.Vgui.ToolTip:AlphaTo(255, 0.8, 0)
-
-            timer.Simple(0.0001, function()
-                if IsValid(self) then
-                    self:OnCursorMoved()
-                end
-            end)
-        end
-    end
-end
-
 Ipr.Function.FogActivate = function(bool)
     if not bool then
         hook.Remove("SetupWorldFog", "IprFpsBooster_WorldFog")
@@ -425,6 +349,81 @@ Ipr.Function.DrawMultipleTextAligned = function(tbl)
     end
 end
 
+Ipr.Function.SetToolTip = function(text, panel, localization)
+    if not IsValid(Ipr.Settings.Vgui.ToolTip) then
+        Ipr.Settings.Vgui.ToolTip = vgui.Create("DTooltip")
+        Ipr.Settings.Vgui.ToolTip:SetText("")
+        Ipr.Settings.Vgui.ToolTip:SetTextColor(Ipr.Settings.TColor["blanc"])
+        Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
+
+        Ipr.Settings.Vgui.ToolTip.Paint = function(self, w, h)
+            Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 130), 6)
+        end
+
+        Ipr.Settings.Vgui.ToolTip:SetVisible(false)
+    end
+    if not IsValid(panel) then
+        return
+    end
+    
+    local Ipr_OverrideChildren = panel:GetChildren()
+    local Ipr_NameVgui = panel:GetName()
+    local Ipr_VguiManage = {
+        ["DButton"] = {Panel = true},
+        ["DImageButton"] = {Panel = true},
+        ["DCheckBox"] = {Panel = false, Parent = panel:GetParent()},
+    }
+
+    if (Ipr_VguiManage[Ipr_NameVgui].Panel) then
+        Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = panel
+    end
+    if (Ipr_VguiManage[Ipr_NameVgui].Parent) then
+        Ipr_OverrideChildren[#Ipr_OverrideChildren + 1] = Ipr_VguiManage[Ipr_NameVgui].Parent
+    end
+
+    for i = 1, #Ipr_OverrideChildren do
+        local Ipr_OverrideChild = Ipr_OverrideChildren[i]
+        
+        Ipr_OverrideChild.OnCursorMoved = function(self)
+            if not IsValid(Ipr.Settings.Vgui.ToolTip) then
+                return
+            end
+
+            local ipr_InputX, ipr_InputY = input.GetCursorPos()
+            local ipr_Pos = ipr_InputX - Ipr.Settings.Vgui.ToolTip:GetWide() / 2
+
+            Ipr.Settings.Vgui.ToolTip:SetPos(ipr_Pos, ipr_InputY - 30)
+        end
+        Ipr_OverrideChild.OnCursorExited = function()
+            if not IsValid(Ipr.Settings.Vgui.ToolTip) then
+                return
+            end
+
+            Ipr.Settings.Vgui.ToolTip:SetVisible(false)
+        end
+        Ipr_OverrideChild.OnCursorEntered = function(self)
+            if not IsValid(Ipr.Settings.Vgui.ToolTip) then
+                return
+            end
+
+            Ipr.Settings.Vgui.ToolTip:SetText((localization) and text or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][text])
+            Ipr.Settings.Vgui.ToolTip:SetTextColor(Ipr.Settings.TColor["blanc"])
+            Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
+
+            Ipr.Settings.Vgui.ToolTip:SetVisible(true)
+
+            Ipr.Settings.Vgui.ToolTip:SetAlpha(0)
+            Ipr.Settings.Vgui.ToolTip:AlphaTo(255, 0.8, 0)
+
+            timer.Simple(0.0001, function()
+                if IsValid(self) then
+                    self:OnCursorMoved()
+                end
+            end)
+        end
+    end
+end
+
 Ipr.Function.DCheckBoxLabel = function(panel, tbl)
     local Ipr_SOptiPanel = vgui.Create("DPanel", panel)
     Ipr_SOptiPanel:Dock(TOP)
@@ -459,7 +458,8 @@ Ipr.Function.DCheckBoxLabel = function(panel, tbl)
     Ipr_SLabel:SetText("")
 
     Ipr_SLabel.Paint = function(self, w, h)
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][tbl.Localization.Text], Ipr.Settings.Font, 0, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
+        local Ipr_Color = Ipr_SOptiButton:IsHovered() and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["blanc"]
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][tbl.Localization.Text], Ipr.Settings.Font, 0, 1, Ipr_Color, TEXT_ALIGN_LEFT)
     end
 
     return Ipr_SOptiButton, Ipr_SOptiPanel
@@ -494,7 +494,8 @@ Ipr.Function.DNumSlider = function(panel, tbl)
             slide:SetSize(Ipr_PrimaryWide, 25)
 
             slide.Knob.Paint = function(self, w, h)
-                draw.RoundedBox(3, 5, 2, w - 10, h - 4, Ipr.Settings.TColor["blanc"])
+                draw.RoundedBox(6, 5, 2, w - 10, h - 4, (slide.Dragging or slide.Knob.Depressed) and Ipr.Settings.TColor["rouge"] or Ipr.Settings.TColor["bleuc"])
+                draw.RoundedBox(6, 6, 3, w - 12, h - 6, Ipr.Settings.TColor["blanc"])
             end
             slide.Paint = function(self, w, h)
                 draw.RoundedBox(3, 7, h / 2 - 2, w - 12, h / 2 - 10, Ipr.Settings.TColor["bleu"])
@@ -505,9 +506,9 @@ Ipr.Function.DNumSlider = function(panel, tbl)
                 surface.SetDrawColor(ColorAlpha(color_black, 90))
                 surface.DrawLine(9, h - 11, w - 8, h - 11)
 
-                draw.RoundedBox(3, 7, 9, 3, h - 18, ColorAlpha(Ipr.Settings.TColor["blanc"], 175))
-                draw.RoundedBox(3, w / 2, 10, 3, h - 20, ColorAlpha(Ipr.Settings.TColor["blanc"], 175))
-                draw.RoundedBox(3, w - 8, 9, 3, h - 18, ColorAlpha(Ipr.Settings.TColor["blanc"], 175))
+                draw.RoundedBox(3, 7, 9, 3, h - 18, Ipr.Settings.TColor["blanc"])
+                draw.RoundedBox(3, w / 2, 10, 3, h - 20, Ipr.Settings.TColor["blanc"])
+                draw.RoundedBox(3, w - 8, 9, 3, h - 18, Ipr.Settings.TColor["blanc"])
             end
         end,
         ["DLabel"] = function(slide)

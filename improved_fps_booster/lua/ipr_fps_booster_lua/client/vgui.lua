@@ -559,7 +559,7 @@ local function Ipr_FpsBooster()
 
         surface.SetMaterial(Ipr.Settings.IEnabled)
 	    surface.SetDrawColor(color_white)
-     	surface.DrawTexturedRect(4, h / 2 - 8, 16, 16)
+     	surface.DrawTexturedRect(5, h / 2 - 7, 16, 16)
     end
     Ipr_PEnabled.DoClick = function()
         local Ipr_CheckBox = Ipr.Function.IsChecked()
@@ -590,11 +590,11 @@ local function Ipr_FpsBooster()
     Ipr_PDisabled:SetText("")
     Ipr_PDisabled.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VDisabled, Ipr.Settings.Font, w / 2 + 7, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VDisabled, Ipr.Settings.Font, w / 2 + 8, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
         surface.SetMaterial(Ipr.Settings.IDisabled)
 	    surface.SetDrawColor(color_white)
-     	surface.DrawTexturedRect(4, h / 2 - 8, 16, 16)
+     	surface.DrawTexturedRect(5, h / 2 - 7, 16, 16)
     end
     Ipr_PDisabled.DoClick = function()
         local Ipr_ConvarsEnabled = Ipr.Function.MatchConvar(false)
@@ -625,7 +625,7 @@ local function Ipr_FpsBooster()
 
         surface.SetMaterial(Ipr.Settings.IResetFps)
 	    surface.SetDrawColor(color_white)
-     	surface.DrawTexturedRect(4, h / 2 - 7, 16, 16)
+     	surface.DrawTexturedRect(6, h / 2 - 8, 16, 16)
     end
     Ipr_PResetFps.DoClick = function()
         Ipr.Function.ResetFps()
@@ -640,7 +640,7 @@ local function Ipr_FpsBooster()
         local Ipr_IsHovered = self:IsHovered()
         draw.RoundedBox(6, 0, 0, w, h, (Ipr_IsHovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
-        draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 8, 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText("Options ", Ipr.Settings.Font, w / 2 + 9, 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
         surface.SetMaterial(Ipr.Settings.IMatOptions)
         surface.SetDrawColor(Ipr.Settings.TColor["blanc"])
@@ -650,7 +650,7 @@ local function Ipr_FpsBooster()
             local Ipr_SysTime = SysTime()
             Ipr_PRotation = math.sin(Ipr_SysTime * 80 * math.pi / 180) * 180
         end
-        surface.DrawTexturedRectRotated(11, 11, 16, 16, Ipr_PRotation)
+        surface.DrawTexturedRectRotated(13, 11, 16, 16, Ipr_PRotation)
     end
     Ipr_PSettings.DoClick = function()
         if IsValid(Ipr.Settings.Vgui.Secondary) then
@@ -666,11 +666,30 @@ local function Ipr_FpsBooster()
     Ipr_PLanguage:SetFont(Ipr.Settings.Font)
     Ipr_PLanguage:SetValue(Ipr.Settings.SetLang)
     Ipr_PLanguage:SetTextColor(Ipr.Settings.TColor["blanc"])
-    
-    for k, v in pairs(Ipr_Fps_Booster.Lang) do
-        Ipr_PLanguage:AddChoice(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..k, k, false, "materials/flags16/" ..v.Icon)
+    Ipr_PLanguage:SetSortItems(false)
+
+    local function Ipr_AddLangSort(index)
+        local Ipr_SortLang = {}
+
+        for k, v in pairs(Ipr_Fps_Booster.Lang) do
+            local Ipr_Selected = (index == k)
+            Ipr_SortLang[#Ipr_SortLang + 1] = {Lang = k, Icon = Ipr_Selected and "icon16/bullet_add.png" or "materials/flags16/" ..v.Icon, First = Ipr_Selected, Spacer = (Ipr_Selected)}
+        end
+        table.SortByMember(Ipr_SortLang, "First", true)
+
+        for i = 1, #Ipr_SortLang do
+            local Ipr_ChoiceLang = Ipr_SortLang[i].Lang
+            local Ipr_ChoiceIcon = Ipr_SortLang[i].Icon
+
+            Ipr_PLanguage:AddChoice(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..Ipr_ChoiceLang, Ipr_ChoiceLang, false, Ipr_ChoiceIcon)
+
+            if Ipr_SortLang[i].Spacer then
+                Ipr_PLanguage:AddSpacer()
+            end
+        end
     end
 
+    Ipr_AddLangSort(Ipr.Settings.SetLang)
     Ipr_PLanguage:SetText("")
 
     local Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Icon, "noclamp")
@@ -695,14 +714,18 @@ local function Ipr_FpsBooster()
 
         surface.SetMaterial(Ipr_FlagMat)
 	    surface.SetDrawColor(color_white)
-     	surface.DrawTexturedRect(4, h / 2 - 5.5, 16, 11)
+     	surface.DrawTexturedRect(5, h / 2 - 5.5, 16, 11)
     end
 
     local function Ipr_OverrideLangPaint(panel)
         local Ipr_PanelChild = panel:GetChildren()
-        local Ipr_Override = {
-            ["DPanel"] = function(frame)
-                frame.Paint = function(self, w, h)
+
+        for i = 1, #Ipr_PanelChild do
+            local Ipr_CPanel = Ipr_PanelChild[i]
+            local Ipr_CNamePanel = Ipr_CPanel:GetName()
+
+            if (Ipr_CNamePanel == "DPanel") then
+                Ipr_CPanel.Paint = function(self, w, h)
                     local Ipr_ArrowRight = {
                         {x = w / 2, y = h / 2 - 8 / 2},
                         {x = w / 2 + 5, y = h / 2},
@@ -713,16 +736,6 @@ local function Ipr_FpsBooster()
                     draw.NoTexture()
                     surface.DrawPoly(Ipr_ArrowRight)
                 end
-            end,
-        }
-
-        for i = 1, #Ipr_PanelChild do
-            local Ipr_CPanel = Ipr_PanelChild[i]
-            local Ipr_CNamePanel = Ipr_CPanel:GetName()
-
-            local Ipr_FindClass = Ipr_Override[Ipr_CNamePanel]
-            if (Ipr_FindClass) then
-                Ipr_FindClass(Ipr_CPanel)
             end
         end
     end
@@ -730,7 +743,8 @@ local function Ipr_FpsBooster()
     Ipr_OverrideLangPaint(Ipr_PLanguage)
 
     Ipr_PLanguage.OnMenuOpened = function(self)
-        local Ipr_PLanguageChild = self:GetChildren()
+        local Ipr_PLanguageChild = self:GetChildren()   
+        Ipr_OverrideLangPaint(self)
 
         for i = 1, #Ipr_PLanguageChild do
             local Ipr_NLangMenu = Ipr_PLanguageChild[i]
@@ -751,16 +765,35 @@ local function Ipr_FpsBooster()
                             local Ipr_GetVal = Ipr_PMenu:GetValue()
 
                             Ipr_GetVal = string.find(Ipr_GetVal, Ipr.Settings.SetLang)
-               
-                            Ipr_PMenu:SetTextColor(Ipr_GetVal and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["blanc"])
-                            Ipr_PMenu:SetFont(Ipr.Settings.Font)
+
+                            if Ipr_PMenu.SetTextColor then
+                                Ipr_PMenu:SetTextColor(Ipr_GetVal and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["blanc"])
+                                Ipr_PMenu:SetFont(Ipr.Settings.Font)
+
+                                if (Ipr_GetVal) then
+                                    Ipr_PMenu:SetMouseInputEnabled(false)
+    
+                                    Ipr_PMenu.Paint = nil
+                                    Ipr_PMenu.OnMousePressed = function(self, mousecode)
+                                        if (mousecode == MOUSE_LEFT) then
+                                		    chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].ASelectLang)
+                                	    end
+                                    end
+                                else
+                                    Ipr_PMenu.Paint = function(self, w, h)
+                                        draw.RoundedBox(1, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
+                                    end
+                                end
+                            else
+                                Ipr_PMenu.Paint = function(self, w, h)
+                                    draw.RoundedBox(1, 0, 0, w, h, Ipr.Settings.TColor["vert"])
+                                end
+                            end
                         end
                     end
                 end
             end
         end
-        
-        Ipr_OverrideLangPaint(self)
     end
     Ipr_PLanguage.OnSelect = function(self, index, value)
         local Ipr_SetLang = self.Data[index]
@@ -768,9 +801,7 @@ local function Ipr_FpsBooster()
         self:Clear()
         self:SetValue(Ipr_SetLang)
         
-        for k, v in pairs(Ipr_Fps_Booster.Lang) do
-            self:AddChoice(Ipr_Fps_Booster.Lang[Ipr_SetLang].SelectLangue.. " " ..k, k, false, "materials/flags16/" ..v.Icon)
-        end
+        Ipr_AddLangSort(Ipr_SetLang)
 
         Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr_SetLang].Icon, "noclamp")
         self:SetText("")
