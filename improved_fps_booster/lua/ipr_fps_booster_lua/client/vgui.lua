@@ -403,7 +403,7 @@ local function Ipr_FpsBooster()
         return
     end
 
-    local Ipr_PSize = {w = 300, h = 269}
+    local Ipr_PSize = {w = 300, h = 267}
 
     Ipr.Settings.Vgui.Primary = vgui.Create("DFrame")
     Ipr.Settings.Vgui.Primary:SetTitle("")
