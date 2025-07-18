@@ -544,8 +544,8 @@ local function Ipr_FpsBooster()
     end
 
     local Ipr_PEnabled = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
-    Ipr_PEnabled:SetSize(110, 24)
-    Ipr_PEnabled:SetPos(5, Ipr_PSize.h - Ipr_PEnabled:GetTall() - 5)
+    Ipr_PEnabled:SetSize(110, 23)
+    Ipr_PEnabled:SetPos(5, Ipr_PSize.h - Ipr_PEnabled:GetTall() - 4)
     Ipr_PEnabled:SetText("")
     Ipr_PEnabled.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
@@ -553,7 +553,7 @@ local function Ipr_FpsBooster()
 
         surface.SetMaterial(Ipr.Settings.IEnabled)
         surface.SetDrawColor(color_white)
-        surface.DrawTexturedRect(5, h / 2 - 8, 16, 16)
+        surface.DrawTexturedRect(5, h / 2 - 7, 16, 16)
     end
     Ipr_PEnabled.DoClick = function()
         local Ipr_CheckBox = Ipr.Function.IsChecked()
@@ -580,16 +580,16 @@ local function Ipr_FpsBooster()
     end
 
     local Ipr_PDisabled = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
-    Ipr_PDisabled:SetSize(110, 24)
-    Ipr_PDisabled:SetPos(Ipr_PSize.w - Ipr_PDisabled:GetWide() - 5, Ipr_PSize.h - Ipr_PDisabled:GetTall() - 5)
+    Ipr_PDisabled:SetSize(110, 23)
+    Ipr_PDisabled:SetPos(Ipr_PSize.w - Ipr_PDisabled:GetWide() - 5, Ipr_PSize.h - Ipr_PDisabled:GetTall() - 4)
     Ipr_PDisabled:SetText("")
     Ipr_PDisabled.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VDisabled, Ipr.Settings.Font, w / 2 + 8, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].VDisabled, Ipr.Settings.Font, w / 2 + 7, 3, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
 
         surface.SetMaterial(Ipr.Settings.IDisabled)
         surface.SetDrawColor(color_white)
-        surface.DrawTexturedRect(4, h / 2 - 8, 16, 16)
+        surface.DrawTexturedRect(4, h / 2 - 7, 16, 16)
     end
     Ipr_PDisabled.DoClick = function()
         local Ipr_ConvarsEnabled = Ipr.Function.MatchConvar(false)
