@@ -612,7 +612,7 @@ local function Ipr_FpsBooster()
 
     local Ipr_PResetFps = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
     Ipr_PResetFps:SetSize(150, 21)
-    Ipr_PResetFps:SetPos(Ipr_PSize.w / 2 - Ipr_PResetFps:GetWide() / 2 + 1, 191)
+    Ipr_PResetFps:SetPos(Ipr_PSize.w / 2 - Ipr_PResetFps:GetWide() / 2 + 2, 191)
     Ipr_PResetFps:SetText("")
     Ipr.Function.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TReset, Ipr_PResetFps, true)
     Ipr_PResetFps.Paint = function(self, w, h)
