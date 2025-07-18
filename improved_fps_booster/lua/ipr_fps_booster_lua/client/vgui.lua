@@ -766,7 +766,7 @@ local function Ipr_FpsBooster()
 
                             Ipr_GetVal = string.find(Ipr_GetVal, Ipr.Settings.SetLang)
 
-                            if Ipr_PMenu.SetTextColor then
+                            if (Ipr_PMenu.SetTextColor) then
                                 Ipr_PMenu:SetTextColor(Ipr_GetVal and Ipr.Settings.TColor["vert"] or Ipr.Settings.TColor["blanc"])
                                 Ipr_PMenu:SetFont(Ipr.Settings.Font)
 
