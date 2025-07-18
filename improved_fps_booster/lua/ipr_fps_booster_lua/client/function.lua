@@ -494,7 +494,7 @@ Ipr.Function.DNumSlider = function(panel, tbl)
             slide:SetSize(Ipr_PrimaryWide, 25)
 
             slide.Knob.Paint = function(self, w, h)
-                draw.RoundedBox(6, 5, 2, w - 10, h - 4, (slide.Dragging or slide.Knob.Depressed) and Ipr.Settings.TColor["rouge"] or Ipr.Settings.TColor["bleuc"])
+                draw.RoundedBox(6, 5, 2, w - 10, h - 4, (slide.Dragging or slide.Knob.Depressed) and Ipr.Settings.TColor["rouge"] or Ipr.Settings.TColor["vert"])
                 draw.RoundedBox(6, 6, 3, w - 12, h - 6, Ipr.Settings.TColor["blanc"])
             end
             slide.Paint = function(self, w, h)
@@ -541,52 +541,48 @@ Ipr.Function.DNumSlider = function(panel, tbl)
 end
 
 Ipr.Function.SettingsVgui = {
-    ["DCheckBoxLabel"] = {
-        Parent = function(panel, tbl, hud)
-            local Ipr_CreateCheckBoxLabel, Ipr_DPanelCheckBox = Ipr.Function.DCheckBoxLabel(panel, tbl)
+    ["DCheckBoxLabel"] = function(panel, tbl, hud)
+        local Ipr_CreateCheckBoxLabel, Ipr_DPanelCheckBox = Ipr.Function.DCheckBoxLabel(panel, tbl)
 
-            Ipr_CreateCheckBoxLabel.OnChange = function(self)
-                local Ipr_GetChecked = self:GetChecked()
-                Ipr.Function.SetConvar(tbl.Name, Ipr_GetChecked, 1)
+        Ipr_CreateCheckBoxLabel.OnChange = function(self)
+            local Ipr_GetChecked = self:GetChecked()
+            Ipr.Function.SetConvar(tbl.Name, Ipr_GetChecked, 1)
 
-                for i = 1, #Ipr.Settings.Vgui.CheckBox do
-                    if (Ipr.Settings.Vgui.CheckBox[i].Paired == tbl.Name) then
-                        local Ipr_Vgui = Ipr.Settings.Vgui.CheckBox[i].Vgui
-                        Ipr_Vgui = Ipr_Vgui:GetParent()
+            for i = 1, #Ipr.Settings.Vgui.CheckBox do
+                if (Ipr.Settings.Vgui.CheckBox[i].Paired == tbl.Name) then
+                    local Ipr_Vgui = Ipr.Settings.Vgui.CheckBox[i].Vgui
+                    Ipr_Vgui = Ipr_Vgui:GetParent()
 
-                        if IsValid(Ipr_Vgui) then
-                            Ipr_Vgui:SetDisabled(not Ipr_GetChecked)
-                        end
+                    if IsValid(Ipr_Vgui) then
+                        Ipr_Vgui:SetDisabled(not Ipr_GetChecked)
                     end
-                end
-
-                if (tbl.Run_HookFog) then
-                    Ipr.Function.FogActivate(Ipr_GetChecked)
-                elseif (tbl.Run_HookFps) then
-                    if (Ipr_GetChecked) then
-                        hook.Add("PostDrawHUD", "IprFpsBooster_HUD", hud)
-                    else
-                        hook.Remove("PostDrawHUD", "IprFpsBooster_HUD", hud)
-                    end
-                elseif (tbl.Run_Debug) then
-                    Ipr.Settings.Debug = Ipr_GetChecked
                 end
             end
 
-            return Ipr_CreateCheckBoxLabel, Ipr_DPanelCheckBox
-        end,
-    },
-    ["DNumSlider"] = {
-        Parent = function(panel, tbl)
-            local Ipr_CreateNumSlider, Ipr_DPanelSlider = Ipr.Function.DNumSlider(panel, tbl)
-
-            Ipr_CreateNumSlider.OnValueChanged = function(self)
-                Ipr.Function.SetConvar(tbl.Name, self:GetValue(), 1)
+            if (tbl.Run_HookFog) then
+                Ipr.Function.FogActivate(Ipr_GetChecked)
+            elseif (tbl.Run_HookFps) then
+                if (Ipr_GetChecked) then
+                    hook.Add("PostDrawHUD", "IprFpsBooster_HUD", hud)
+                else
+                    hook.Remove("PostDrawHUD", "IprFpsBooster_HUD", hud)
+                end
+            elseif (tbl.Run_Debug) then
+                Ipr.Settings.Debug = Ipr_GetChecked
             end
+        end
 
-            return Ipr_CreateNumSlider, Ipr_DPanelSlider
-        end,
-    },
+        return Ipr_CreateCheckBoxLabel, Ipr_DPanelCheckBox
+    end,
+    ["DNumSlider"] = function(panel, tbl)
+        local Ipr_CreateNumSlider, Ipr_DPanelSlider = Ipr.Function.DNumSlider(panel, tbl)
+
+        Ipr_CreateNumSlider.OnValueChanged = function(self)
+            Ipr.Function.SetConvar(tbl.Name, self:GetValue(), 1)
+        end
+
+        return Ipr_CreateNumSlider, Ipr_DPanelSlider
+    end,
 }
 
 return Ipr

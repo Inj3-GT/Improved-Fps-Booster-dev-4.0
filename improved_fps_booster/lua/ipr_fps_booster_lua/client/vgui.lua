@@ -67,13 +67,8 @@ local function Ipr_FpsBooster_Options(primary)
     end
 
     local Ipr_SSize = {w = 240, h = 450}
+
     Ipr.Settings.Vgui.Secondary = vgui.Create("DFrame")
-
-    local Ipr_SOpti = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
-    local Ipr_Revert = vgui.Create("DImageButton", Ipr_SOpti)
-    local Ipr_SUncheck = vgui.Create("DImageButton", Ipr_SOpti)
-    local Ipr_SClose = vgui.Create("DImageButton", Ipr.Settings.Vgui.Secondary)
-
     Ipr.Settings.Vgui.Secondary:SetTitle("")
     Ipr.Settings.Vgui.Secondary:SetSize(Ipr_SSize.w, Ipr_SSize.h)
     Ipr.Settings.Vgui.Secondary:MakePopup()
@@ -104,7 +99,6 @@ local function Ipr_FpsBooster_Options(primary)
     else
         Ipr.Settings.Vgui.Secondary:Center()
     end
-    
     Ipr.Settings.Vgui.Secondary.Paint = function(self, w, h)
         if IsValid(primary) then
             if (primary.Dragging) and (self.m_AnimList) then
@@ -127,23 +121,28 @@ local function Ipr_FpsBooster_Options(primary)
         Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 130), 6)
         
         draw.RoundedBoxEx(6, 0, 0, w, 20, Ipr.Settings.TColor["bleu"], true, true, false, false)
-
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].NOptions, Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
-        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].FPSLimit, Ipr.Settings.Font, 5, h - 19, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
 
         local Ipr_FpsLimit = math.Round(Ipr.Function.InfoNum("fps_max"))
         Ipr_FpsLimit = (Ipr_FpsLimit > 1000) and 1000 or Ipr_FpsLimit
 
+        draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].FPSLimit, Ipr.Settings.Font, 5, h - 19, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
         draw.SimpleText(Ipr_FpsLimit, Ipr.Settings.Font, 67, h - 19, Ipr.Function.ColorTransition(Ipr_FpsLimit), TEXT_ALIGN_LEFT)
-        draw.SimpleText("v" ..Ipr_Fps_Booster.Settings.Version, Ipr.Settings.Font, w - 39, h - 19, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
-        draw.SimpleText("[" ..Ipr_Fps_Booster.Settings.Developer.. "]", Ipr.Settings.Font, w - 5, h - 19, Ipr.Settings.TColor["vert"], TEXT_ALIGN_RIGHT)
+
+        local Ipr_SysTimeColor = SysTime() * 1.5
+        local Ipr_R = math.sin(Ipr_SysTimeColor) * 255
+        local Ipr_G = math.sin(Ipr_SysTimeColor + 2) * 255
+        local Ipr_B = math.sin(Ipr_SysTimeColor + 4) * 255
+
+        draw.SimpleText("v" ..Ipr_Fps_Booster.Settings.Version.. " by", Ipr.Settings.Font, w - 29, h - 19, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_RIGHT)
+        draw.SimpleText(Ipr_Fps_Booster.Settings.Developer, Ipr.Settings.Font, w - 5, h - 19, Color(Ipr_R, Ipr_G, Ipr_B), TEXT_ALIGN_RIGHT)
     end
 
     local Ipr_CenterVgui = Ipr_SSize.w / 2
     local Ipr_SChecked = Ipr.Function.IsChecked()
-
     Ipr.Settings.Vgui.CheckBox = {}
 
+    local Ipr_SClose = vgui.Create("DImageButton", Ipr.Settings.Vgui.Secondary)
     Ipr_SClose:SetSize(16, 16)
     Ipr_SClose:SetPos(Ipr_SSize.w - Ipr_SClose:GetWide() - 2, 2)
     Ipr_SClose:SetImage("icon16/cross.png")
@@ -160,6 +159,7 @@ local function Ipr_FpsBooster_Options(primary)
         end)
     end
 
+    local Ipr_SOpti = vgui.Create("DPanel", Ipr.Settings.Vgui.Secondary)
     Ipr_SOpti:SetSize(232, 165)
     Ipr_SOpti:SetPos(Ipr_CenterVgui - (Ipr_SOpti:GetWide() / 2), 90)
     Ipr_SOpti.Paint = function(self, w, h)
@@ -167,6 +167,7 @@ local function Ipr_FpsBooster_Options(primary)
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TSettings, Ipr.Settings.Font, w / 2, 2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
     end
 
+    local Ipr_Revert = vgui.Create("DImageButton", Ipr_SOpti)
     Ipr_Revert:SetSize(16, 16)
     Ipr_Revert:SetPos(Ipr_SOpti:GetWide() - Ipr_Revert:GetWide() - 1, 3)
     Ipr_Revert:SetImage("icon16/arrow_rotate_clockwise.png")
@@ -206,6 +207,7 @@ local function Ipr_FpsBooster_Options(primary)
     end
     
     local Ipr_CheckboxState = {[true] = {Icon = "icon16/lorry_flatbed.png", PoH = 2}, [false] = {Icon = "icon16/lorry.png", PoH = 4}}
+    local Ipr_SUncheck = vgui.Create("DImageButton", Ipr_SOpti)
     Ipr_SUncheck:SetSize(16, 16)
     Ipr_SUncheck:SetPos(6, Ipr_CheckboxState[Ipr_SChecked].PoH)
     Ipr_SUncheck:SetImage(Ipr_CheckboxState[Ipr_SChecked].Icon)
@@ -312,7 +314,7 @@ local function Ipr_FpsBooster_Options(primary)
 
     for i = 1, #Ipr_Fps_Booster.Defaultsettings do
         local Ipr_SConfigSettings = Ipr_Fps_Booster.Defaultsettings[i]
-        local Ipr_SConfigCheckBox, Ipr_SConfigSlider = Ipr.Function.SettingsVgui[Ipr_SConfigSettings.Vgui].Parent(Ipr_SScrollConfig, Ipr_SConfigSettings, Ipr_HUD)
+        local Ipr_SConfigCheckBox, Ipr_SConfigSlider = Ipr.Function.SettingsVgui[Ipr_SConfigSettings.Vgui](Ipr_SScrollConfig, Ipr_SConfigSettings, Ipr_HUD)
 
         Ipr.Function.SetConvar(Ipr_SConfigSettings.Name, Ipr_SConfigSettings.DefaultCheck, nil, true)
         if (Ipr_SConfigSettings.Localization.ToolTip) then
@@ -371,11 +373,11 @@ local function Ipr_FpsBooster_Options(primary)
                     draw.RoundedBox(0, 0, h- 1, w, h, Ipr_ConvarColor)
                 else
                     if (Ipr.Settings.Data.Set) then
-                        local Ipr_SysTime = SysTime()
-                        local Ipr_ColorAbs = math.abs(math.sin(Ipr_SysTime * 2.5) * 255)
+                        local Ipr_SysTimeColor = SysTime()
+                        local Ipr_ColorRG = math.abs(math.sin(Ipr_SysTimeColor * 2.5) * 255)
 
                         draw.RoundedBoxEx(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"], true, true, false, false)
-                        draw.RoundedBox(1, 0, h- 1, w, h, Color(Ipr_ColorAbs, Ipr_ColorAbs, 0))
+                        draw.RoundedBox(1, 0, h- 1, w, h, Color(Ipr_ColorRG, Ipr_ColorRG, 0))
                     else
                         draw.RoundedBox(6, 0, 0, w, h, (Ipr_Hovered) and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
                     end
@@ -402,20 +404,8 @@ local function Ipr_FpsBooster()
     end
 
     local Ipr_PSize = {w = 300, h = 269}
+
     Ipr.Settings.Vgui.Primary = vgui.Create("DFrame")
-    
-    Ipr.Function.CopyData()
-
-    local Ipr_PIcon = vgui.Create("DPanel", Ipr.Settings.Vgui.Primary)
-    local Ipr_PLanguage = vgui.Create("DComboBox", Ipr.Settings.Vgui.Primary)
-    local Ipr_PClose = vgui.Create("DImageButton", Ipr.Settings.Vgui.Primary)
-
-    local Ipr_PFps = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
-    local Ipr_PEnabled = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
-    local Ipr_PDisabled = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
-    local Ipr_PSettings = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
-    local Ipr_PResetFps = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
-
     Ipr.Settings.Vgui.Primary:SetTitle("")
     Ipr.Settings.Vgui.Primary:SetSize(Ipr_PSize.w, Ipr_PSize.h)
     Ipr.Settings.Vgui.Primary:Center()
@@ -506,6 +496,7 @@ local function Ipr_FpsBooster()
         surface.DrawTexturedRectRotated(x + Ipr_Newx, y + Ipr_NewY, w, h, rotate)
     end
 
+    local Ipr_PIcon = vgui.Create("DPanel", Ipr.Settings.Vgui.Primary)
     Ipr_PIcon:Dock(FILL)
     Ipr_PIcon.Paint = function(self, w, h)
         surface.SetDrawColor(255, 255, 255, 255)
@@ -518,6 +509,7 @@ local function Ipr_FpsBooster()
         Ipr_Copy.Draw(207, 120, 220, 220, Ipr_Loop, -25)
     end
 
+    local Ipr_PFps = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
     Ipr_PFps:SetSize(110, 83)
     Ipr_PFps:SetPos(Ipr_PSize.w / 2 - Ipr_PFps:GetWide() / 2 + 1, Ipr_PSize.h / 2 - Ipr_PFps:GetTall() / 2 - 15)
     Ipr_PFps:SetText("")
@@ -542,6 +534,7 @@ local function Ipr_FpsBooster()
         gui.OpenURL(Ipr.Settings.ExternalLink)
     end
 
+    local Ipr_PClose = vgui.Create("DImageButton", Ipr.Settings.Vgui.Primary)
     Ipr_PClose:SetSize(16, 16)
     Ipr_PClose:SetPos(Ipr_PSize.w - Ipr_PClose:GetWide() - 2, 2)
     Ipr_PClose:SetImage("icon16/cross.png")
@@ -550,6 +543,7 @@ local function Ipr_FpsBooster()
         Ipr_CloseVgui()
     end
 
+    local Ipr_PEnabled = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
     Ipr_PEnabled:SetSize(110, 24)
     Ipr_PEnabled:SetPos(5, Ipr_PSize.h - Ipr_PEnabled:GetTall() - 5)
     Ipr_PEnabled:SetText("")
@@ -559,7 +553,7 @@ local function Ipr_FpsBooster()
 
         surface.SetMaterial(Ipr.Settings.IEnabled)
 	    surface.SetDrawColor(color_white)
-     	surface.DrawTexturedRect(5, h / 2 - 7, 16, 16)
+     	surface.DrawTexturedRect(5, h / 2 - 8, 16, 16)
     end
     Ipr_PEnabled.DoClick = function()
         local Ipr_CheckBox = Ipr.Function.IsChecked()
@@ -585,6 +579,7 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/combine_button7.wav")
     end
 
+    local Ipr_PDisabled = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
     Ipr_PDisabled:SetSize(110, 24)
     Ipr_PDisabled:SetPos(Ipr_PSize.w - Ipr_PDisabled:GetWide() - 5, Ipr_PSize.h - Ipr_PDisabled:GetTall() - 5)
     Ipr_PDisabled:SetText("")
@@ -594,7 +589,7 @@ local function Ipr_FpsBooster()
 
         surface.SetMaterial(Ipr.Settings.IDisabled)
 	    surface.SetDrawColor(color_white)
-     	surface.DrawTexturedRect(5, h / 2 - 7, 16, 16)
+     	surface.DrawTexturedRect(4, h / 2 - 8, 16, 16)
     end
     Ipr_PDisabled.DoClick = function()
         local Ipr_ConvarsEnabled = Ipr.Function.MatchConvar(false)
@@ -615,6 +610,7 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/combine_button5.wav")
     end
 
+    local Ipr_PResetFps = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
     Ipr_PResetFps:SetSize(150, 21)
     Ipr_PResetFps:SetPos(Ipr_PSize.w / 2 - Ipr_PResetFps:GetWide() / 2 + 1, 191)
     Ipr_PResetFps:SetText("")
@@ -625,13 +621,14 @@ local function Ipr_FpsBooster()
 
         surface.SetMaterial(Ipr.Settings.IResetFps)
 	    surface.SetDrawColor(color_white)
-     	surface.DrawTexturedRect(6, h / 2 - 8, 16, 16)
+     	surface.DrawTexturedRect(4, h / 2 - 7, 16, 16)
     end
     Ipr_PResetFps.DoClick = function()
         Ipr.Function.ResetFps()
         surface.PlaySound("buttons/button9.wav")
     end
 
+    local Ipr_PSettings = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
     Ipr_PSettings:SetSize(85, 21)
     Ipr_PSettings:SetPos(Ipr_PSize.w - Ipr_PSettings:GetWide() - 5, 37)
     Ipr_PSettings:SetText("")
@@ -661,6 +658,7 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/button9.wav")
     end
 
+    local Ipr_PLanguage = vgui.Create("DComboBox", Ipr.Settings.Vgui.Primary)
     Ipr_PLanguage:SetSize(85, 21)
     Ipr_PLanguage:SetPos(5, 37)
     Ipr_PLanguage:SetFont(Ipr.Settings.Font)
@@ -673,7 +671,7 @@ local function Ipr_FpsBooster()
 
         for k, v in pairs(Ipr_Fps_Booster.Lang) do
             local Ipr_Selected = (index == k)
-            Ipr_SortLang[#Ipr_SortLang + 1] = {Lang = k, Icon = Ipr_Selected and "icon16/bullet_add.png" or "materials/flags16/" ..v.Icon, First = Ipr_Selected, Spacer = (Ipr_Selected)}
+            Ipr_SortLang[#Ipr_SortLang + 1] = {Lang = k, Icon = (Ipr_Selected) and "icon16/bullet_add.png" or "materials/flags16/" ..v.Icon, First = (Ipr_Selected), Spacer = (Ipr_Selected)}
         end
         table.SortByMember(Ipr_SortLang, "First", true)
 
@@ -815,6 +813,8 @@ local function Ipr_FpsBooster()
             surface.PlaySound("buttons/button9.wav")
         end
     end
+
+    Ipr.Function.CopyData()
 end
 
 local function Ipr_InitPostPlayer()
