@@ -678,12 +678,14 @@ local function Ipr_FpsBooster()
         table.SortByMember(Ipr_SortLang, "First", true)
 
         for i = 1, #Ipr_SortLang do
-            local Ipr_ChoiceLang = Ipr_SortLang[i].Lang
-            local Ipr_ChoiceIcon = Ipr_SortLang[i].Icon
+            local Ipr_ChoiceVar = Ipr_SortLang[i]
+            local Ipr_ChoiceLang = Ipr_ChoiceVar.Lang
+            local Ipr_ChoiceIcon = Ipr_ChoiceVar.Icon
 
             Ipr_PLanguage:AddChoice(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..Ipr_ChoiceLang, Ipr_ChoiceLang, false, Ipr_ChoiceIcon)
 
-            if Ipr_SortLang[i].Spacer then
+            local Ipr_Spacer = Ipr_ChoiceVar.Spacer
+            if (Ipr_Spacer) then
                 Ipr_PLanguage:AddSpacer()
             end
         end
