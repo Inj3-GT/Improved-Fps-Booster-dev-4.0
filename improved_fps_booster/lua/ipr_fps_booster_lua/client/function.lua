@@ -498,13 +498,11 @@ Ipr.Function.DNumSlider = function(panel, tbl)
                 draw.RoundedBox(6, 6, 3, w - 12, h - 6, Ipr.Settings.TColor["blanc"])
             end
             slide.Paint = function(self, w, h)
-                draw.RoundedBox(3, 7, h / 2 - 2, w - 12, h / 2 - 10, Ipr.Settings.TColor["bleu"])
-
                 surface.SetDrawColor(ColorAlpha(color_black, 90))
                 surface.DrawLine(9, h - 15, w - 8, h - 15)
-
-                surface.SetDrawColor(ColorAlpha(color_black, 90))
                 surface.DrawLine(9, h - 11, w - 8, h - 11)
+                
+                draw.RoundedBox(3, 7, h / 2 - 2, w - 12, h / 2 - 10, Ipr.Settings.TColor["bleu"])
 
                 draw.RoundedBox(3, 7, 9, 3, h - 18, Ipr.Settings.TColor["blanc"])
                 draw.RoundedBox(3, w / 2, 10, 3, h - 20, Ipr.Settings.TColor["blanc"])
