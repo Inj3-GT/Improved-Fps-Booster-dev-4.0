@@ -561,7 +561,7 @@ local function Ipr_FpsBooster()
             return chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CheckedBox)
         end
 
-        local Ipr_ConvarsEnabled = Ipr.Function.MatchConvar(true)
+        local Ipr_ConvarsEnabled = Ipr.Function.Activate(true, true)
         if (Ipr_ConvarsEnabled) then
             Ipr.Function.Activate(true)
             Ipr.Function.ResetFps()
@@ -592,7 +592,7 @@ local function Ipr_FpsBooster()
         surface.DrawTexturedRect(4, h / 2 - 7, 16, 16)
     end
     Ipr_PDisabled.DoClick = function()
-        local Ipr_ConvarsEnabled = Ipr.Function.MatchConvar(false)
+        local Ipr_ConvarsEnabled = Ipr.Function.Activate(false, true)
         if (Ipr_ConvarsEnabled) then
             Ipr.Function.Activate(false)
             Ipr.Function.ResetFps()

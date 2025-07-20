@@ -136,35 +136,6 @@ Ipr.Function.InfoNum = function(cmd, exist)
     return tonumber(Ipr_InfoNum)
 end
 
-Ipr.Function.MatchConvar = function(bool)
-    local Ipr_ConvarsCheck = bool
-
-    for i = 1, #Ipr_Fps_Booster.Defaultconvars do
-        local Ipr_NameCommand = Ipr_Fps_Booster.Defaultconvars[i].Name
-        local Ipr_ConvarCommand = Ipr_Fps_Booster.Defaultconvars[i].Convars
-
-        for k, v in pairs(Ipr_ConvarCommand) do
-            if isbool(Ipr.Function.GetConvar(Ipr_NameCommand)) then
-                if (bool) then
-                    Ipr_ConvarsCheck = Ipr.Function.GetConvar(Ipr_NameCommand)
-                end
-
-                local Ipr_Toggle = (Ipr_ConvarsCheck) and v.Enabled or v.Disabled
-                Ipr_Toggle = tonumber(Ipr_Toggle)
-
-                local Ipr_InfoCmds = Ipr.Function.InfoNum(k)
-                if Ipr.Function.InfoNum(k, true) or (Ipr_InfoCmds == Ipr_Toggle) then
-                    continue
-                end
-
-                return true
-            end
-        end
-    end
-
-    return false
-end
-
 Ipr.Function.IsChecked = function()
     for i = 1, #Ipr_Fps_Booster.Convars do
         if not Ipr_Fps_Booster.Convars[i].Vgui and (Ipr_Fps_Booster.Convars[i].Checked == true) then
@@ -179,7 +150,7 @@ Ipr.Function.CurrentState = function()
     return Ipr.Settings.Status.State
 end
 
-Ipr.Function.Activate = function(bool)
+Ipr.Function.Activate = function(bool, match)
     local Ipr_ConvarsCheck = bool
 
     for i = 1, #Ipr_Fps_Booster.Defaultconvars do
@@ -200,16 +171,19 @@ Ipr.Function.Activate = function(bool)
                     continue
                 end
 
-                RunConsoleCommand(k, Ipr_Toggle)
+                if (match) then
+                    return true
+                else
+                    RunConsoleCommand(k, Ipr_Toggle)
+                    Ipr.Settings.Status.State = bool
 
-                if (Ipr.Settings.Debug) then
-                    print("Updating " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle)
+                    if (Ipr.Settings.Debug) then
+                        print("Updating " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle)
+                    end
                 end
             end
         end
     end
-
-    Ipr.Settings.Status.State = bool
 end
 
 Ipr.Function.FpsCalculator = function()
