@@ -170,20 +170,18 @@ Ipr.Function.Activate = function(bool, match)
                 if Ipr.Function.InfoNum(k, true) or (Ipr_InfoCmds == Ipr_Toggle) then
                     continue
                 end
-
                 if (match) then
                     return true
-                else
-                    RunConsoleCommand(k, Ipr_Toggle)
+                end
+                RunConsoleCommand(k, Ipr_Toggle)
 
-                    if (Ipr.Settings.Debug) then
-                        print("Updating " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle)
-                    end
+                if (Ipr.Settings.Debug) then
+                    print("Updating " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle)
                 end
             end
         end
     end
-    
+
     Ipr.Settings.Status.State = bool
 end
 
