@@ -175,7 +175,6 @@ Ipr.Function.Activate = function(bool, match)
                     return true
                 else
                     RunConsoleCommand(k, Ipr_Toggle)
-                    Ipr.Settings.Status.State = bool
 
                     if (Ipr.Settings.Debug) then
                         print("Updating " ..k.. " set " ..Ipr_InfoCmds.. " to " ..Ipr_Toggle)
@@ -184,6 +183,8 @@ Ipr.Function.Activate = function(bool, match)
             end
         end
     end
+    
+    Ipr.Settings.Status.State = bool
 end
 
 Ipr.Function.FpsCalculator = function()
