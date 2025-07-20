@@ -819,7 +819,16 @@ end
 
 local function Ipr_InitPostPlayer()
     timer.Simple(5, function()
-        Ipr.Function.CreateData()
+        if not IsValid(Ipr.Settings.Vgui.Primary) then
+            Ipr.Function.CreateData()
+
+            local Ipr_ForcedOpen = Ipr.Function.GetConvar("ForcedOpen")
+            if (Ipr_ForcedOpen) then
+                Ipr_FpsBooster()
+            else
+                chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CForcedOpen)
+            end
+        end
 
         local Ipr_DebugEnable = Ipr.Function.GetConvar("EnableDebug")
         if (Ipr_DebugEnable) then
@@ -830,15 +839,6 @@ local function Ipr_InitPostPlayer()
         if (Ipr_Startup) then
             Ipr.Function.Activate(true)
             chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].StartupEnabled)
-        end
-
-        local Ipr_ForcedOpen = Ipr.Function.GetConvar("ForcedOpen")
-        if not IsValid(Ipr.Settings.Vgui.Primary) then
-            if (Ipr_ForcedOpen) then
-                Ipr_FpsBooster()
-            else
-                chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].CForcedOpen)
-            end
         end
 
         local Ipr_HudEnable = Ipr.Function.GetConvar("FpsView")
