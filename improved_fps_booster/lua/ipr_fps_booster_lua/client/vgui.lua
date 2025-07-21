@@ -118,7 +118,7 @@ local function Ipr_FpsBooster_Options(primary)
             end
         end
 
-        Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 130), 6)
+        Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 170), 6)
 
         draw.RoundedBoxEx(6, 0, 0, w, 20, Ipr.Settings.TColor["bleu"], true, true, false, false)
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].NOptions, Ipr.Settings.Font, w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
@@ -442,7 +442,7 @@ local function Ipr_FpsBooster()
             end
         end
 
-        Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 130), 6)
+        Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 170), 6)
 
         draw.RoundedBoxEx(6, 0, 0, w, 33, Ipr.Settings.TColor["bleu"], true, true, false, false)
         draw.SimpleText(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TEnabled,Ipr.Settings.Font,w / 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_CENTER)
