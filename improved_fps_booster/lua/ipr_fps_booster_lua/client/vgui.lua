@@ -658,8 +658,7 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/button9.wav")
     end
 
-    local Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Icon, "noclamp")
-    local Ipr_PLanguage = vgui.Create("DComboBox", Ipr.Settings.Vgui.Primary)
+    local Ipr_PLanguage, Ipr_FlagMat = vgui.Create("DComboBox", Ipr.Settings.Vgui.Primary)
     Ipr_PLanguage:SetSize(85, 21)
     Ipr_PLanguage:SetPos(5, 37)
     Ipr_PLanguage:SetFont(Ipr.Settings.Font)
