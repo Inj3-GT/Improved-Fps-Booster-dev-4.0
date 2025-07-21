@@ -49,7 +49,7 @@ return {
     MatProcessing = "Material processing",
     TMatProcessing = "This setting determines the threading mode the material system uses",
     ShadowQuality = "Shadow Rendering",
-    TShadowQuality = "Reduces the quality of shadows !",
+    TShadowQuality = "Lower the shadow quality",
     TextureFiltering = "Texture filtering",
     TTextureFiltering = "Disables texture filtering",
     SourceEngine = "Modify the behavior (engine)",
