@@ -671,11 +671,11 @@ local function Ipr_FpsBooster()
         
         for k, v in pairs(Ipr_Fps_Booster.Lang) do
             local Ipr_Selected = (index == k)
-            Ipr_SortLang[#Ipr_SortLang + 1] = {Lang = k, Icon = (Ipr_Selected) and "icon16/bullet_add.png" or "materials/flags16/" ..v.Icon, First = (Ipr_Selected), Spacer = (Ipr_Selected)}
+            Ipr_SortLang[#Ipr_SortLang + 1] = {Lang = k, Icon = (Ipr_Selected) and "icon16/bullet_add.png" or "materials/flags16/" ..v.Icon, Selected = (Ipr_Selected)}
         end
         
         Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[index].Icon, "noclamp")
-        table.SortByMember(Ipr_SortLang, "First", true)
+        table.SortByMember(Ipr_SortLang, "Selected", true)
 
         for i = 1, #Ipr_SortLang do
             local Ipr_ChoiceVar = Ipr_SortLang[i]
@@ -684,7 +684,7 @@ local function Ipr_FpsBooster()
 
             Ipr_PLanguage:AddChoice(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].SelectLangue.. " " ..Ipr_ChoiceLang, Ipr_ChoiceLang, false, Ipr_ChoiceIcon)
 
-            local Ipr_Spacer = Ipr_ChoiceVar.Spacer
+            local Ipr_Spacer = Ipr_ChoiceVar.Selected
             if (Ipr_Spacer) then
                 Ipr_PLanguage:AddSpacer()
             end
