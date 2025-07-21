@@ -500,11 +500,11 @@ local function Ipr_FpsBooster()
     Ipr_PIcon:Dock(FILL)
     Ipr_PIcon.Paint = function(self, w, h)
         surface.SetDrawColor(color_white)
-        surface.SetMaterial(Ipr_Icon.Computer)
+        surface.SetMaterial(Ipr.Settings.IComputer)
         surface.DrawTexturedRect(-10, 0, 350, 235)
 
         surface.SetDrawColor(Ipr.Settings.TColor["bleu"])
-        surface.SetMaterial(Ipr_Icon.Wrench)
+        surface.SetMaterial(Ipr.Settings.IWrench)
         local Ipr_Loop = Ipr_Copy.Loop()
         Ipr_Copy.Draw(207, 120, 220, 220, Ipr_Loop, -25)
     end
@@ -658,6 +658,7 @@ local function Ipr_FpsBooster()
         surface.PlaySound("buttons/button9.wav")
     end
 
+    local Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Icon, "noclamp")
     local Ipr_PLanguage = vgui.Create("DComboBox", Ipr.Settings.Vgui.Primary)
     Ipr_PLanguage:SetSize(85, 21)
     Ipr_PLanguage:SetPos(5, 37)
@@ -668,11 +669,13 @@ local function Ipr_FpsBooster()
 
     local function Ipr_AddLangSort(index)
         local Ipr_SortLang = {}
-
+        
         for k, v in pairs(Ipr_Fps_Booster.Lang) do
             local Ipr_Selected = (index == k)
             Ipr_SortLang[#Ipr_SortLang + 1] = {Lang = k, Icon = (Ipr_Selected) and "icon16/bullet_add.png" or "materials/flags16/" ..v.Icon, First = (Ipr_Selected), Spacer = (Ipr_Selected)}
         end
+        
+        Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[index].Icon, "noclamp")
         table.SortByMember(Ipr_SortLang, "First", true)
 
         for i = 1, #Ipr_SortLang do
@@ -692,7 +695,6 @@ local function Ipr_FpsBooster()
     Ipr_AddLangSort(Ipr.Settings.SetLang)
     Ipr_PLanguage:SetText("")
 
-    local Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].Icon, "noclamp")
     Ipr_PLanguage.Paint = function(self, w, h)
         draw.RoundedBox(6, 0, 0, w, h, self:IsHovered() and Ipr.Settings.TColor["bleuc"] or Ipr.Settings.TColor["bleu"])
 
@@ -802,8 +804,6 @@ local function Ipr_FpsBooster()
         self:SetValue(Ipr_SetLang)
 
         Ipr_AddLangSort(Ipr_SetLang)
-
-        Ipr_FlagMat = Material("materials/flags16/" ..Ipr_Fps_Booster.Lang[Ipr_SetLang].Icon, "noclamp")
         self:SetText("")
 
         if (Ipr_SetLang ~= Ipr.Settings.SetLang) then

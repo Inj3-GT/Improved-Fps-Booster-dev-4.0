@@ -10,6 +10,8 @@ return {
     IResetFps = Material("icon16/chart_bar.png", "noclamp"),
     IEnabled = Material("icon16/tick.png", "noclamp"),
     IDisabled = Material("icon16/cross.png", "noclamp"),
+    IComputer = Material("icon/Ipr_boost_computer.png", "noclamp smooth"),
+    IWrench = Material("icon/Ipr_boost_wtool.png", "noclamp smooth"),
     SetLang = Ipr_Fps_Booster.Settings.DefaultLanguage,
     Debug = false,
     Map = game.GetMap(),
