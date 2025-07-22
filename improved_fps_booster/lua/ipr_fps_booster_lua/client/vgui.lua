@@ -507,7 +507,7 @@ local function Ipr_FpsBooster()
 
     local Ipr_PFps = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
     Ipr_PFps:SetSize(110, 83)
-    Ipr_PFps:SetPos(Ipr_PSize.w / 2 - Ipr_PFps:GetWide() / 2 + 1, Ipr_PSize.h / 2 - Ipr_PFps:GetTall() / 2 - 13)
+    Ipr_PFps:SetPos(Ipr_PSize.w / 2 - Ipr_PFps:GetWide() / 2, Ipr_PSize.h / 2 - Ipr_PFps:GetTall() / 2 - 13)
     Ipr_PFps:SetText("")
     Ipr_PFps.Paint = function(self, w, h)
         local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Function.FpsCalculator()
