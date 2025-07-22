@@ -12,6 +12,7 @@ return {
     IDisabled = Material("icon16/cross.png", "noclamp"),
     IComputer = Material("icon/Ipr_boost_computer.png", "noclamp smooth"),
     IWrench = Material("icon/Ipr_boost_wtool.png", "noclamp smooth"),
+    IToolTip = Material("icon16/help.png", "noclamp"),
     SetLang = Ipr_Fps_Booster.Settings.DefaultLanguage,
     Debug = false,
     Map = game.GetMap(),

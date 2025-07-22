@@ -324,13 +324,28 @@ end
 
 Ipr.Function.SetToolTip = function(text, panel, localization)
     if not IsValid(Ipr.Settings.Vgui.ToolTip) then
-        Ipr.Settings.Vgui.ToolTip = vgui.Create("DTooltip")
+        Ipr.Settings.Vgui.ToolTip = vgui.Create("DPanel")
         Ipr.Settings.Vgui.ToolTip:SetText("")
-        Ipr.Settings.Vgui.ToolTip:SetTextColor(Ipr.Settings.TColor["blanc"])
-        Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
+        Ipr.Settings.Vgui.ToolTip:SetDrawOnTop(true)
+
+        local Ipr_Text = text
+        local Ipr_IconSize = 16
+        Ipr.Settings.Vgui.ToolTip.Text = function(text) 
+            surface.SetFont(Ipr.Settings.Font)
+            local Ipr_TWide, Ipr_THeight = surface.GetTextSize(text)
+
+            Ipr.Settings.Vgui.ToolTip:SetSize(Ipr_TWide + Ipr_IconSize + 6, Ipr_THeight + 2)
+            Ipr_Text = text
+        end
 
         Ipr.Settings.Vgui.ToolTip.Paint = function(self, w, h)
             Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 130), 6)
+
+            surface.SetDrawColor(color_white)
+            surface.SetMaterial(Ipr.Settings.IToolTip)
+            surface.DrawTexturedRect(1, 2, Ipr_IconSize, Ipr_IconSize)
+ 
+            draw.SimpleText(Ipr_Text, Ipr.Settings.Font, Ipr_IconSize + 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
         end
 
         Ipr.Settings.Vgui.ToolTip:SetVisible(false)
@@ -378,11 +393,7 @@ Ipr.Function.SetToolTip = function(text, panel, localization)
             if not IsValid(Ipr.Settings.Vgui.ToolTip) then
                 return
             end
-
-            Ipr.Settings.Vgui.ToolTip:SetText((localization) and text or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][text])
-            Ipr.Settings.Vgui.ToolTip:SetTextColor(Ipr.Settings.TColor["blanc"])
-            Ipr.Settings.Vgui.ToolTip:SetFont(Ipr.Settings.Font)
-
+            Ipr.Settings.Vgui.ToolTip.Text((localization) and text or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang][text])
             Ipr.Settings.Vgui.ToolTip:SetVisible(true)
 
             Ipr.Settings.Vgui.ToolTip:SetAlpha(0)

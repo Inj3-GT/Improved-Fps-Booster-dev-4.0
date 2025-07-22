@@ -455,10 +455,6 @@ local function Ipr_FpsBooster()
         draw.SimpleText(Ipr_TCurrentStatus, Ipr.Settings.Font, (Ipr_CurrentState) and w / 2 + 22 or w / 2 + 18, 16, ipr_TCurrentColor, TEXT_ALIGN_CENTER)
     end
 
-    local Ipr_Icon = {
-        Computer = Material("icon/Ipr_boost_computer.png", "noclamp smooth"),
-        Wrench = Material("icon/Ipr_boost_wrench.png", "noclamp smooth"),
-    }
     local Ipr_Rotate = {start = 10, s_end = 35, step = 5}
     local Ipr_Copy = table.Copy(Ipr_Rotate)
 
@@ -499,9 +495,9 @@ local function Ipr_FpsBooster()
     local Ipr_PIcon = vgui.Create("DPanel", Ipr.Settings.Vgui.Primary)
     Ipr_PIcon:Dock(FILL)
     Ipr_PIcon.Paint = function(self, w, h)
-        surface.SetDrawColor(color_white)
+        surface.SetDrawColor(Ipr.Settings.TColor["bleu"])
         surface.SetMaterial(Ipr.Settings.IComputer)
-        surface.DrawTexturedRect(-10, 0, 350, 235)
+        surface.DrawTexturedRect(-11, 0, 349, 235)
 
         surface.SetDrawColor(Ipr.Settings.TColor["bleu"])
         surface.SetMaterial(Ipr.Settings.IWrench)
@@ -511,7 +507,7 @@ local function Ipr_FpsBooster()
 
     local Ipr_PFps = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
     Ipr_PFps:SetSize(110, 83)
-    Ipr_PFps:SetPos(Ipr_PSize.w / 2 - Ipr_PFps:GetWide() / 2 + 1, Ipr_PSize.h / 2 - Ipr_PFps:GetTall() / 2 - 15)
+    Ipr_PFps:SetPos(Ipr_PSize.w / 2 - Ipr_PFps:GetWide() / 2 + 1, Ipr_PSize.h / 2 - Ipr_PFps:GetTall() / 2 - 13)
     Ipr_PFps:SetText("")
     Ipr_PFps.Paint = function(self, w, h)
         local Ipr_FpsCurrent, Ipr_FpsMin, Ipr_FpsMax, Ipr_FpsLow = Ipr.Function.FpsCalculator()
@@ -612,7 +608,7 @@ local function Ipr_FpsBooster()
 
     local Ipr_PResetFps = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
     Ipr_PResetFps:SetSize(150, 21)
-    Ipr_PResetFps:SetPos(Ipr_PSize.w / 2 - Ipr_PResetFps:GetWide() / 2 + 2, 191)
+    Ipr_PResetFps:SetPos(Ipr_PSize.w / 2 - Ipr_PResetFps:GetWide() / 2 + 2, 189)
     Ipr_PResetFps:SetText("")
     Ipr.Function.SetToolTip(Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].TReset, Ipr_PResetFps, true)
     Ipr_PResetFps.Paint = function(self, w, h)
