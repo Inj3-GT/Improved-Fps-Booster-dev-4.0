@@ -41,7 +41,7 @@ if (CLIENT) then
     
     include("ipr_fps_booster_lua/client/vgui.lua")
 else
-    local Ipr_Resource = {"resource/fonts/Rajdhani-Bold.ttf", "materials/icon/ipr_boost_computer.png", "materials/icon/ipr_boost_wtool.png"}
+    local Ipr_Resource = {"resource/fonts/Rajdhani-Bold.ttf", "materials/icon/ipr_boost_pc.png", "materials/icon/ipr_boost_wtool.png"}
     for i = 1, #Ipr_Resource do
         local Ipr_Resources = Ipr_Resource[i]
         resource.AddFile(Ipr_Resources)
