@@ -330,22 +330,22 @@ Ipr.Function.SetToolTip = function(text, panel, localization)
 
         local Ipr_Text = text
         local Ipr_IconSize = 16
+        local Ipr_CBoxSize = 9
         Ipr.Settings.Vgui.ToolTip.Text = function(text) 
             surface.SetFont(Ipr.Settings.Font)
             local Ipr_TWide, Ipr_THeight = surface.GetTextSize(text)
+            Ipr.Settings.Vgui.ToolTip:SetSize(Ipr_TWide + Ipr_IconSize + Ipr_CBoxSize, Ipr_THeight + 1)
 
-            Ipr.Settings.Vgui.ToolTip:SetSize(Ipr_TWide + Ipr_IconSize + 6, Ipr_THeight + 2)
             Ipr_Text = text
         end
-
         Ipr.Settings.Vgui.ToolTip.Paint = function(self, w, h)
             Ipr.Function.RenderBlur(self, ColorAlpha(color_black, 130), 6)
 
             surface.SetDrawColor(color_white)
             surface.SetMaterial(Ipr.Settings.IToolTip)
-            surface.DrawTexturedRect(1, 2, Ipr_IconSize, Ipr_IconSize)
+            surface.DrawTexturedRect(2, 2, Ipr_IconSize, Ipr_IconSize)
  
-            draw.SimpleText(Ipr_Text, Ipr.Settings.Font, Ipr_IconSize + 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+            draw.SimpleText(Ipr_Text, Ipr.Settings.Font, Ipr_IconSize + Ipr_CBoxSize / 2 - 2, 1, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
         end
 
         Ipr.Settings.Vgui.ToolTip:SetVisible(false)
@@ -398,12 +398,6 @@ Ipr.Function.SetToolTip = function(text, panel, localization)
 
             Ipr.Settings.Vgui.ToolTip:SetAlpha(0)
             Ipr.Settings.Vgui.ToolTip:AlphaTo(255, 0.8, 0)
-
-            timer.Simple(0.0001, function()
-                if IsValid(self) then
-                    self:OnCursorMoved()
-                end
-            end)
         end
     end
 end
