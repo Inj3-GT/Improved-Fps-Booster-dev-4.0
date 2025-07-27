@@ -19,7 +19,7 @@ if (CLIENT) then
         font = "Rajdhani Bold",
         size = 18,
         weight = 250,
-        antialias = true
+        antialias = trueq
     })
 
     Ipr_Fps_Booster.Convars = Ipr_Fps_Booster.Convars or {}

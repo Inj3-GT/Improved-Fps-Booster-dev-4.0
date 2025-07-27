@@ -43,9 +43,16 @@ local function Ipr_HUD()
     Ipr.Function.DrawMultipleTextAligned(Ipr_RenderFpsText)
 end
 
-local function Ipr_CloseVgui()
+local function Ipr_PanelShutdown(panel, bool)
+    if IsValid(panel) then
+        surface.PlaySound("common/wpn_select.wav")
+    end
+    
     for _, v in pairs(Ipr.Settings.Vgui) do
         if not IsValid(v) then
+            continue
+        end
+        if (bool) and (v ~= panel) then
             continue
         end
 
@@ -62,10 +69,6 @@ local function Ipr_CloseVgui()
 end
 
 local function Ipr_FpsBooster_Options(primary)
-    if IsValid(Ipr.Settings.Vgui.Secondary) then
-        Ipr.Settings.Vgui.Secondary:Remove()
-    end
-
     local Ipr_SSize = {w = 240, h = 450}
 
     Ipr.Settings.Vgui.Secondary = vgui.Create("DFrame")
@@ -148,11 +151,9 @@ local function Ipr_FpsBooster_Options(primary)
     Ipr_SClose:SetImage("icon16/cross.png")
     Ipr_SClose.Paint = nil
     Ipr_SClose.DoClick = function()
-        Ipr.Settings.Vgui.Secondary:AlphaTo(0, 0.3, 0, function()
-            if IsValid(Ipr.Settings.Vgui.Secondary) then
-                Ipr.Settings.Vgui.Secondary:Remove()
-            end
+        Ipr_PanelShutdown(Ipr.Settings.Vgui.Secondary, true)
 
+        timer.Simple(0.3, function()
             if IsValid(primary) and not primary.PMoved then
                 primary:MoveTo(Ipr.Settings.Pos.w / 2 - primary:GetWide() / 2, Ipr.Settings.Pos.h / 2 - primary:GetTall() / 2, 0.3, 0)
             end
@@ -203,6 +204,7 @@ local function Ipr_FpsBooster_Options(primary)
             end
         end
 
+        surface.PlaySound((Ipr_CopyFind) and "friends/friend_online.wav" or "buttons/button18.wav")
         chat.AddText(Ipr.Settings.TColor["rouge"], Ipr.Settings.Script, Ipr.Settings.TColor["blanc"], (Ipr_CopyFind) and Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataApply or Ipr_Fps_Booster.Lang[Ipr.Settings.SetLang].RevertDataCancel)
     end
 
@@ -225,6 +227,7 @@ local function Ipr_FpsBooster_Options(primary)
             Ipr.Settings.Vgui.CheckBox[i].Vgui:SetValue(Ipr_SChecked)
         end
 
+        surface.PlaySound("buttons/lever7.wav")
         Ipr_SUncheck:SetImage(Ipr_CheckboxState[Ipr_SChecked].Icon)
         Ipr_SUncheck:SetY(Ipr_CheckboxState[Ipr_SChecked].PoH)
     end
@@ -392,8 +395,10 @@ local function Ipr_FpsBooster_Options(primary)
             draw.SimpleText(Ipr_TButton, Ipr.Settings.Font, w / 2 - Ipr_PTWide / 2 + 7, h / 2 - Ipr_PTHeight /  2, Ipr.Settings.TColor["blanc"], TEXT_ALIGN_LEFT)
         end
         Ipr_SManageCreate.DoClick = function()
+            local Ipr_ReadSound = Ipr_SManageTbl.Sound(Ipr)
+            surface.PlaySound(Ipr_ReadSound)
+            
             Ipr_SManageTbl.Function(Ipr, Ipr_SManageTbl)
-            surface.PlaySound(Ipr_SManageTbl.Sound)
         end
     end
 end
@@ -537,7 +542,7 @@ local function Ipr_FpsBooster()
     Ipr_PClose:SetImage("icon16/cross.png")
     Ipr_PClose.Paint = nil
     Ipr_PClose.DoClick = function()
-        Ipr_CloseVgui()
+        Ipr_PanelShutdown(Ipr_PClose)
     end
 
     local Ipr_PEnabled = vgui.Create("DButton", Ipr.Settings.Vgui.Primary)
@@ -570,7 +575,7 @@ local function Ipr_FpsBooster()
 
         local Ipr_CloseFpsBooster = Ipr.Function.GetConvar("AutoClose")
         if (Ipr_CloseFpsBooster) then
-            Ipr_CloseVgui()
+            Ipr_PanelShutdown()
         end
 
         surface.PlaySound("buttons/combine_button7.wav")
@@ -601,7 +606,7 @@ local function Ipr_FpsBooster()
 
         local Ipr_CloseFpsBooster = Ipr.Function.GetConvar("AutoClose")
         if (Ipr_CloseFpsBooster) then
-            Ipr_CloseVgui()
+            Ipr_PanelShutdown()
         end
 
         surface.PlaySound("buttons/combine_button5.wav")
@@ -806,7 +811,7 @@ local function Ipr_FpsBooster()
             file.Write(Ipr.Settings.Save.. "language.json", Ipr_SetLang)
 
             Ipr.Settings.SetLang = Ipr_SetLang
-            surface.PlaySound("buttons/button9.wav")
+            surface.PlaySound("common/stuck1.wav")
         end
     end
 

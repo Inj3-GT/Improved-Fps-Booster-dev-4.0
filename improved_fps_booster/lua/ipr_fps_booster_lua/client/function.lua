@@ -429,6 +429,12 @@ Ipr.Function.DCheckBoxLabel = function(panel, tbl)
         
         surface.DrawCircle(self.SLerp + 5, 10, 6, ColorAlpha(color_black, 90))
     end
+    Ipr_SOptiButton.DoClick = function(self)
+        local Ipr_SoundChecked = self:GetChecked() and "garrysmod/ui_return.wav" or "buttons/button15.wav"
+        surface.PlaySound(Ipr_SoundChecked)
+
+        self:Toggle()
+    end
 
     local Ipr_SLabel = vgui.Create("DLabel", Ipr_SOptiPanel)
     Ipr_SLabel:Dock(FILL)
