@@ -315,7 +315,7 @@ Ipr.Function.DrawMultipleTextAligned = function(tbl)
 
             Ipr_OldWide = Ipr_OldWide + Ipr_TWide + Ipr.Settings.Escape
 
-            draw.SimpleText(Ipr_NameText, Ipr.Settings.Font, Ipr_Pos.PWide + Ipr_NewWide, Ipr_Pos.PHeight, Ipr_TextTbl[i].FColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+            draw.SimpleTextOutlined(Ipr_NameText, Ipr.Settings.Font, Ipr_Pos.PWide + Ipr_NewWide, Ipr_Pos.PHeight, Ipr_TextTbl[i].FColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT, 0.7, color_black)
         end
 
         Ipr_OldWide = 0

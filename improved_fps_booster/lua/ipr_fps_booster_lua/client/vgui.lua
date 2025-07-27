@@ -12,7 +12,7 @@ local function Ipr_HUD()
     local Ipr_HWide = Ipr.Settings.Pos.w * Ipr.Function.GetConvar("FpsPosWidth") / 100
     local Ipr_PlayerPing = LocalPlayer():Ping()
 
-    local Ipr_RenderFpsText = {
+    local Ipr_HudFpsBooster = {
         {
             {Name = "FPS :", FColor = Ipr.Settings.TColor["blanc"]},
             {Name = Ipr_FpsCurrent, FColor = Ipr.Function.ColorTransition(Ipr_FpsCurrent)},
@@ -31,16 +31,16 @@ local function Ipr_HUD()
 
         {
             {Name = "Map :", FColor = Ipr.Settings.TColor["blanc"]},
-            {Name = Ipr.Settings.Map, FColor = Ipr.Settings.TColor["bleuc"]},
+            {Name = Ipr.Settings.Map, FColor = Ipr.Settings.TColor["bleu"]},
             {Name = "|", FColor = Ipr.Settings.TColor["blanc"]},
             {Name = "Ping :", FColor = Ipr.Settings.TColor["blanc"]},
-            {Name = Ipr_PlayerPing, FColor = Ipr.Settings.TColor["bleuc"]},
+            {Name = Ipr_PlayerPing, FColor = (Ipr_PlayerPing > 100) and Ipr.Settings.TColor["rouge"] or Ipr.Settings.TColor["vert"]},
 
             Pos = {PWide = Ipr_HWide - 1, PHeight = Ipr_HHeight + 20},
         },
     }
 
-    Ipr.Function.DrawMultipleTextAligned(Ipr_RenderFpsText)
+    Ipr.Function.DrawMultipleTextAligned(Ipr_HudFpsBooster)
 end
 
 local function Ipr_PanelShutdown(panel, bool)
