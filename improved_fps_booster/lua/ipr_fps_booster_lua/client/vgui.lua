@@ -46,12 +46,13 @@ end
 local function Ipr_PanelShutdown(panel, bool)
     if IsValid(panel) then
         surface.PlaySound("common/wpn_select.wav")
+
+        if (bool) then
+            panel:Remove()
+            return
+        end
     end
-    if (bool) then
-        panel:Remove()
-        return 
-    end
-    
+
     for _, v in pairs(Ipr.Settings.Vgui) do
         if not IsValid(v) then
             continue
